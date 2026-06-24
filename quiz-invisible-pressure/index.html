@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>你的隐形压力有多大？ - 20题完整版治愈系心理测试</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #A88B7E 0%, #C19E90 100%);
+  min-height: 100vh;
+  color: #3E3A39;
+}
+.container {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+}
+.card {
+  background: #F6F3EF;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 16px rgba(168,139,126,0.12);
+}
+.welcome-page .logo {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.welcome-page .logo h1 {
+  font-size: 24px;
+  color: #A88B7E;
+  margin-bottom: 8px;
+}
+.welcome-page .logo p {
+  font-size: 14px;
+  color: #986C5C;
+}
+.welcome-page .desc {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #6C6867;
+  margin-bottom: 24px;
+  text-align: center;
+}
+.welcome-page .price-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #A88B7E, #C19E90);
+  color: #FFFBF8;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.progress-bar {
+  background: #E6E7EA;
+  height: 6px;
+  border-radius: 3px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.progress-fill {
+  background: linear-gradient(90deg, #A88B7E, #C19E90);
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+.progress-text {
+  font-size: 12px;
+  color: #989493;
+  text-align: right;
+  margin-bottom: 8px;
+}
+.question-page .category-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #A88B7E, #C19E90);
+  color: #FFFBF8;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+.question-page .question-text {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  color: #3E3A39;
+}
+.option-list { list-style: none; }
+.option-item {
+  background: #F0ECE8;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #3E3A39;
+}
+.option-item:hover { background: #E6E2DE; }
+.option-item.selected {
+  background: linear-gradient(135deg, rgba(168,139,126,0.08), rgba(193,158,144,0.08));
+  border-color: #A88B7E;
+  color: #A88B7E;
+  font-weight: 500;
+}
+.option-label {
+  font-weight: bold;
+  color: #A88B7E;
+  margin-right: 8px;
+}
+.btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+.btn-primary {
+  background: linear-gradient(135deg, #A88B7E, #C19E90);
+  color: #FFFBF8;
+}
+.btn-primary:hover { opacity: 0.9; }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-share {
+  background: linear-gradient(135deg, #98AA9A, #A88B7E);
+  color: #FFFBF8;
+  margin-top: 10px;
+}
+.result-page .result-type { text-align: center; margin-bottom: 24px; }
+.result-type-icon { font-size: 48px; margin-bottom: 8px; }
+.result-type-name { font-size: 22px; font-weight: 700; color: #A88B7E; margin-bottom: 4px; }
+.result-type-desc { font-size: 14px; color: #6C6867; }
+.radar-chart { width: 240px; height: 240px; margin: 16px auto; position: relative; }
+.radar-svg { width: 100%; height: 100%; }
+.score-section { text-align: center; margin-bottom: 20px; }
+.score-number { font-size: 48px; font-weight: 700; color: #A88B7E; }
+.score-label { font-size: 14px; color: #6C6867; }
+.score-bar { background: #E6E7EA; height: 8px; border-radius: 4px; margin: 8px 0; overflow: hidden; }
+.score-bar-fill { background: linear-gradient(90deg, #A88B7E, #C19E90); height: 100%; border-radius: 4px; }
+.interpret-card {
+  background: linear-gradient(135deg, rgba(168,139,126,0.05), rgba(193,158,144,0.05));
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.interpret-card h4 { font-size: 15px; color: #A88B7E; margin-bottom: 8px; }
+.interpret-card p { font-size: 14px; line-height: 1.6; color: #6C6867; }
+.path-compare { display: flex; gap: 12px; margin-bottom: 16px; }
+.path-card { flex: 1; background: #F0ECE8; border-radius: 12px; padding: 14px; text-align: center; }
+.path-card h5 { font-size: 14px; margin-bottom: 6px; }
+.path-card p { font-size: 12px; line-height: 1.4; color: #6C6867; }
+.path-a { border: 2px solid #A88B7E; }
+.path-a h5 { color: #A88B7E; }
+.path-b { border: 2px solid #98AA9A; }
+.path-b h5 { color: #98AA9A; }
+.action-plan {
+  background: linear-gradient(135deg, #A88B7E, #C19E90);
+  color: #FFFBF8;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.action-plan h4 { font-size: 15px; margin-bottom: 12px; }
+.action-step { display: flex; align-items: flex-start; margin-bottom: 10px; font-size: 13px; line-height: 1.5; }
+.action-step .step-num {
+  background: rgba(255,253,250,0.3);
+  border-radius: 50%;
+  width: 24px; height: 24px;
+  text-align: center; line-height: 24px;
+  font-size: 12px; font-weight: bold;
+  margin-right: 10px; flex-shrink: 0;
+}
+.hidden { display: none !important; }
+.fade-in { animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 380px) {
+  .container { padding: 12px; }
+  .card { padding: 16px; }
+  .question-page .question-text { font-size: 15px; }
+  .option-item { padding: 12px; font-size: 14px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- 欢迎页 -->
+<div id="welcome-page" class="welcome-page">
+  <div class="card">
+    <div class="logo">
+      <h1>🌿 你的隐形压力有多大？</h1>
+      <p>20 题完整版 · 治愈系压力诊断</p>
+    </div>
+    <div class="desc">
+      <span class="price-tag">解锁完整版测试</span><br>
+      覆盖<strong>情绪压力、时间压力、关系压力、期待压力、自我压力</strong>五大维度<br>
+      生成专属压力诊断报告 + 90天治愈方案
+    </div>
+    <button class="btn btn-primary" onclick="startTest()">开始测试 →</button>
+  </div>
+</div>
+
+<!-- 题目页 -->
+<div id="question-page" class="question-page hidden">
+  <div class="card">
+    <div class="progress-text" id="progress-text">第 1/20 题</div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:5%"></div></div>
+    <div class="category-tag" id="category-tag">情绪压力</div>
+    <div class="question-text" id="question-text"></div>
+    <ul class="option-list" id="option-list"></ul>
+    <button class="btn btn-primary" id="next-btn" disabled onclick="nextQuestion()">下一题 →</button>
+  </div>
+</div>
+
+<!-- 结果页 -->
+<div id="result-page" class="result-page hidden">
+  <div class="card">
+    <div class="result-type">
+      <div class="result-type-icon" id="result-icon"></div>
+      <div class="result-type-name" id="result-name"></div>
+      <div class="result-type-desc" id="result-desc"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="score-section">
+      <div class="score-label">隐形压力指数</div>
+      <div class="score-number" id="score-number"></div>
+      <div class="score-bar"><div class="score-bar-fill" id="score-bar-fill"></div></div>
+      <div style="font-size:12px;color:#989493" id="score-hint"></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="font-size:16px;color:#A88B7E;margin-bottom:12px">📊 五维压力雷达图</h3>
+    <div class="radar-chart" id="radar-chart"></div>
+  </div>
+  <div class="card">
+    <div class="interpret-card">
+      <h4>🔍 核心解读</h4>
+      <p id="interpret-core"></p>
+    </div>
+    <div class="interpret-card">
+      <h4>🧠 心理机制</h4>
+      <p id="interpret-mechanism"></p>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="font-size:16px;color:#A88B7E;margin-bottom:12px">🛤️ 两条治愈路径对比</h3>
+    <div class="path-compare">
+      <div class="path-card path-a"><h5 id="path-a-title">路径 A</h5><p id="path-a-desc"></p></div>
+      <div class="path-card path-b"><h5 id="path-b-title">路径 B</h5><p id="path-b-desc"></p></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="action-plan">
+      <h4>🌿 90 天治愈行动方案</h4>
+      <div id="action-steps"></div>
+    </div>
+  </div>
+  <div class="card" style="text-align:center">
+    <button class="btn btn-primary" onclick="restartTest()">🔄 重新测试</button>
+    <button class="btn btn-share" onclick="shareResult()">📤 分享结果</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+const questions = [
+  // 维度1：情绪压力 (4题)
+  { category: "情绪压力", text: "最近有没有一种「说不出的累」？", options: ["经常有，但不知道为什么", "偶尔有，忙的时候更明显", "很少，基本能自我调节", "几乎没有，心态很稳"] },
+  { category: "情绪压力", text: "你独处时的情绪状态通常是：", options: ["很低落，总想哭或发呆", "有点空虚，需要找事填补", "平静，偶尔有些小波动", "很自在，享受独处时光"] },
+  { category: "情绪压力", text: "你对负面情绪的处理方式：", options: ["压抑它，假装没事", "默默消化，很少找人倾诉", "会跟亲近的人聊聊", "很快就能自我调节好"] },
+  { category: "情绪压力", text: "你最近是否经常感到「心里堵着什么东西」？", options: ["几乎每天，胸口闷闷的", "经常有，但说不清是什么", "偶尔有，忙碌时更明显", "很少，内心比较通透"] },
+  // 维度2：时间压力 (4题)
+  { category: "时间压力", text: "你对「时间不够用」的感受有多强烈？", options: ["每天都在赶赶赶，喘不过气", "经常觉得，但还能勉强应付", "偶尔焦虑，大部分时间够用", "很少，节奏比较从容"] },
+  { category: "时间压力", text: "你的待办清单状态通常是：", options: ["永远做不完，越积越多", "大部分能完成，但总有遗漏", "基本能清完，偶有延期", "很少积压，井井有条"] },
+  { category: "时间压力", text: "你休息时的状态是：", options: ["根本不敢休息，怕浪费时间", "休息时也在想工作的事", "能放下，但总觉得休息不够", "真正放松，不焦虑时间"] },
+  { category: "时间压力", text: "你对deadline的反应：", options: ["极度焦虑，提前几天就睡不好", "紧张但能咬牙完成", "有压力但可以自我调节", "从容应对，按计划推进"] },
+  // 维度3：关系压力 (4题)
+  { category: "关系压力", text: "你会为了维护关系而委屈自己吗？", options: ["经常，怕得罪人不敢拒绝", "有时，在重要关系上会妥协", "很少，基本能表达真实想法", "几乎不会，先照顾自己"] },
+  { category: "关系压力", text: "社交后你的感受通常是：", options: ["很疲惫，需要很长时间恢复", "有点累，但还是觉得值得", "还行，不会特别消耗", "很享受，社交是充电方式"] },
+  { category: "关系压力", text: "当别人对你提要求时，你的第一反应：", options: ["立即答应，哪怕自己不方便", "犹豫一下，最终大概率答应", "先考虑自己的情况再决定", "根据实际情况直接回应"] },
+  { category: "关系压力", text: "你对「被误解」的恐惧程度：", options: ["非常恐惧，拼命解释和讨好", "比较害怕，但能克制住", "有点在意，但很快放下", "不太在意，知道自己就好"] },
+  // 维度4：期待压力 (4题)
+  { category: "期待压力", text: "你觉得别人对你的期待和你的真实能力之间：", options: ["差距很大，永远达不到", "有差距，但还在努力追赶", "基本匹配，偶尔有落差", "很匹配，甚至超出期待"] },
+  { category: "期待压力", text: "你做一件事，更在意谁的评价？", options: ["所有人，害怕任何负面评价", "重要的人，如父母领导伴侣", "自己认可就够，偶尔在意别人", "只在意自己的评价和感受"] },
+  { category: "期待压力", text: "你觉得「足够好」的标准是谁定的？", options: ["别人定的，我一直在追那个标准", "社会定的，大家都在追同一个目标", "一半别人一半自己", "我自己定的，我有自己的标尺"] },
+  { category: "期待压力", text: "你对自己的满意程度：", options: ["非常不满意，觉得处处不如人", "不太满意，总有想改的地方", "还行，有些方面挺满意的", "比较满意，接纳自己的样子"] },
+  // 维度5：自我压力 (4题)
+  { category: "自我压力", text: "你内心的声音通常是鼓励还是批评？", options: ["几乎全是批评，对自己很严苛", "批评居多，偶尔有些安慰", "一半一半，有时鼓励有时挑剔", "鼓励居多，对自己比较温柔"] },
+  { category: "自我压力", text: "犯错后你的自责程度：", options: ["极度自责，反复回想很久", "比较自责，但能慢慢走出来", "有点懊恼，很快就放下", "坦然面对，错误是学习的机会"] },
+  { category: "自我压力", text: "你是否经常觉得「我不够好」？", options: ["几乎每天都这么想", "经常，尤其是做比较的时候", "偶尔，在特定场景下出现", "很少，基本接纳自己"] },
+  { category: "自我压力", text: "如果有一整天完全自由，你最想做的是：", options: ["什么都不做，只想瘫着放空", "做些轻松的事，慢慢恢复能量", "做点自己喜欢的事，充电", "充满活力，享受自由时光"] }
+];
+
+const resultTypes = {
+  emotional: {
+    icon: "🫧",
+    name: "情绪内耗型",
+    desc: "你的压力不在外面，而在心里——那些说不出的累，才是最重的重量",
+    core: "你的隐形压力核心来源是「情绪内耗」——你习惯压抑负面情绪，假装没事，但它们并没有消失，而是在内心慢慢堆积。你不是真的没事，只是太擅长装没事了。",
+    mechanism: "情绪内耗型的人有一个隐藏的心理循环：感受到压力 → 压抑不表达 → 情绪在体内积累 → 身心出现症状（疲惫、失眠、胸闷）→ 更加压抑 → 循环加剧。打破这个循环的关键不是「更坚强」，而是「更诚实」。",
+    pathA: { title: "路径 A：情绪释放", desc: "学习安全的情绪表达方式——书写、倾诉、专业咨询。让压抑的情绪找到出口，而不是继续在体内发酵。" },
+    pathB: { title: "路径 B：内在重建", desc: "通过正念冥想和自我对话，重建你和情绪的关系。不是消除情绪，而是学会和它共处。" },
+    actions: [
+      "第1-14天：每天写5分钟「情绪日记」——不评判，只记录真实感受",
+      "第15-30天：找一个安全的倾诉对象（朋友/咨询师），每周至少聊一次真实感受",
+      "第31-60天：学习一种情绪释放方法——正念冥想、自由书写、或身体运动",
+      "第61-90天：建立你的「情绪支持系统」——3个可以随时说真话的人"
+    ]
+  },
+  time: {
+    icon: "⏰",
+    name: "时间焦虑型",
+    desc: "你的压力来自「永远不够」——时间、精力、空间，总觉得还差那么一点",
+    core: "你的隐形压力核心来源是「时间焦虑」——你总觉得时间不够、事情做不完、别人比你快。这不是效率问题，而是内心深处对「失控」的恐惧。",
+    mechanism: "时间焦虑型的人有强烈的「完成驱动」——不把待办清完就不敢休息，休息时也在想下一步。你把时间等同于价值，浪费时间就等于浪费生命。这种思维让你永远在追赶，却永远追不上自己设定的高标准。",
+    pathA: { title: "路径 A：时间重构", desc: "重新定义「够用的时间」——从「做完所有事」变成「做完最重要的事」。学会战略性放弃。" },
+    pathB: { title: "路径 B：节奏调整", desc: "找到你的自然节奏——不是所有人都需要8小时产出。接受自己的节奏，是治愈的开始。" },
+    actions: [
+      "第1-7天：记录你的一天——每30分钟做了什么，找到真正的「时间黑洞」",
+      "第8-30天：每天只定3个核心任务，其余全部降级或放弃",
+      "第31-60天：设定「硬性休息时间」——每天至少1小时完全不安排任何事",
+      "第61-90天：建立你的「时间边界」——学会说「这个我做不到」而不内疚"
+    ]
+  },
+  relation: {
+    icon: "👥",
+    name: "关系维系型",
+    desc: "你的压力来自别人——为了每段关系都好好的，你一直在悄悄消耗自己",
+    core: "你的隐形压力核心来源是「关系消耗」——你习惯优先照顾别人的感受，不敢拒绝，害怕被误解。你为每段关系都在付出，但很少为自己留点什么。",
+    mechanism: "关系维系型的人有强烈的「被认可需要」——你通过让别人满意来确认自己的价值。这意味着你很难拒绝，很难表达真实想法，很难在不被认可时还觉得自己够好。你的压力不是关系本身，而是你在关系中的「自我缺失」。",
+    pathA: { title: "路径 A：边界建立", desc: "学会说「不」——不是对所有人说不，而是对不合理的要求说不。边界不是自私，是自我保护。" },
+    pathB: { title: "路径 B：关系筛选", desc: "不是所有关系都需要维护。识别3个最重要的关系，其余降低优先级，为自己留出空间。" },
+    actions: [
+      "第1-7天：写下你最难拒绝的3种场景，找到背后的恐惧",
+      "第8-30天：每天练习1次「温和拒绝」——「我很想帮你，但我现在确实做不到」",
+      "第31-60天：对你的社交圈做一次「能量审计」——谁给你充电，谁在消耗你",
+      "第61-90天：建立你的「自我优先清单」——至少3件事是只为自己做的"
+    ]
+  },
+  expectation: {
+    icon: "🧭",
+    name: "期待落差型",
+    desc: "你的压力来自一个看不见的标准——活在别人设定的坐标系里，永远觉得差一点",
+    core: "你的隐形压力核心来源是「期待落差」——你总觉得自己不够好，因为你衡量自己的标尺不是自己定的，而是别人和社会的。你一直在追一个不属于你的终点。",
+    mechanism: "期待落差型的人有强烈的「外评驱动」——你通过别人的认可来确认自己的价值，而不是通过内在标准。这意味着即使你已经做得很好，如果别人不认可，你依然觉得不够。你的压力不是能力不足，而是标准错位。",
+    pathA: { title: "路径 A：标准重定", desc: "建立你自己的「够好」标准——不是降低要求，而是把标尺从外部移到内部。你自己说了算。" },
+    pathB: { title: "路径 B：期待脱钩", desc: "逐步减少对他人评价的依赖——从「被认可才有价值」到「我知道自己有价值就够了」。" },
+    actions: [
+      "第1-7天：写下10条「别人觉得我应该做到的事」，逐条问：这真的是我想要的吗？",
+      "第8-30天：每天做1件「只让自己满意的事」，不需要任何人知道或认可",
+      "第31-60天：建立你的「个人成就清单」——只记录让你内心真正有成就感的事",
+      "第61-90天：对外评的依赖程度做一次评估，看是否在逐步下降"
+    ]
+  }
+};
+
+let currentQuestion = 0;
+let answers = [];
+let scores = { "情绪压力": 0, "时间压力": 0, "关系压力": 0, "期待压力": 0, "自我压力": 0 };
+
+function startTest() {
+  document.getElementById('welcome-page').classList.add('hidden');
+  document.getElementById('question-page').classList.remove('hidden');
+  document.getElementById('question-page').classList.add('fade-in');
+  currentQuestion = 0;
+  answers = [];
+  scores = { "情绪压力": 0, "时间压力": 0, "关系压力": 0, "期待压力": 0, "自我压力": 0 };
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('progress-text').textContent = `第 ${currentQuestion + 1}/20 题`;
+  document.getElementById('progress-fill').style.width = `${(currentQuestion + 1) / 20 * 100}%`;
+  document.getElementById('category-tag').textContent = q.category;
+  document.getElementById('question-text').textContent = q.text;
+  const optionList = document.getElementById('option-list');
+  optionList.innerHTML = '';
+  const labels = ['A', 'B', 'C', 'D'];
+  q.options.forEach((opt, i) => {
+    const li = document.createElement('li');
+    li.className = 'option-item';
+    li.innerHTML = `<span class="option-label">${labels[i]}.</span> ${opt}`;
+    li.onclick = () => selectOption(i, li);
+    optionList.appendChild(li);
+  });
+  document.getElementById('next-btn').disabled = true;
+  document.getElementById('next-btn').textContent = currentQuestion === 19 ? '查看结果 →' : '下一题 →';
+}
+
+function selectOption(index, element) {
+  document.querySelectorAll('.option-item').forEach(item => item.classList.remove('selected'));
+  element.classList.add('selected');
+  answers[currentQuestion] = index;
+  document.getElementById('next-btn').disabled = false;
+}
+
+function nextQuestion() {
+  if (answers[currentQuestion] === undefined) return;
+  const q = questions[currentQuestion];
+  scores[q.category] += (answers[currentQuestion] + 1);
+  currentQuestion++;
+  if (currentQuestion < 20) showQuestion();
+  else showResult();
+}
+
+function showResult() {
+  document.getElementById('question-page').classList.add('hidden');
+  document.getElementById('result-page').classList.remove('hidden');
+  document.getElementById('result-page').classList.add('fade-in');
+
+  const totalScore = Object.values(scores).reduce((a, b) => a + b, 0);
+  const avg = totalScore / 5;
+  let resultKey;
+  if (avg <= 8) resultKey = 'emotional';
+  else if (avg <= 12) resultKey = 'time';
+  else if (avg <= 16) resultKey = 'relation';
+  else resultKey = 'expectation';
+
+  const result = resultTypes[resultKey];
+
+  document.getElementById('result-icon').textContent = result.icon;
+  document.getElementById('result-name').textContent = result.name;
+  document.getElementById('result-desc').textContent = result.desc;
+
+  const stressScore = Math.round(100 - avg * 5);
+  const displayScore = Math.max(20, Math.min(95, stressScore));
+  document.getElementById('score-number').textContent = displayScore;
+  document.getElementById('score-bar-fill').style.width = `${displayScore}%`;
+  document.getElementById('score-hint').textContent = displayScore >= 70 ? '你的隐形压力偏高，需要关注了' : displayScore >= 40 ? '你的压力在中等水平，可以优化' : '你的压力水平较低，状态不错';
+
+  drawRadar(scores);
+
+  document.getElementById('interpret-core').textContent = result.core;
+  document.getElementById('interpret-mechanism').textContent = result.mechanism;
+  document.getElementById('path-a-title').textContent = result.pathA.title;
+  document.getElementById('path-a-desc').textContent = result.pathA.desc;
+  document.getElementById('path-b-title').textContent = result.pathB.title;
+  document.getElementById('path-b-desc').textContent = result.pathB.desc;
+
+  const stepsDiv = document.getElementById('action-steps');
+  stepsDiv.innerHTML = '';
+  result.actions.forEach((action, i) => {
+    stepsDiv.innerHTML += `<div class="action-step"><span class="step-num">${i + 1}</span><span>${action}</span></div>`;
+  });
+}
+
+function drawRadar(scores) {
+  const container = document.getElementById('radar-chart');
+  const categories = ["情绪压力", "时间压力", "关系压力", "期待压力", "自我压力"];
+  const maxScore = 16;
+  const cx = 120, cy = 120, r = 90;
+  let svg = `<svg viewBox="0 0 240 240" class="radar-svg">`;
+  for (let level = 1; level <= 4; level++) {
+    const lr = r * level / 4;
+    const points = categories.map((_, i) => {
+      const angle = (i * 72 - 90) * Math.PI / 180;
+      return `${cx + lr * Math.cos(angle)},${cy + lr * Math.sin(angle)}`;
+    }).join(' ');
+    svg += `<polygon points="${points}" fill="none" stroke="#D4D0CC" stroke-width="1"/>`;
+  }
+  categories.forEach((_, i) => {
+    const angle = (i * 72 - 90) * Math.PI / 180;
+    svg += `<line x1="${cx}" y1="${cy}" x2="${cx + r * Math.cos(angle)}" y2="${cy + r * Math.sin(angle)}" stroke="#C0C0C0" stroke-width="1"/>`;
+  });
+  const dataPoints = categories.map((cat, i) => {
+    const val = scores[cat] / maxScore;
+    const angle = (i * 72 - 90) * Math.PI / 180;
+    const dr = r * val;
+    return `${cx + dr * Math.cos(angle)},${cy + dr * Math.sin(angle)}`;
+  }).join(' ');
+  svg += `<polygon points="${dataPoints}" fill="rgba(168,139,126,0.3)" stroke="#A88B7E" stroke-width="2"/>`;
+  categories.forEach((cat, i) => {
+    const val = scores[cat] / maxScore;
+    const angle = (i * 72 - 90) * Math.PI / 180;
+    const dr = r * val;
+    svg += `<circle cx="${cx + dr * Math.cos(angle)}" cy="${cy + dr * Math.sin(angle)}" r="4" fill="#A88B7E"/>`;
+  });
+  categories.forEach((cat, i) => {
+    const angle = (i * 72 - 90) * Math.PI / 180;
+    const lx = cx + (r + 20) * Math.cos(angle);
+    const ly = cy + (r + 20) * Math.sin(angle);
+    svg += `<text x="${lx}" y="${ly}" text-anchor="middle" font-size="11" fill="#6C6867">${cat}</text>`;
+  });
+  svg += `</svg>`;
+  container.innerHTML = svg;
+}
+
+function restartTest() {
+  document.getElementById('result-page').classList.add('hidden');
+  startTest();
+}
+
+function shareResult() {
+  const resultName = document.getElementById('result-name').textContent;
+  const text = `我刚做了「你的隐形压力有多大」20题测试，结果是【${resultName}】🌿 每一份压力都值得被看见，你也来试试 👇`;
+  if (navigator.share) {
+    navigator.share({ title: '压力测试结果', text: text });
+  } else {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    alert('已复制到剪贴板，可分享到社交平台！🌿');
+  }
+}
+</script>
+</body>
+</html>
