@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>你的隐形攻击力 - 20题完整版心理测试</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #C8C3BC 0%, #D7D4D0 100%);
+  min-height: 100vh;
+  color: #373632;
+}
+.container {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+}
+.card {
+  background: #F8F7F5;
+  border-radius: 18px;
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 20px rgba(180,177,172,0.18);
+}
+.welcome-page .logo { text-align: center; margin-bottom: 24px; }
+.welcome-page .logo h1 { font-size: 24px; color: #82807C; margin-bottom: 8px; }
+.welcome-page .logo p { font-size: 14px; color: #A09D98; }
+.welcome-page .desc { font-size: 15px; line-height: 1.8; color: #73706C; margin-bottom: 24px; text-align: center; }
+.welcome-page .unlock-tag {
+  display: inline-block; background: linear-gradient(135deg, #C8C3BC, #D7D4D0);
+  color: #FCFBF9; padding: 8px 22px; border-radius: 22px; font-size: 16px; font-weight: bold; margin-bottom: 20px;
+}
+.progress-bar { background: #E8E6E3; height: 8px; border-radius: 4px; margin-bottom: 16px; overflow: hidden; }
+.progress-fill { background: linear-gradient(90deg, #C8C3BC, #B9B7B2); height: 100%; border-radius: 4px; transition: width 0.3s ease; }
+.progress-text { font-size: 12px; color: #9E9B96; text-align: right; margin-bottom: 8px; }
+.question-page .category-tag {
+  display: inline-block; background: linear-gradient(135deg, #C8C3BC, #D7D4D0);
+  color: #FCFBF9; padding: 5px 14px; border-radius: 14px; font-size: 13px; margin-bottom: 12px;
+}
+.question-page .question-text { font-size: 18px; font-weight: 600; line-height: 1.6; margin-bottom: 20px; color: #373632; }
+.option-list { list-style: none; }
+.option-item {
+  background: #F0EEEC; border: 2px solid transparent; border-radius: 14px;
+  padding: 15px 18px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s ease;
+  font-size: 15px; line-height: 1.5; color: #373632;
+}
+.option-item:hover { background: #E8E5E2; }
+.option-item.selected {
+  background: linear-gradient(135deg, rgba(200,195,188,0.12), rgba(215,212,208,0.12));
+  border-color: #C8C3BC; color: #82807C; font-weight: 500;
+}
+.option-label { font-weight: bold; color: #A09D98; margin-right: 8px; }
+.btn { display: block; width: 100%; padding: 15px; border: none; border-radius: 14px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; text-align: center; }
+.btn-primary { background: linear-gradient(135deg, #C8C3BC, #B9B7B2); color: #FCFBF9; }
+.btn-primary:hover { opacity: 0.9; }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-share { background: linear-gradient(135deg, #D7D4D0, #C8C3BC); color: #FCFBF9; margin-top: 10px; }
+.result-page .result-type { text-align: center; margin-bottom: 24px; }
+.result-type-icon { font-size: 52px; margin-bottom: 8px; }
+.result-type-name { font-size: 24px; font-weight: 700; color: #82807C; margin-bottom: 4px; }
+.result-type-desc { font-size: 14px; color: #73706C; }
+.radar-chart { width: 250px; height: 250px; margin: 16px auto; position: relative; }
+.radar-svg { width: 100%; height: 100%; }
+.score-section { text-align: center; margin-bottom: 20px; }
+.score-number { font-size: 52px; font-weight: 700; color: #82807C; }
+.score-label { font-size: 14px; color: #73706C; }
+.score-bar { background: #E8E6E3; height: 10px; border-radius: 5px; margin: 8px 0; overflow: hidden; }
+.score-bar-fill { background: linear-gradient(90deg, #C8C3BC, #B9B7B2); height: 100%; border-radius: 5px; }
+.interpret-card { background: linear-gradient(135deg, rgba(200,195,188,0.07), rgba(215,212,208,0.07)); border-radius: 14px; padding: 18px; margin-bottom: 12px; }
+.interpret-card h4 { font-size: 15px; color: #82807C; margin-bottom: 8px; }
+.interpret-card p { font-size: 14px; line-height: 1.7; color: #73706C; }
+.path-compare { display: flex; gap: 12px; margin-bottom: 16px; }
+.path-card { flex: 1; background: #F0EEEC; border-radius: 14px; padding: 15px; text-align: center; }
+.path-card h5 { font-size: 14px; margin-bottom: 6px; }
+.path-card p { font-size: 12px; line-height: 1.5; color: #73706C; }
+.path-a { border: 2px solid #C8C3BC; } .path-a h5 { color: #C8C3BC; }
+.path-b { border: 2px solid #D7D4D0; } .path-b h5 { color: #B9B7B2; }
+.action-plan { background: linear-gradient(135deg, #C8C3BC, #D7D4D0); color: #FCFBF9; border-radius: 14px; padding: 18px; margin-bottom: 16px; }
+.action-plan h4 { font-size: 16px; margin-bottom: 12px; }
+.action-step { display: flex; align-items: flex-start; margin-bottom: 10px; font-size: 13px; line-height: 1.6; }
+.action-step .step-num { background: rgba(252,251,249,0.35); border-radius: 50%; width: 26px; height: 26px; text-align: center; line-height: 26px; font-size: 13px; font-weight: bold; margin-right: 10px; flex-shrink: 0; }
+.hidden { display: none !important; }
+.fade-in { animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 380px) { .container { padding: 12px; } .card { padding: 16px; } .question-page .question-text { font-size: 16px; } .option-item { padding: 12px; font-size: 14px; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div id="welcome-page" class="welcome-page">
+  <div class="card">
+    <div class="logo">
+      <h1>💥 你的隐形攻击力</h1>
+      <p>20 题完整版 · 心理防御机制诊断</p>
+    </div>
+    <div class="desc">
+      <span class="unlock-tag">解锁完整版测试</span><br>
+      覆盖<strong>冲突应对、情绪表达、报复倾向、控制方式、自我觉察</strong>五大维度<br>
+      生成专属攻击力报告 + 90天成长方案
+    </div>
+    <button class="btn btn-primary" onclick="startTest()">✨ 开始测试 →</button>
+  </div>
+</div>
+
+<div id="question-page" class="question-page hidden">
+  <div class="card">
+    <div class="progress-text" id="progress-text">第 1/20 题</div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:5%"></div></div>
+    <div class="category-tag" id="category-tag">冲突应对</div>
+    <div class="question-text" id="question-text"></div>
+    <ul class="option-list" id="option-list"></ul>
+    <button class="btn btn-primary" id="next-btn" disabled onclick="nextQuestion()">下一题 →</button>
+  </div>
+</div>
+
+<div id="result-page" class="result-page hidden">
+  <div class="card">
+    <div class="result-type">
+      <div class="result-type-icon" id="result-icon"></div>
+      <div class="result-type-name" id="result-name"></div>
+      <div class="result-type-desc" id="result-desc"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="score-section">
+      <div class="score-label">隐形攻击力指数</div>
+      <div class="score-number" id="score-number"></div>
+      <div class="score-bar"><div class="score-bar-fill" id="score-bar-fill"></div></div>
+      <div style="font-size:12px;color:#9E9B96" id="score-hint"></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="font-size:16px;color:#82807C;margin-bottom:12px">📊 五维攻击力雷达图</h3>
+    <div class="radar-chart" id="radar-chart"></div>
+  </div>
+  <div class="card">
+    <div class="interpret-card"><h4>🔍 核心解读</h4><p id="interpret-core"></p></div>
+    <div class="interpret-card"><h4>🧠 心理防御机制</h4><p id="interpret-mechanism"></p></div>
+  </div>
+  <div class="card">
+    <h3 style="font-size:16px;color:#82807C;margin-bottom:12px">🛤️ 隐形攻击 → 直接表达 转变路径</h3>
+    <div class="path-compare">
+      <div class="path-card path-a"><h5 id="path-a-title">当前模式</h5><p id="path-a-desc"></p></div>
+      <div class="path-card path-b"><h5 id="path-b-title">成长方向</h5><p id="path-b-desc"></p></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="action-plan"><h4>💥 90 天沟通成长行动方案</h4><div id="action-steps"></div></div>
+  </div>
+  <div class="card" style="text-align:center">
+    <button class="btn btn-primary" onclick="restartTest()">🔄 重新测试</button>
+    <button class="btn btn-share" onclick="shareResult()">📤 分享结果</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+const questions = [
+  { category: "冲突应对", text: "当有人让你非常不爽时，你最可能的反应是：", options: ["直接怼回去，不憋着", "不说了，但心里已经在拉黑对方", "微笑着说没事，但语气里有刺", "冷静下来后找机会沟通"] },
+  { category: "冲突应对", text: "同事在会议上否定了你的方案，你会：", options: ["当场反驳，据理力争", "表面接受，但后续不再配合", "微笑着说「好的」，但处处给他使绊", "会后单独找他沟通你的想法"] },
+  { category: "冲突应对", text: "你和伴侣/朋友吵架后，你通常会：", options: ["吵完就翻篇，不记仇", "冷战，等对方先来道歉", "假装没事，但会在别的地方找补", "主动破冰，把话说开"] },
+  { category: "冲突应对", text: "如果有人插队，你会：", options: ["直接大声说「请排队」", "心里骂但不出声", "故意挤到对方前面去", "礼貌提醒对方"] },
+  { category: "情绪表达", text: "你生气了，身边的人通常：", options: ["立刻知道，我藏不住", "感觉气氛不对，但不知道我为什么生气", "我嘴上说没生气，但他们能感觉到", "需要我主动说出来"] },
+  { category: "情绪表达", text: "你如何表达不满？", options: ["直接说出来，不拐弯抹角", "不说话，用沉默施压", "用讽刺或玩笑的方式表达", "找合适的时机坦诚沟通"] },
+  { category: "情绪表达", text: "别人问你「怎么了」，你明明有事却说「没事」的频率：", options: ["很少，我有事会说", "经常，不想解释", "嘴上说没事，但希望对方继续追问", "看对方是谁"] },
+  { category: "情绪表达", text: "你更倾向于哪种情绪处理方式？", options: ["当场释放，不压着", "压着，但会通过其他方式流露", "压着，然后在某个点爆发", "先冷静，再表达"] },
+  { category: "报复倾向", text: "如果有人伤害了你，你的内心更接近：", options: ["我一定要让他也尝尝这个滋味", "我不会报复，但我会彻底远离", "表面放过，但会在别的地方让他难堪", "试着理解对方，然后放下"] },
+  { category: "报复倾向", text: "朋友放了你鸽子，你会：", options: ["直接表达不满", "下次也放他鸽子", "说没事，但以后不会再约他", "理解可能有原因，问清楚再说"] },
+  { category: "报复倾向", text: "你对「以牙还牙」的态度：", options: ["赞同，公平", "不赞同但理解", "嘴上不赞同，但可能会做", "不赞同，倾向于化解"] },
+  { category: "报复倾向", text: "有人在背后说你坏话被你知道了：", options: ["直接找他当面对质", "从此当这个人不存在", "假装不知道，但开始散播他的坏话", "评估是否值得追究，再决定"] },
+  { category: "控制方式", text: "在一段关系中，你更倾向于：", options: ["直接表达我想要什么", "用沉默或冷淡让对方意识到问题", "用暗示或小动作让对方按我的想法来", "坦诚沟通，协商解决"] },
+  { category: "控制方式", text: "你想让伴侣/朋友做某件事，但对方不太愿意：", options: ["直接说服，摆出理由", "冷战，直到对方妥协", "用「算了，没事」让对方内疚", "尊重对方，不强求"] },
+  { category: "控制方式", text: "你对「操纵别人」这件事怎么看？", options: ["我不操纵，我直接要求", "我不用，但别人经常对我用", "我承认有时候会，但无意识的", "我尽量避免，倾向平等沟通"] },
+  { category: "控制方式", text: "在团队中，你希望事情按你的想法来，你会：", options: ["直接表达并争取支持", "暗中引导大家往我的方向走", "嘴上说随便，但会挑刺别人的方案", "提出想法但接受集体决定"] },
+  { category: "自我觉察", text: "回顾过去，你觉得自己用过「隐形攻击」吗？", options: ["经常用，这是我的一部分", "偶尔会用，尤其是被逼急的时候", "好像用过，但不太确定", "几乎不用，我更倾向于直接表达"] },
+  { category: "自我觉察", text: "别人说过你「阴阳怪气」或「冷暴力」吗？", options: ["经常被说", "偶尔被说", "好像有过但记不清", "从来没被说过"] },
+  { category: "自我觉察", text: "你觉得自己最大的沟通问题是：", options: ["太直接了，容易伤到人", "太不直接了，什么都憋着", "说一套做一套，表里不一", "还好，基本能有效沟通"] },
+  { category: "自我觉察", text: "如果给「隐形攻击」打分（0=完全没有，10=非常严重），你给自己打：", options: ["7-10分，我知道自己很擅长", "4-6分，有时候会这样", "1-3分，偶尔会有", "0分，我不做这种事"] }
+];
+
+const resultTypes = {
+  direct: {
+    icon: "💥", name: "直接爆发型",
+    desc: "你的攻击力是显性的——有气当场发，从不藏着掖着。这是双刃剑。",
+    core: "你属于「直接爆发型」。你的攻击力从不隐形——它就是明面上的。你有情绪直接表达，有不满直接说。这让你真实、痛快，但也可能在不经意间伤害关系。你的挑战不是「学会表达」，而是「学会在表达前停顿一秒」。",
+    mechanism: "你的心理防御机制是「外化」——情绪快速转化为行动。优势：不内耗、真实透明；劣势：可能冲动伤人、后悔率高。关键不是压抑直接，而是在「直接」前面加一个「思考」的缓冲。",
+    pathA: { title: "直接模式", desc: "情绪升起→立即表达→有时伤人→后悔→下次继续。这是你的默认循环。" },
+    pathB: { title: "成长方向", desc: "情绪升起→停顿3秒→选择表达方式→有效沟通→关系不受伤。" },
+    actions: ["第1-14天：练习「3秒停顿法」——每次想说重话前先默数3秒", "第15-30天：记录每次「直接爆发」后的结果，对比「如果当时冷静3秒会怎样」", "第31-60天：学习「我陈述句」——把「你总是…」改成「我感到…」", "第61-90天：主动为一次过去的直接爆发道歉，感受修复关系的力量"]
+  },
+  cold: {
+    icon: "🧊", name: "冷暴力型",
+    desc: "你的攻击力是隐形的——用沉默和距离作为武器，让对方在冰窖里反省。",
+    core: "你属于「冷暴力型」。你的隐形攻击方式是「撤回」——撤回关注、撤回温度、撤回自己。你不是在攻击，你是在「撤离」。但对对方来说，这种沉默的惩罚比直接的争吵更令人窒息。你的挑战是学会在不想说话的时候，依然保持连接的通道。",
+    mechanism: "你的心理防御机制是「隔离」——用情感抽离来保护自己。优势：不会在情绪中失控；劣势：让对方极度焦虑、关系渐行渐远。关键是在「需要冷静」和「需要连接」之间找到平衡——冷静可以，但不要关闭所有的门。",
+    pathA: { title: "冷暴力模式", desc: "受伤→沉默→对方焦虑→对方追问我更沉默→关系冻结。循环加剧。" },
+    pathB: { title: "成长方向", desc: "受伤→说「我需要一点时间冷静」→设定冷静时限→到时间主动沟通→关系升温。" },
+    actions: ["第1-14天：练习「安全词」——当你想沉默时，说「我需要冷静一会，但不是不理你」", "第15-30天：设定「冷静上限」——每次冷静不超过2小时，超时主动发一条信息", "第31-60天：记录3次你使用冷暴力的场景，分析背后的真实需求是什么", "第61-90天：尝试一次「带着情绪沟通」——不完美也没关系，重点是打破沉默模式"]
+  },
+  passive: {
+    icon: "🎭", name: "被动攻击型",
+    desc: "你的攻击力最隐形——表面微笑暗藏刀锋，让人有苦说不出。",
+    core: "你属于「被动攻击型」。这是最高级的隐形攻击——你从不正面冲突，但你的「不小心」迟到、「忘了」约定、「随便」的态度，都在精确地表达不满。你可能自己都没有完全意识到这一点。你的挑战是：承认自己有攻击性，然后学会用更健康的方式表达。",
+    mechanism: "你的心理防御机制是「被动化」——因为不敢直接表达攻击，所以用间接的方式让它泄露出来。优势：避免正面冲突；劣势：积累怨恨、损害信任、自己也累。关键转变：攻击性不是坏东西——关键是用什么方式表达。",
+    pathA: { title: "被动模式", desc: "不满→不敢表达→间接泄露→对方困惑受伤→关系恶化→更不敢表达。" },
+    pathB: { title: "成长方向", desc: "不满→觉察自己的攻击性→选择直接但温和的方式→对方明白→关系变真实。" },
+    actions: ["第1-14天：做「隐形攻击日记」——记录每天有没有「不小心」的报复行为", "第15-30天：练习「直接说不」——从最小的事开始，拒绝一个你不想去的邀约", "第31-60天：找一次机会，对一个人坦诚地说出你对他/她长期的不满（用温和的方式）", "第61-90天：复盘过去3个月——你的被动攻击行为减少了多少？关系有什么变化？"]
+  },
+  peace: {
+    icon: "🕊", name: "和平化解型",
+    desc: "你的攻击力很低——你几乎不使用隐形攻击，倾向于直接、健康的沟通方式。",
+    core: "你属于「和平化解型」。你很少使用隐形攻击——你更倾向于直接沟通、坦诚表达、主动化解冲突。这是一种成熟的沟通模式。你的挑战不是减少攻击，而是在保持和平的同时，确保自己的需求也被充分表达和满足。",
+    mechanism: "你的沟通模式是「健康外化」——情绪被觉察、被表达、被化解，而不是被压抑或泄露。优势：关系真实、不内耗、信任度高；注意点：不要为了避免冲突而过度妥协。真正的和平不是没有冲突，而是能健康地处理冲突。",
+    pathA: { title: "保持优势", desc: "你已经拥有健康的沟通模式——继续保持，同时帮助身边的人学习。" },
+    pathB: { title: "深度精进", desc: "在保持和平的同时，练习更勇敢地表达自己的边界和需求，不因「和平」而妥协。" },
+    actions: ["第1-14天：复盘你的沟通优势——是什么让你能做到健康表达？", "第15-30天：检查是否有「为了和平而委屈自己」的情况，有的话练习更坚定", "第31-60天：帮助一个朋友改善他的沟通模式，分享你的经验", "第61-90天：在现有基础上尝试一次「深度沟通」——分享一个你以前不敢说的感受"]
+  }
+};
+
+let currentQuestion = 0, answers = [], scores = { "冲突应对": 0, "情绪表达": 0, "报复倾向": 0, "控制方式": 0, "自我觉察": 0 };
+
+function startTest() {
+  document.getElementById('welcome-page').classList.add('hidden');
+  document.getElementById('question-page').classList.remove('hidden');
+  document.getElementById('question-page').classList.add('fade-in');
+  currentQuestion = 0; answers = [];
+  scores = { "冲突应对": 0, "情绪表达": 0, "报复倾向": 0, "控制方式": 0, "自我觉察": 0 };
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('progress-text').textContent = `第 ${currentQuestion + 1}/20 题`;
+  document.getElementById('progress-fill').style.width = `${(currentQuestion + 1) / 20 * 100}%`;
+  document.getElementById('category-tag').textContent = q.category;
+  document.getElementById('question-text').textContent = q.text;
+  const ol = document.getElementById('option-list');
+  ol.innerHTML = '';
+  ['A','B','C','D'].forEach((lbl, i) => {
+    const li = document.createElement('li');
+    li.className = 'option-item';
+    li.innerHTML = `<span class="option-label">${lbl}.</span> ${q.options[i]}`;
+    li.onclick = () => selectOption(i, li);
+    ol.appendChild(li);
+  });
+  document.getElementById('next-btn').disabled = true;
+  document.getElementById('next-btn').textContent = currentQuestion < 19 ? '下一题 →' : '查看结果 ✨';
+}
+
+function selectOption(index, element) {
+  document.querySelectorAll('.option-item').forEach(el => el.classList.remove('selected'));
+  element.classList.add('selected');
+  document.getElementById('next-btn').disabled = false;
+  element.dataset.selectedIndex = index;
+}
+
+function nextQuestion() {
+  const sel = document.querySelector('.option-item.selected');
+  if (!sel) return;
+  const idx = parseInt(sel.dataset.selectedIndex);
+  answers.push(idx);
+  const q = questions[currentQuestion];
+  // A=直接/高攻击(4), B=冷暴力(3), C=被动攻击(3), D=和平(1)
+  const sm = { 0: 4, 1: 3, 2: 3, 3: 1 };
+  scores[q.category] += sm[idx];
+  currentQuestion++;
+  if (currentQuestion < 20) { showQuestion(); document.getElementById('question-page').classList.remove('fade-in'); void document.getElementById('question-page').offsetWidth; document.getElementById('question-page').classList.add('fade-in'); }
+  else showResult();
+}
+
+function showResult() {
+  document.getElementById('question-page').classList.add('hidden');
+  document.getElementById('result-page').classList.remove('hidden');
+  document.getElementById('result-page').classList.add('fade-in');
+  const total = Object.values(scores).reduce((a,b)=>a+b,0);
+  const pct = Math.round(total / 80 * 100);
+  let rk;
+  if (pct >= 70) rk = 'direct';
+  else if (pct >= 50) rk = 'passive';
+  else if (pct >= 30) rk = 'cold';
+  else rk = 'peace';
+  const r = resultTypes[rk];
+  document.getElementById('result-icon').textContent = r.icon;
+  document.getElementById('result-name').textContent = r.name;
+  document.getElementById('result-desc').textContent = r.desc;
+  document.getElementById('score-number').textContent = pct + '%';
+  document.getElementById('score-bar-fill').style.width = pct + '%';
+  const hints = { direct: '偏高——你的攻击力是显性的，学会缓冲', cold: '中等偏低——你倾向于用沉默表达，学会在冷静中保持连接', passive: '中等——你的攻击力最隐形，学会直接表达', peace: '低——你几乎不用攻击，保持和平也要照顾自己的需求' };
+  document.getElementById('score-hint').textContent = hints[rk];
+  document.getElementById('interpret-core').textContent = r.core;
+  document.getElementById('interpret-mechanism').textContent = r.mechanism;
+  document.getElementById('path-a-title').textContent = r.pathA.title;
+  document.getElementById('path-a-desc').textContent = r.pathA.desc;
+  document.getElementById('path-b-title').textContent = r.pathB.title;
+  document.getElementById('path-b-desc').textContent = r.pathB.desc;
+  document.getElementById('action-steps').innerHTML = r.actions.map((a,i)=>`<div class="action-step"><span class="step-num">${i+1}</span>${a}</div>`).join('');
+  drawRadar();
+}
+
+function drawRadar() {
+  const c = document.getElementById('radar-chart');
+  const dims = ["冲突应对","情绪表达","报复倾向","控制方式","自我觉察"];
+  const maxD = 16, cx = 125, cy = 125, R = 100;
+  let s = `<svg class="radar-svg" viewBox="0 0 250 250">`;
+  for (let lv=1; lv<=4; lv++) {
+    let pts = []; for (let i=0; i<5; i++) { const a = Math.PI*2*i/5 - Math.PI/2; const r = R*lv/4; pts.push(`${cx+r*Math.cos(a)},${cy+r*Math.sin(a)}`); }
+    s += `<polygon points="${pts.join(' ')}" fill="none" stroke="#D7D4D0" stroke-width="1" opacity="0.6"/>`;
+  }
+  for (let i=0; i<5; i++) { const a = Math.PI*2*i/5 - Math.PI/2; s += `<line x1="${cx}" y1="${cy}" x2="${cx+R*Math.cos(a)}" y2="${cy+R*Math.sin(a)}" stroke="#D7D4D0" stroke-width="1"/>`; }
+  let dp = []; for (let i=0; i<5; i++) { const a = Math.PI*2*i/5 - Math.PI/2; const r = R*Math.min(scores[dims[i]]/maxD,1); dp.push(`${cx+r*Math.cos(a)},${cy+r*Math.sin(a)}`); }
+  s += `<polygon points="${dp.join(' ')}" fill="rgba(200,195,188,0.25)" stroke="#C8C3BC" stroke-width="2.5"/>`;
+  for (let i=0; i<5; i++) { const a = Math.PI*2*i/5 - Math.PI/2; const r = R*Math.min(scores[dims[i]]/maxD,1); s += `<circle cx="${cx+r*Math.cos(a)}" cy="${cy+r*Math.sin(a)}" r="5" fill="#B9B7B2"/>`; }
+  for (let i=0; i<5; i++) { const a = Math.PI*2*i/5 - Math.PI/2; const lr = R+24; const x = cx+lr*Math.cos(a); const y = cy+lr*Math.sin(a); const anc = Math.abs(x-cx)<15?'middle':(x<cx?'end':'start'); s += `<text x="${x}" y="${y}" text-anchor="${anc}" dominant-baseline="middle" font-size="11" fill="#73706C">${dims[i]}</text>`; }
+  s += '</svg>'; c.innerHTML = s;
+}
+
+function restartTest() { document.getElementById('result-page').classList.add('hidden'); document.getElementById('welcome-page').classList.remove('hidden'); currentQuestion=0; answers=[]; scores={"冲突应对":0,"情绪表达":0,"报复倾向":0,"控制方式":0,"自我觉察":0}; }
+
+function shareResult() {
+  const n = document.getElementById('result-name').textContent, d = document.getElementById('result-desc').textContent;
+  const t = `测了「你的隐形攻击力」：${n} - ${d}`;
+  navigator.share ? navigator.share({title:'你的隐形攻击力',text:t}) : (navigator.clipboard.writeText(t), alert('结果已复制！'));
+}
+</script>
+</body>
+</html>
