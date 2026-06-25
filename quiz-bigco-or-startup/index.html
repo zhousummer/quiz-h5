@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>你的隐形压力有多大？ - 20题完整版治愈系心理测试</title>
+<title>看你更适合大公司还是小团队？ - 20题完整版职场测试</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
@@ -200,13 +200,13 @@ body {
 <div id="welcome-page" class="welcome-page">
   <div class="card">
     <div class="logo">
-      <h1>🌿 你的隐形压力有多大？</h1>
-      <p>20 题完整版 · 治愈系压力诊断</p>
+      <h1>🏢 看你更适合大公司还是小团队？</h1>
+      <p>20 题完整版 · 职场基因诊断</p>
     </div>
     <div class="desc">
       <span class="price-tag">解锁完整版测试</span><br>
-      覆盖<strong>情绪压力、时间压力、关系压力、期待压力、自我压力</strong>五大维度<br>
-      生成专属压力诊断报告 + 90天治愈方案
+      覆盖<strong>节奏偏好、角色宽度、协作模式、成长路径、环境选择</strong>五大维度<br>
+      生成专属职场基因报告 + 90天定位方案
     </div>
     <button class="btn btn-primary" onclick="startTest()">开始测试 →</button>
   </div>
@@ -217,7 +217,7 @@ body {
   <div class="card">
     <div class="progress-text" id="progress-text">第 1/20 题</div>
     <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:5%"></div></div>
-    <div class="category-tag" id="category-tag">情绪压力</div>
+    <div class="category-tag" id="category-tag">节奏偏好</div>
     <div class="question-text" id="question-text"></div>
     <ul class="option-list" id="option-list"></ul>
     <button class="btn btn-primary" id="next-btn" disabled onclick="nextQuestion()">下一题 →</button>
@@ -235,14 +235,14 @@ body {
   </div>
   <div class="card">
     <div class="score-section">
-      <div class="score-label">隐形压力指数</div>
+      <div class="score-label">组织匹配度评分</div>
       <div class="score-number" id="score-number"></div>
       <div class="score-bar"><div class="score-bar-fill" id="score-bar-fill"></div></div>
       <div style="font-size:12px;color:#989493" id="score-hint"></div>
     </div>
   </div>
   <div class="card">
-    <h3 style="font-size:16px;color:#A88B7E;margin-bottom:12px">📊 五维压力雷达图</h3>
+    <h3 style="font-size:16px;color:#A88B7E;margin-bottom:12px">📊 五维职场基因雷达图</h3>
     <div class="radar-chart" id="radar-chart"></div>
   </div>
   <div class="card">
@@ -251,20 +251,20 @@ body {
       <p id="interpret-core"></p>
     </div>
     <div class="interpret-card">
-      <h4>🧠 心理机制</h4>
+      <h4>🧠 职场行为模式</h4>
       <p id="interpret-mechanism"></p>
     </div>
   </div>
   <div class="card">
-    <h3 style="font-size:16px;color:#A88B7E;margin-bottom:12px">🛤️ 两条治愈路径对比</h3>
+    <h3 style="font-size:16px;color:#A88B7E;margin-bottom:12px">🛤️ 大公司 vs 小团队路径对比</h3>
     <div class="path-compare">
-      <div class="path-card path-a"><h5 id="path-a-title">路径 A</h5><p id="path-a-desc"></p></div>
-      <div class="path-card path-b"><h5 id="path-b-title">路径 B</h5><p id="path-b-desc"></p></div>
+      <div class="path-card path-a"><h5 id="path-a-title">大公司路径</h5><p id="path-a-desc"></p></div>
+      <div class="path-card path-b"><h5 id="path-b-title">小团队路径</h5><p id="path-b-desc"></p></div>
     </div>
   </div>
   <div class="card">
     <div class="action-plan">
-      <h4>🌿 90 天治愈行动方案</h4>
+      <h4>🌿 90 天职场定位行动方案</h4>
       <div id="action-steps"></div>
     </div>
   </div>
@@ -278,99 +278,99 @@ body {
 
 <script>
 const questions = [
-  // 维度1：情绪压力 (4题)
-  { category: "情绪压力", text: "最近有没有一种「说不出的累」？", options: ["经常有，但不知道为什么", "偶尔有，忙的时候更明显", "很少，基本能自我调节", "几乎没有，心态很稳"] },
-  { category: "情绪压力", text: "你独处时的情绪状态通常是：", options: ["很低落，总想哭或发呆", "有点空虚，需要找事填补", "平静，偶尔有些小波动", "很自在，享受独处时光"] },
-  { category: "情绪压力", text: "你对负面情绪的处理方式：", options: ["压抑它，假装没事", "默默消化，很少找人倾诉", "会跟亲近的人聊聊", "很快就能自我调节好"] },
-  { category: "情绪压力", text: "你最近是否经常感到「心里堵着什么东西」？", options: ["几乎每天，胸口闷闷的", "经常有，但说不清是什么", "偶尔有，忙碌时更明显", "很少，内心比较通透"] },
-  // 维度2：时间压力 (4题)
-  { category: "时间压力", text: "你对「时间不够用」的感受有多强烈？", options: ["每天都在赶赶赶，喘不过气", "经常觉得，但还能勉强应付", "偶尔焦虑，大部分时间够用", "很少，节奏比较从容"] },
-  { category: "时间压力", text: "你的待办清单状态通常是：", options: ["永远做不完，越积越多", "大部分能完成，但总有遗漏", "基本能清完，偶有延期", "很少积压，井井有条"] },
-  { category: "时间压力", text: "你休息时的状态是：", options: ["根本不敢休息，怕浪费时间", "休息时也在想工作的事", "能放下，但总觉得休息不够", "真正放松，不焦虑时间"] },
-  { category: "时间压力", text: "你对deadline的反应：", options: ["极度焦虑，提前几天就睡不好", "紧张但能咬牙完成", "有压力但可以自我调节", "从容应对，按计划推进"] },
-  // 维度3：关系压力 (4题)
-  { category: "关系压力", text: "你会为了维护关系而委屈自己吗？", options: ["经常，怕得罪人不敢拒绝", "有时，在重要关系上会妥协", "很少，基本能表达真实想法", "几乎不会，先照顾自己"] },
-  { category: "关系压力", text: "社交后你的感受通常是：", options: ["很疲惫，需要很长时间恢复", "有点累，但还是觉得值得", "还行，不会特别消耗", "很享受，社交是充电方式"] },
-  { category: "关系压力", text: "当别人对你提要求时，你的第一反应：", options: ["立即答应，哪怕自己不方便", "犹豫一下，最终大概率答应", "先考虑自己的情况再决定", "根据实际情况直接回应"] },
-  { category: "关系压力", text: "你对「被误解」的恐惧程度：", options: ["非常恐惧，拼命解释和讨好", "比较害怕，但能克制住", "有点在意，但很快放下", "不太在意，知道自己就好"] },
-  // 维度4：期待压力 (4题)
-  { category: "期待压力", text: "你觉得别人对你的期待和你的真实能力之间：", options: ["差距很大，永远达不到", "有差距，但还在努力追赶", "基本匹配，偶尔有落差", "很匹配，甚至超出期待"] },
-  { category: "期待压力", text: "你做一件事，更在意谁的评价？", options: ["所有人，害怕任何负面评价", "重要的人，如父母领导伴侣", "自己认可就够，偶尔在意别人", "只在意自己的评价和感受"] },
-  { category: "期待压力", text: "你觉得「足够好」的标准是谁定的？", options: ["别人定的，我一直在追那个标准", "社会定的，大家都在追同一个目标", "一半别人一半自己", "我自己定的，我有自己的标尺"] },
-  { category: "期待压力", text: "你对自己的满意程度：", options: ["非常不满意，觉得处处不如人", "不太满意，总有想改的地方", "还行，有些方面挺满意的", "比较满意，接纳自己的样子"] },
-  // 维度5：自我压力 (4题)
-  { category: "自我压力", text: "你内心的声音通常是鼓励还是批评？", options: ["几乎全是批评，对自己很严苛", "批评居多，偶尔有些安慰", "一半一半，有时鼓励有时挑剔", "鼓励居多，对自己比较温柔"] },
-  { category: "自我压力", text: "犯错后你的自责程度：", options: ["极度自责，反复回想很久", "比较自责，但能慢慢走出来", "有点懊恼，很快就放下", "坦然面对，错误是学习的机会"] },
-  { category: "自我压力", text: "你是否经常觉得「我不够好」？", options: ["几乎每天都这么想", "经常，尤其是做比较的时候", "偶尔，在特定场景下出现", "很少，基本接纳自己"] },
-  { category: "自我压力", text: "如果有一整天完全自由，你最想做的是：", options: ["什么都不做，只想瘫着放空", "做些轻松的事，慢慢恢复能量", "做点自己喜欢的事，充电", "充满活力，享受自由时光"] }
+  // 维度1：节奏偏好 (4题)
+  { category: "节奏偏好", text: "你更喜欢哪种工作节奏？", options: ["稳定、可预测的流程", "快节奏、随时可能变方向", "有节奏但允许灵活调整", "看具体项目和阶段"] },
+  { category: "节奏偏好", text: "工作中遇到突发状况，你的反应是：", options: ["有点烦躁，希望按原计划走", "很快切换，应急处理", "先稳住，再评估影响", "看事情大小再决定"] },
+  { category: "节奏偏好", text: "你对「朝九晚五」的态度：", options: ["很适应，生活需要规律", "有点束缚感，但能接受", "更喜欢弹性工作制", "无所谓，看工作内容"] },
+  { category: "节奏偏好", text: "你理想的工作节奏更像：", options: ["长周期稳定推进", "短周期快速迭代", "长短结合，灵活切换", "根据团队需要调整"] },
+  // 维度2：角色宽度 (4题)
+  { category: "角色宽度", text: "你更享受哪种工作方式？", options: ["深耕一个专业领域", "什么都碰一点，样样都能做", "主攻一个方向，偶尔跨界", "看机会，不给自己设限"] },
+  { category: "角色宽度", text: "如果你的职责突然扩大3倍，你会：", options: ["焦虑，希望回到原来的专注区", "兴奋，觉得是新挑战", "先尝试，不行再调整", "看有没有对应的资源支持"] },
+  { category: "角色宽度", text: "你对自己技能树的描述：", options: ["T型：一专多能，深度为主", "π型：两三个方向都较深", "一字型：什么都懂一些", "还在打基础中"] },
+  { category: "角色宽度", text: "老板让你做一个完全没做过的事，你：", options: ["先要资源和指导，再动手", "直接上手边做边学", "评估一下自己能不能搞定", "看事情是不是自己感兴趣的方向"] },
+  // 维度3：协作模式 (4题)
+  { category: "协作模式", text: "你更适应哪种团队协作方式？", options: ["分工明确，各司其职", "扁平灵活，随时补位", "有分工但鼓励跨岗协作", "看团队氛围而定"] },
+  { category: "协作模式", text: "你更习惯的沟通方式：", options: ["正式会议和邮件，有迹可循", "随时拉群或站会，快速对齐", "重要的事正式沟通，小事灵活", "看对方偏好"] },
+  { category: "协作模式", text: "当同事做了一件不属于他职责的事，你觉得：", options: ["越界了，各人管好自己", "挺好的，灵活补位", "看情况，紧急时可以", "无所谓，只要不影响到我"] },
+  { category: "协作模式", text: "你在团队中通常扮演的角色：", options: ["可靠的执行者，按时交付", "多面手，哪里需要去哪里", "专业担当，提供深度支持", "还在找自己的定位"] },
+  // 维度4：成长路径 (4题)
+  { category: "成长路径", text: "你更看重什么样的职业成长？", options: ["清晰的晋升阶梯和培训体系", "实践中野蛮生长，快速试错", "有导师带，按节奏成长", "还在探索中"] },
+  { category: "成长路径", text: "你对「轮岗」的态度：", options: ["不太喜欢，想在一个方向深耕", "很感兴趣，想多看看不同岗位", "可以接受，但要有规划", "看轮岗的方向适不适合我"] },
+  { category: "成长路径", text: "你的职业目标更接近：", options: ["成为某个领域的专家", "成为能独当一面的综合人才", "先成为专家，再拓展宽度", "还没想好，边走边看"] },
+  { category: "成长路径", text: "如果3年后回头看，你希望自己：", options: ["在一个大平台站稳了脚跟", "在一个快速成长的团队独当一面", "有自己的核心竞争力，在哪都行", "找到了真正想做的事"] },
+  // 维度5：环境选择 (4题)
+  { category: "环境选择", text: "如果现在要选下一份工作，你会优先考虑：", options: ["平台规模和品牌影响力", "团队氛围和成长空间", "薪资和工作内容匹配度", "先看看有什么机会再说"] },
+  { category: "环境选择", text: "你对「不确定性」的承受能力：", options: ["较低，喜欢稳定可预期", "较高，不确定中也有机会", "中等，能承受一定波动", "看具体情况"] },
+  { category: "环境选择", text: "你对「在大公司做小螺丝钉」的感觉：", options: ["能接受，大平台本身就是价值", "有点排斥，怕被埋没", "看阶段，年轻时可以去积累", "关键看做什么，不在乎title"] },
+  { category: "环境选择", text: "你对「在小团队身兼多职」的感觉：", options: ["有点焦虑，怕什么都做不深", "很兴奋，这正是我想要的", "可以接受，但不能长期这样", "看团队做什么事"] }
 ];
 
 const resultTypes = {
-  emotional: {
-    icon: "🫧",
-    name: "情绪内耗型",
-    desc: "你的压力不在外面，而在心里——那些说不出的累，才是最重的重量",
-    core: "你的隐形压力核心来源是「情绪内耗」——你习惯压抑负面情绪，假装没事，但它们并没有消失，而是在内心慢慢堆积。你不是真的没事，只是太擅长装没事了。",
-    mechanism: "情绪内耗型的人有一个隐藏的心理循环：感受到压力 → 压抑不表达 → 情绪在体内积累 → 身心出现症状（疲惫、失眠、胸闷）→ 更加压抑 → 循环加剧。打破这个循环的关键不是「更坚强」，而是「更诚实」。",
-    pathA: { title: "路径 A：情绪释放", desc: "学习安全的情绪表达方式——书写、倾诉、专业咨询。让压抑的情绪找到出口，而不是继续在体内发酵。" },
-    pathB: { title: "路径 B：内在重建", desc: "通过正念冥想和自我对话，重建你和情绪的关系。不是消除情绪，而是学会和它共处。" },
+  bigcompany: {
+    icon: "🏢",
+    name: "大公司深耕型",
+    desc: "你更适合在规范的大体系中稳步成长——深耕一个领域，做到极致",
+    core: "你的职场基因偏向「大公司深耕型」。你重视稳定、规范和深度，在结构化的环境中能发挥最大效能。你需要的不是更多选择，而是一个能让你安心深耕的土壤。",
+    mechanism: "你的行为模式有三大特征：高结构偏好（明确的流程让你更安心）、深度专注力（在一个领域钻下去是你最舒服的状态）、低角色模糊（清晰的分工和职责让你更有掌控感）。在大公司，这些特质是优势而非限制。",
+    pathA: { title: "大公司路径", desc: "进入或留在大型企业，利用其培训体系和晋升阶梯，在专业领域持续深耕，成为行业专家。" },
+    pathB: { title: "中型平台过渡", desc: "如果大公司门槛高，可以先在中型稳定企业积累，建立专业深度后再进入更大平台。" },
     actions: [
-      "第1-14天：每天写5分钟「情绪日记」——不评判，只记录真实感受",
-      "第15-30天：找一个安全的倾诉对象（朋友/咨询师），每周至少聊一次真实感受",
-      "第31-60天：学习一种情绪释放方法——正念冥想、自由书写、或身体运动",
-      "第61-90天：建立你的「情绪支持系统」——3个可以随时说真话的人"
+      "第1-14天：梳理你的专业方向，确定未来3年深耕的具体领域",
+      "第15-30天：更新简历，重点突出深度项目经验和专业认证",
+      "第31-60天：锁定3-5家目标大公司，研究其业务和招聘需求",
+      "第61-90天：完成至少2次面试或内推，做出选择"
     ]
   },
-  time: {
-    icon: "⏰",
-    name: "时间焦虑型",
-    desc: "你的压力来自「永远不够」——时间、精力、空间，总觉得还差那么一点",
-    core: "你的隐形压力核心来源是「时间焦虑」——你总觉得时间不够、事情做不完、别人比你快。这不是效率问题，而是内心深处对「失控」的恐惧。",
-    mechanism: "时间焦虑型的人有强烈的「完成驱动」——不把待办清完就不敢休息，休息时也在想下一步。你把时间等同于价值，浪费时间就等于浪费生命。这种思维让你永远在追赶，却永远追不上自己设定的高标准。",
-    pathA: { title: "路径 A：时间重构", desc: "重新定义「够用的时间」——从「做完所有事」变成「做完最重要的事」。学会战略性放弃。" },
-    pathB: { title: "路径 B：节奏调整", desc: "找到你的自然节奏——不是所有人都需要8小时产出。接受自己的节奏，是治愈的开始。" },
+  smallteam: {
+    icon: "🚀",
+    name: "小团队全能型",
+    desc: "你更适合在灵活的小团队中野蛮生长——快速学习，全链条成长",
+    core: "你的职场基因偏向「小团队全能型」。你喜欢灵活多变、快速切换、什么都碰一点的工作方式。在结构化的大公司里你可能会觉得被束缚，而小团队的自由和多元正好能满足你的成长需求。",
+    mechanism: "你的行为模式有三大特征：高适应弹性（变化让你兴奋而非焦虑）、多元学习欲（接触新东西是你的核心驱动力）、低层级敏感（扁平的结构让你更能发挥影响力）。在小团队，你的多面手能力是最大的资产。",
+    pathA: { title: "小团队路径", desc: "加入创业公司或小团队，利用扁平结构和全链条接触，快速成长为综合型人才。" },
+    pathB: { title: "大公司创新部门", desc: "如果仍想保留大公司的一些优势，可以瞄准大公司的创新部门或内部孵化项目。" },
     actions: [
-      "第1-7天：记录你的一天——每30分钟做了什么，找到真正的「时间黑洞」",
-      "第8-30天：每天只定3个核心任务，其余全部降级或放弃",
-      "第31-60天：设定「硬性休息时间」——每天至少1小时完全不安排任何事",
-      "第61-90天：建立你的「时间边界」——学会说「这个我做不到」而不内疚"
+      "第1-14天：评估你的「多面手」技能组合，找到最突出的2-3项",
+      "第15-30天：在创业社群、招聘平台锁定高成长小团队机会",
+      "第31-60天：参加2-3个创业活动或行业meetup，建立人脉",
+      "第61-90天：完成至少2次面试，重点考察团队氛围和成长空间"
     ]
   },
-  relation: {
-    icon: "👥",
-    name: "关系维系型",
-    desc: "你的压力来自别人——为了每段关系都好好的，你一直在悄悄消耗自己",
-    core: "你的隐形压力核心来源是「关系消耗」——你习惯优先照顾别人的感受，不敢拒绝，害怕被误解。你为每段关系都在付出，但很少为自己留点什么。",
-    mechanism: "关系维系型的人有强烈的「被认可需要」——你通过让别人满意来确认自己的价值。这意味着你很难拒绝，很难表达真实想法，很难在不被认可时还觉得自己够好。你的压力不是关系本身，而是你在关系中的「自我缺失」。",
-    pathA: { title: "路径 A：边界建立", desc: "学会说「不」——不是对所有人说不，而是对不合理的要求说不。边界不是自私，是自我保护。" },
-    pathB: { title: "路径 B：关系筛选", desc: "不是所有关系都需要维护。识别3个最重要的关系，其余降低优先级，为自己留出空间。" },
+  flexible: {
+    icon: "🔄",
+    name: "双向适应型",
+    desc: "你在大公司和小团队之间都能游刃有余——关键在于选择对的阶段和对的事",
+    core: "你的职场基因是「双向适应型」。你有足够的结构适应力在大公司生存，也有足够的灵活性能在小团队发挥。你不是非此即彼，而是可以根据人生阶段和职业目标做出最适合当下的选择。",
+    mechanism: "你的行为模式是「情境驱动」——你会根据环境调整自己的工作方式。你的核心优势不是某一种特定能力，而是环境洞察力和自我调节能力。这意味着你的选择空间比大多数人都大，但也更需要清晰的自我认知来做出决策。",
+    pathA: { title: "阶段策略", desc: "年轻时去大公司积累品牌和体系，成熟后去小团队或自己创业释放能量，按人生阶段切换。" },
+    pathB: { title: "并行策略", desc: "主业在大公司保稳定，业余时间参与小团队或副业项目，两边都体验再做选择。" },
     actions: [
-      "第1-7天：写下你最难拒绝的3种场景，找到背后的恐惧",
-      "第8-30天：每天练习1次「温和拒绝」——「我很想帮你，但我现在确实做不到」",
-      "第31-60天：对你的社交圈做一次「能量审计」——谁给你充电，谁在消耗你",
-      "第61-90天：建立你的「自我优先清单」——至少3件事是只为自己做的"
+      "第1-14天：画出你的「职场阶段图」——未来5年你最需要什么",
+      "第15-30天：同时研究大公司和小团队的机会，不设限",
+      "第31-60天：和在大公司/小团队各3年以上的朋友深度交流",
+      "第61-90天：基于阶段需求做出选择，并设定1年后的复盘节点"
     ]
   },
-  expectation: {
+  exploring: {
     icon: "🧭",
-    name: "期待落差型",
-    desc: "你的压力来自一个看不见的标准——活在别人设定的坐标系里，永远觉得差一点",
-    core: "你的隐形压力核心来源是「期待落差」——你总觉得自己不够好，因为你衡量自己的标尺不是自己定的，而是别人和社会的。你一直在追一个不属于你的终点。",
-    mechanism: "期待落差型的人有强烈的「外评驱动」——你通过别人的认可来确认自己的价值，而不是通过内在标准。这意味着即使你已经做得很好，如果别人不认可，你依然觉得不够。你的压力不是能力不足，而是标准错位。",
-    pathA: { title: "路径 A：标准重定", desc: "建立你自己的「够好」标准——不是降低要求，而是把标尺从外部移到内部。你自己说了算。" },
-    pathB: { title: "路径 B：期待脱钩", desc: "逐步减少对他人评价的依赖——从「被认可才有价值」到「我知道自己有价值就够了」。" },
+    name: "还在探索型",
+    desc: "你还在寻找最适合自己的土壤——这不是迷茫，是认真对待自己的职业选择",
+    core: "你的职场基因还在形成中。你现在可能还不确定自己更适合大公司还是小团队，这不是问题，而是一个重要的探索阶段。关键不是急着做选择，而是用正确的方法去试、去感受、去比较。",
+    mechanism: "你的行为模式还处于「样本收集期」——你正在通过不同的经历来了解自己的偏好。这个阶段最需要的是多元体验和深度复盘，而不是过早下结论。每段经历都在帮你更靠近答案。",
+    pathA: { title: "体验优先", desc: "给自己1-2年时间，分别体验大公司和小团队（各至少6个月），用亲身体验代替想象。" },
+    pathB: { title: "人脉探索", desc: "深度访谈10个在大公司/小团队工作的朋友，用别人的经验帮你缩小选择范围。" },
     actions: [
-      "第1-7天：写下10条「别人觉得我应该做到的事」，逐条问：这真的是我想要的吗？",
-      "第8-30天：每天做1件「只让自己满意的事」，不需要任何人知道或认可",
-      "第31-60天：建立你的「个人成就清单」——只记录让你内心真正有成就感的事",
-      "第61-90天：对外评的依赖程度做一次评估，看是否在逐步下降"
+      "第1-14天：列出你最想了解的5个问题（如「大公司真的会把人螺丝钉化吗」）",
+      "第15-30天：找到并深度访谈5个在大公司工作3年+的人",
+      "第31-60天：找到并深度访谈5个在小团队工作3年+的人",
+      "第61-90天：整理所有访谈收获，写出你的「职场偏好初步判断」"
     ]
   }
 };
 
 let currentQuestion = 0;
 let answers = [];
-let scores = { "情绪压力": 0, "时间压力": 0, "关系压力": 0, "期待压力": 0, "自我压力": 0 };
+let scores = { "节奏偏好": 0, "角色宽度": 0, "协作模式": 0, "成长路径": 0, "环境选择": 0 };
 
 function startTest() {
   document.getElementById('welcome-page').classList.add('hidden');
@@ -378,7 +378,7 @@ function startTest() {
   document.getElementById('question-page').classList.add('fade-in');
   currentQuestion = 0;
   answers = [];
-  scores = { "情绪压力": 0, "时间压力": 0, "关系压力": 0, "期待压力": 0, "自我压力": 0 };
+  scores = { "节奏偏好": 0, "角色宽度": 0, "协作模式": 0, "成长路径": 0, "环境选择": 0 };
   showQuestion();
 }
 
@@ -426,10 +426,11 @@ function showResult() {
   const totalScore = Object.values(scores).reduce((a, b) => a + b, 0);
   const avg = totalScore / 5;
   let resultKey;
-  if (avg <= 8) resultKey = 'emotional';
-  else if (avg <= 12) resultKey = 'time';
-  else if (avg <= 16) resultKey = 'relation';
-  else resultKey = 'expectation';
+  // A选项多=偏大公司（低分），B选项多=偏小团队（高分）
+  if (avg <= 8) resultKey = 'bigcompany';
+  else if (avg <= 12) resultKey = 'exploring';
+  else if (avg <= 16) resultKey = 'flexible';
+  else resultKey = 'smallteam';
 
   const result = resultTypes[resultKey];
 
@@ -437,11 +438,11 @@ function showResult() {
   document.getElementById('result-name').textContent = result.name;
   document.getElementById('result-desc').textContent = result.desc;
 
-  const stressScore = Math.round(100 - avg * 5);
-  const displayScore = Math.max(20, Math.min(95, stressScore));
+  const matchScore = Math.round(avg * 6.25);
+  const displayScore = Math.max(25, Math.min(95, matchScore));
   document.getElementById('score-number').textContent = displayScore;
   document.getElementById('score-bar-fill').style.width = `${displayScore}%`;
-  document.getElementById('score-hint').textContent = displayScore >= 70 ? '你的隐形压力偏高，需要关注了' : displayScore >= 40 ? '你的压力在中等水平，可以优化' : '你的压力水平较低，状态不错';
+  document.getElementById('score-hint').textContent = displayScore >= 75 ? '你与所选路径匹配度很高' : displayScore >= 50 ? '你与所选路径匹配度良好' : '你还在探索阶段，保持开放';
 
   drawRadar(scores);
 
@@ -461,7 +462,7 @@ function showResult() {
 
 function drawRadar(scores) {
   const container = document.getElementById('radar-chart');
-  const categories = ["情绪压力", "时间压力", "关系压力", "期待压力", "自我压力"];
+  const categories = ["节奏偏好", "角色宽度", "协作模式", "成长路径", "环境选择"];
   const maxScore = 16;
   const cx = 120, cy = 120, r = 90;
   let svg = `<svg viewBox="0 0 240 240" class="radar-svg">`;
@@ -507,9 +508,9 @@ function restartTest() {
 
 function shareResult() {
   const resultName = document.getElementById('result-name').textContent;
-  const text = `我刚做了「你的隐形压力有多大」20题测试，结果是【${resultName}】🌿 每一份压力都值得被看见，你也来试试 👇`;
+  const text = `我刚做了「看你更适合大公司还是小团队」20题测试，结果是【${resultName}】🏢🚀 你也来测测你的职场基因 👇`;
   if (navigator.share) {
-    navigator.share({ title: '压力测试结果', text: text });
+    navigator.share({ title: '职场测试结果', text: text });
   } else {
     const textarea = document.createElement('textarea');
     textarea.value = text;
