@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>你是高敏感人格还是钝感力人格？ - 20题完整版人格测试</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #87CEFA 0%, #AFC8F0 100%);
+  min-height: 100vh;
+  color: #2D374B;
+}
+.container {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+}
+.card {
+  background: #F8F9FE;
+  border-radius: 18px;
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 20px rgba(135,206,250,0.15);
+}
+.welcome-page .logo {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.welcome-page .logo h1 {
+  font-size: 24px;
+  color: #4696D5;
+  margin-bottom: 8px;
+}
+.welcome-page .logo p {
+  font-size: 14px;
+  color: #64B5E6;
+}
+.welcome-page .desc {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #5A6D82;
+  margin-bottom: 24px;
+  text-align: center;
+}
+.welcome-page .unlock-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #87CEFA, #AFC8F0);
+  color: #FCFBFF;
+  padding: 8px 22px;
+  border-radius: 22px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.progress-bar {
+  background: #E1ECF8;
+  height: 8px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.progress-fill {
+  background: linear-gradient(90deg, #87CEFA, #64B5E6);
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+.progress-text {
+  font-size: 12px;
+  color: #8AA0B8;
+  text-align: right;
+  margin-bottom: 8px;
+}
+.question-page .category-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #87CEFA, #AFC8F0);
+  color: #FCFBFF;
+  padding: 5px 14px;
+  border-radius: 14px;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+.question-page .question-text {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  color: #2D374B;
+}
+.option-list { list-style: none; }
+.option-item {
+  background: #EEF3FA;
+  border: 2px solid transparent;
+  border-radius: 14px;
+  padding: 15px 18px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #2D374B;
+}
+.option-item:hover { background: #E4ECF8; }
+.option-item.selected {
+  background: linear-gradient(135deg, rgba(135,206,250,0.1), rgba(175,200,240,0.1));
+  border-color: #87CEFA;
+  color: #4696D5;
+  font-weight: 500;
+}
+.option-label {
+  font-weight: bold;
+  color: #64B5E6;
+  margin-right: 8px;
+}
+.btn {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+.btn-primary {
+  background: linear-gradient(135deg, #87CEFA, #64B5E6);
+  color: #FCFBFF;
+}
+.btn-primary:hover { opacity: 0.9; }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-share {
+  background: linear-gradient(135deg, #AFC8F0, #87CEFA);
+  color: #FCFBFF;
+  margin-top: 10px;
+}
+.result-page .result-type { text-align: center; margin-bottom: 24px; }
+.result-type-icon { font-size: 52px; margin-bottom: 8px; }
+.result-type-name { font-size: 24px; font-weight: 700; color: #4696D5; margin-bottom: 4px; }
+.result-type-desc { font-size: 14px; color: #5A6D82; }
+.radar-chart { width: 250px; height: 250px; margin: 16px auto; position: relative; }
+.radar-svg { width: 100%; height: 100%; }
+.score-section { text-align: center; margin-bottom: 20px; }
+.score-number { font-size: 52px; font-weight: 700; color: #4696D5; }
+.score-label { font-size: 14px; color: #5A6D82; }
+.score-bar { background: #E1ECF8; height: 10px; border-radius: 5px; margin: 8px 0; overflow: hidden; }
+.score-bar-fill { background: linear-gradient(90deg, #87CEFA, #64B5E6); height: 100%; border-radius: 5px; }
+.interpret-card {
+  background: linear-gradient(135deg, rgba(135,206,250,0.06), rgba(175,200,240,0.06));
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 12px;
+}
+.interpret-card h4 { font-size: 15px; color: #4696D5; margin-bottom: 8px; }
+.interpret-card p { font-size: 14px; line-height: 1.7; color: #5A6D82; }
+.path-compare { display: flex; gap: 12px; margin-bottom: 16px; }
+.path-card { flex: 1; background: #EEF3FA; border-radius: 14px; padding: 15px; text-align: center; }
+.path-card h5 { font-size: 14px; margin-bottom: 6px; }
+.path-card p { font-size: 12px; line-height: 1.5; color: #5A6D82; }
+.path-a { border: 2px solid #87CEFA; }
+.path-a h5 { color: #87CEFA; }
+.path-b { border: 2px solid #AFC8F0; }
+.path-b h5 { color: #AFC8F0; }
+.action-plan {
+  background: linear-gradient(135deg, #87CEFA, #AFC8F0);
+  color: #FCFBFF;
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 16px;
+}
+.action-plan h4 { font-size: 16px; margin-bottom: 12px; }
+.action-step { display: flex; align-items: flex-start; margin-bottom: 10px; font-size: 13px; line-height: 1.6; }
+.action-step .step-num {
+  background: rgba(252,251,255,0.35);
+  border-radius: 50%;
+  width: 26px; height: 26px;
+  text-align: center; line-height: 26px;
+  font-size: 13px; font-weight: bold;
+  margin-right: 10px; flex-shrink: 0;
+}
+.hidden { display: none !important; }
+.fade-in { animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 380px) {
+  .container { padding: 12px; }
+  .card { padding: 16px; }
+  .question-page .question-text { font-size: 16px; }
+  .option-item { padding: 12px; font-size: 14px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- 欢迎页 -->
+<div id="welcome-page" class="welcome-page">
+  <div class="card">
+    <div class="logo">
+      <h1>🦋 你是高敏感人格还是钝感力人格？</h1>
+      <p>20 题完整版 · 人格特质诊断</p>
+    </div>
+    <div class="desc">
+      <span class="unlock-tag">解锁完整版测试</span><br>
+      覆盖<strong>感知敏锐度、情绪反应、社交能耗、抗干扰力、自我认知</strong>五大维度<br>
+      生成专属人格诊断报告 + 90天成长方案
+    </div>
+    <button class="btn btn-primary" onclick="startTest()">✨ 开始测试 →</button>
+  </div>
+</div>
+
+<!-- 题目页 -->
+<div id="question-page" class="question-page hidden">
+  <div class="card">
+    <div class="progress-text" id="progress-text">第 1/20 题</div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:5%"></div></div>
+    <div class="category-tag" id="category-tag">感知敏锐度</div>
+    <div class="question-text" id="question-text"></div>
+    <ul class="option-list" id="option-list"></ul>
+    <button class="btn btn-primary" id="next-btn" disabled onclick="nextQuestion()">下一题 →</button>
+  </div>
+</div>
+
+<!-- 结果页 -->
+<div id="result-page" class="result-page hidden">
+  <div class="card">
+    <div class="result-type">
+      <div class="result-type-icon" id="result-icon"></div>
+      <div class="result-type-name" id="result-name"></div>
+      <div class="result-type-desc" id="result-desc"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="score-section">
+      <div class="score-label">人格敏感度评分</div>
+      <div class="score-number" id="score-number"></div>
+      <div class="score-bar"><div class="score-bar-fill" id="score-bar-fill"></div></div>
+      <div style="font-size:12px;color:#8AA0B8" id="score-hint"></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="font-size:16px;color:#4696D5;margin-bottom:12px">📊 五维人格特质雷达图</h3>
+    <div class="radar-chart" id="radar-chart"></div>
+  </div>
+  <div class="card">
+    <div class="interpret-card">
+      <h4>🔍 核心解读</h4>
+      <p id="interpret-core"></p>
+    </div>
+    <div class="interpret-card">
+      <h4>🧠 人格行为模式</h4>
+      <p id="interpret-mechanism"></p>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="font-size:16px;color:#4696D5;margin-bottom:12px">🛤️ 高敏感 → 钝感力 平衡路径</h3>
+    <div class="path-compare">
+      <div class="path-card path-a"><h5 id="path-a-title">当前状态</h5><p id="path-a-desc"></p></div>
+      <div class="path-card path-b"><h5 id="path-b-title">成长方向</h5><p id="path-b-desc"></p></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="action-plan">
+      <h4>🦋 90 天人格成长行动方案</h4>
+      <div id="action-steps"></div>
+    </div>
+  </div>
+  <div class="card" style="text-align:center">
+    <button class="btn btn-primary" onclick="restartTest()">🔄 重新测试</button>
+    <button class="btn btn-share" onclick="shareResult()">📤 分享结果</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+const questions = [
+  // 维度1：感知敏锐度 (4题)
+  { category: "感知敏锐度", text: "走进一个房间，你通常会最先注意到什么？", options: ["光线、气味、氛围的细微变化", "房间里有哪些人、他们在做什么", "整体感觉，不会关注细节", "看情况，有时候敏感有时候钝"] },
+  { category: "感知敏锐度", text: "别人换了一个新发型或穿了新衣服，你会：", options: ["一眼就发现，甚至会说出来", "可能会注意到，但不确定", "除非很明显，否则不会注意到", "有时候注意有时候不注意"] },
+  { category: "感知敏锐度", text: "你对声音的敏感程度是：", options: ["很敏感，细微噪音都会让我分心", "一般，太吵了才会不舒服", "不太敏感，能自动过滤背景音", "看心情和状态"] },
+  { category: "感知敏锐度", text: "看电影时，你更容易被什么打动？", options: ["一个眼神、一个微表情、一段配乐", "剧情和台词的整体感染力", "不太容易被电影打动", "看什么类型的电影"] },
+  // 维度2：情绪反应 (4题)
+  { category: "情绪反应", text: "看到别人哭，你会有什么感觉？", options: ["鼻子一酸，自己也快哭了", "会关心，但不会太受影响", "理解但能保持情绪独立", "看那个人和我关系有多近"] },
+  { category: "情绪反应", text: "朋友向你倾诉烦恼后，你通常：", options: ["自己也变得沉重，久久不能平复", "会安慰对方，但能抽离", "给建议但不代入情绪", "看事情严重程度"] },
+  { category: "情绪反应", text: "看新闻里的负面事件，你的反应是：", options: ["会难过很久，反复想", "当时会不舒服，但很快过去", "知道是坏消息，但不影响心情", "尽量不看负面新闻"] },
+  { category: "情绪反应", text: "别人对你说话的语气稍微不好，你会：", options: ["立刻察觉，心里反复琢磨", "注意到但告诉自己别多想", "不太在意，可能对方心情不好", "有时候在意有时候不在意"] },
+  // 维度3：社交能耗 (4题)
+  { category: "社交能耗", text: "参加完一场聚会后，你通常感觉：", options: ["精疲力竭，需要独处充电很久", "有点累但还好，睡一觉就恢复", "精神抖擞，社交让我充满能量", "看聚会氛围，有时候累有时候不累"] },
+  { category: "社交能耗", text: "你更喜欢哪种社交方式？", options: ["一对一深聊，人多了我会累", "小圈子聚会，三五个人刚好", "大型聚会很嗨，人越多越兴奋", "混合，不同场合不同模式"] },
+  { category: "社交能耗", text: "周末两天都排满社交活动，你的感觉是：", options: ["光是想想就累了，需要推掉一些", "可以接受，但下周要多休息", "太好了，充实的一周！", "看和谁在一起"] },
+  { category: "社交能耗", text: "你需要独处的时间吗？", options: ["每天都需要，独处是充电方式", "需要但不用太多，偶尔就行", "不太需要，一个人反而无聊", "有时候需要有时候不需要"] },
+  // 维度4：抗干扰力 (4题)
+  { category: "抗干扰力", text: "工作或学习时，周围有噪音你会：", options: ["完全无法集中，烦躁不安", "有点影响但能适应", "基本不受影响，能自动过滤", "戴上耳机就能解决"] },
+  { category: "抗干扰力", text: "别人批评你，你的第一反应是：", options: ["心里很难受，会想很久", "会不舒服，但能理性分析", "听听有没有道理，不太往心里去", "看是谁批评的"] },
+  { category: "抗干扰力", text: "面对突然的变化（计划被打乱），你会：", options: ["很焦虑，需要时间消化", "有点烦但能调整", "无所谓，随机应变", "看变化有多大"] },
+  { category: "抗干扰力", text: "咖啡因对你的影响是：", options: ["非常敏感，下午喝了晚上就睡不着", "有一定影响，但可以控制", "没什么感觉，喝了照样睡", "不太喝咖啡，不清楚"] },
+  // 维度5：自我认知 (4题)
+  { category: "自我认知", text: "如果用一句话形容你的内心，更接近：", options: ["一个高精度的感应器，什么都能接收到", "一座有厚墙的城堡，外面风雨进不来", "时而敏感时而钝，像天气一样变化", "还在了解自己，不确定属于哪一种"] },
+  { category: "自我认知", text: "你觉得自己最大的优势是：", options: ["细腻、共情力强、善于察觉", "稳定、不受干扰、专注目标", "两者都有，看情况切换", "还在探索中"] },
+  { category: "自我认知", text: "如果可以选，你更想成为哪种人？", options: ["保持敏感，但学会保护自己", "保持钝感，但增加一些细腻", "既敏感又钝感，自由切换", "现在这样就挺好"] },
+  { category: "自我认知", text: "你对「高敏感是一种天赋」这句话的态度：", options: ["深有共鸣，但我需要学会管理它", "理解但不完全认同", "觉得钝感力也是一种天赋", "还在思考这个问题"] }
+];
+
+const resultTypes = {
+  highlySensitive: {
+    icon: "🦋",
+    name: "高敏感共情型",
+    desc: "你拥有细腻的感知力和强大的共情力——这是天赋，学会保护自己的能量就能发光",
+    core: "你属于「高敏感共情型」。你对世界的感知像一个高精度雷达，能捕捉到别人忽略的细微信息。你容易共情、容易被美打动、也容易被消耗。关键不是改变你的敏感，而是学会在敏感和自我保护之间找到平衡。",
+    mechanism: "你的行为模式有三大特征：高感知敏锐度（细节和情绪都逃不过你的雷达）、高共情反应（别人的情绪会直接影响你）、高社交能耗（社交后需要独处充电）。这些都是中性特质——用好了是天赋，用不好是负担。",
+    pathA: { title: "高敏感状态", desc: "感知全开→容易过载→情绪消耗→需要大量独处恢复。这是你的默认模式，但可以通过练习优化。" },
+    pathB: { title: "成长方向", desc: "保持敏感天赋→建立能量边界→学会选择性共情→在敏感和钝感之间自如切换。" },
+    actions: [
+      "第1-14天：记录你的「能量日记」——每天什么让你耗能、什么让你充电",
+      "第15-30天：练习「选择性共情」——对重要的人打开，对不重要的事关上",
+      "第31-60天：建立「独处充电」仪式——每天固定30分钟完全属于自己的时间",
+      "第61-90天：尝试一次「钝感力练习」——对一件小事故意不在意，感受不敏感的自由"
+    ]
+  },
+  highlyResilient: {
+    icon: "🪨",
+    name: "钝感稳定型",
+    desc: "你拥有强大的心理韧性和稳定的内核——风吹不动，专注向前",
+    core: "你属于「钝感稳定型」。你的内心像一座有厚墙的城堡，外界的风雨很难撼动你。你情绪稳定、抗干扰力强、不会被别人的评价左右。这是一种宝贵的心理资产，但偶尔也需要打开城门，让温柔的东西进来。",
+    mechanism: "你的行为模式有三大特征：高抗干扰力（噪音和批评都不太影响你）、低社交能耗（社交对你来说是充电而非耗电）、稳定的情绪基线（不太容易大起大落）。你的挑战不是变得敏感，而是在稳定中保留一份细腻。",
+    pathA: { title: "钝感优势", desc: "内核稳定→不受干扰→专注目标→高效产出。这是你的核心优势，继续保持。" },
+    pathB: { title: "成长方向", desc: "保持稳定内核→练习细腻感知→增加对他人的共情理解→在钝感中注入温柔。" },
+    actions: [
+      "第1-14天：练习「主动共情」——每天刻意关注一个人的情绪变化",
+      "第15-30天：做一件需要「细腻」的事——写诗、画画、慢下来感受生活",
+      "第31-60天：和一个高敏感的朋友深度聊天，尝试理解他的世界",
+      "第61-90天：在保持内核稳定的同时，给生活增加一些「柔软」的仪式感"
+    ]
+  },
+  balanced: {
+    icon: "⚖️",
+    name: "平衡型",
+    desc: "你能在高敏感和钝感力之间灵活切换——既细腻又稳定，这是最理想的状态",
+    core: "你属于「平衡型」。你既拥有感知世界的细腻天线，又有不被轻易撼动的稳定内核。你知道什么时候该敏感、什么时候该钝——这不是天赋，而是你通过成长获得的智慧。继续保持这种动态平衡。",
+    mechanism: "你的行为模式是「情境适配」——你根据环境自动调节敏感度。在需要共情时你细腻温柔，在需要专注时你能屏蔽干扰。你的核心优势是「灵活度」，既能深度感受，也能轻松放下。",
+    pathA: { title: "保持平衡", desc: "你已经找到了自己的节奏——继续在敏感和钝感之间灵活切换，这是最健康的状态。" },
+    pathB: { title: "帮助他人", desc: "你的经验对高敏感和钝感力的朋友都很有价值。分享你的平衡之道，助人也助己。" },
+    actions: [
+      "第1-14天：复盘你的「平衡秘诀」——是什么让你能灵活切换？",
+      "第15-30天：帮助一个高敏感的朋友，分享你的能量管理方法",
+      "第31-60天：帮助一个钝感力的朋友，分享你的细腻感知技巧",
+      "第61-90天：在现有平衡中继续精进，尝试更深层次的自我觉察"
+    ]
+  },
+  growing: {
+    icon: "🌱",
+    name: "成长探索型",
+    desc: "你还在了解自己的人格特质——这不是迷茫，而是最有潜力的自我发现之旅",
+    core: "你属于「成长探索型」。你可能还在摸索自己是偏敏感还是偏钝——这不是问题，而是宝贵的自我认知阶段。你像一块海绵，正在通过不同的经历来了解自己的真实人格。每一步探索都在靠近更真实的自己。",
+    mechanism: "你的行为模式还处于「样本收集期」——你在不同的情境中表现不同，还没有固化的模式。这意味着你有最大的可塑性。现在的关键是：不带评判地观察自己，了解自己在什么情况下敏感、什么情况下钝。",
+    pathA: { title: "自我观察", desc: "先不急着给自己贴标签，花时间在不同情境中观察自己的反应模式。" },
+    pathB: { title: "多元体验", desc: "刻意体验不同类型的场景——社交、独处、刺激、安静——收集关于自己的数据。" },
+    actions: [
+      "第1-14天：做「情境日志」——记录每天在不同场景下的敏感/钝感反应",
+      "第15-30天：刻意体验两种极端——一天高强度社交 vs 一天完全独处，对比感受",
+      "第31-60天：找2-3个了解你的朋友，听听他们眼中你的敏感度",
+      "第61-90天：基于三个月的观察，写出你的「人格特质初步判断」"
+    ]
+  }
+};
+
+let currentQuestion = 0;
+let answers = [];
+let scores = { "感知敏锐度": 0, "情绪反应": 0, "社交能耗": 0, "抗干扰力": 0, "自我认知": 0 };
+
+function startTest() {
+  document.getElementById('welcome-page').classList.add('hidden');
+  document.getElementById('question-page').classList.remove('hidden');
+  document.getElementById('question-page').classList.add('fade-in');
+  currentQuestion = 0;
+  answers = [];
+  scores = { "感知敏锐度": 0, "情绪反应": 0, "社交能耗": 0, "抗干扰力": 0, "自我认知": 0 };
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('progress-text').textContent = `第 ${currentQuestion + 1}/20 题`;
+  document.getElementById('progress-fill').style.width = `${(currentQuestion + 1) / 20 * 100}%`;
+  document.getElementById('category-tag').textContent = q.category;
+  document.getElementById('question-text').textContent = q.text;
+  const optionList = document.getElementById('option-list');
+  optionList.innerHTML = '';
+  const labels = ['A', 'B', 'C', 'D'];
+  q.options.forEach((opt, i) => {
+    const li = document.createElement('li');
+    li.className = 'option-item';
+    li.innerHTML = `<span class="option-label">${labels[i]}.</span> ${opt}`;
+    li.onclick = () => selectOption(i, li);
+    optionList.appendChild(li);
+  });
+  document.getElementById('next-btn').disabled = true;
+  document.getElementById('next-btn').textContent = currentQuestion < 19 ? '下一题 →' : '查看结果 ✨';
+}
+
+function selectOption(index, element) {
+  document.querySelectorAll('.option-item').forEach(el => el.classList.remove('selected'));
+  element.classList.add('selected');
+  document.getElementById('next-btn').disabled = false;
+  element.dataset.selectedIndex = index;
+}
+
+function nextQuestion() {
+  const selected = document.querySelector('.option-item.selected');
+  if (!selected) return;
+  const idx = parseInt(selected.dataset.selectedIndex);
+  answers.push(idx);
+  
+  // 计分：A=4(高敏感), B=3(偏敏感), C=1(钝感), D=2(中间)
+  const q = questions[currentQuestion];
+  const scoreMap = { 0: 4, 1: 3, 2: 1, 3: 2 };
+  scores[q.category] += scoreMap[idx];
+  
+  currentQuestion++;
+  if (currentQuestion < 20) {
+    showQuestion();
+    document.getElementById('question-page').classList.remove('fade-in');
+    void document.getElementById('question-page').offsetWidth;
+    document.getElementById('question-page').classList.add('fade-in');
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  document.getElementById('question-page').classList.add('hidden');
+  document.getElementById('result-page').classList.remove('hidden');
+  document.getElementById('result-page').classList.add('fade-in');
+
+  const totalScore = Object.values(scores).reduce((a, b) => a + b, 0);
+  const maxScore = 80;
+  const percentage = Math.round(totalScore / maxScore * 100);
+  
+  let resultKey;
+  if (percentage >= 70) resultKey = 'highlySensitive';
+  else if (percentage >= 45) resultKey = 'balanced';
+  else if (percentage >= 25) resultKey = 'growing';
+  else resultKey = 'highlyResilient';
+  
+  const result = resultTypes[resultKey];
+  
+  document.getElementById('result-icon').textContent = result.icon;
+  document.getElementById('result-name').textContent = result.name;
+  document.getElementById('result-desc').textContent = result.desc;
+  document.getElementById('score-number').textContent = percentage + '%';
+  document.getElementById('score-bar-fill').style.width = percentage + '%';
+  
+  const hints = { highlySensitive: '偏高——你的敏感是天赋，学会管理它', highlyResilient: '偏低——你的钝感是铠甲，偶尔打开让温柔进来', balanced: '适中——你已找到敏感和钝感之间的最佳平衡点', growing: '发展中——你正处于最有价值的自我发现阶段' };
+  document.getElementById('score-hint').textContent = hints[resultKey];
+  
+  document.getElementById('interpret-core').textContent = result.core;
+  document.getElementById('interpret-mechanism').textContent = result.mechanism;
+  document.getElementById('path-a-title').textContent = result.pathA.title;
+  document.getElementById('path-a-desc').textContent = result.pathA.desc;
+  document.getElementById('path-b-title').textContent = result.pathB.title;
+  document.getElementById('path-b-desc').textContent = result.pathB.desc;
+  
+  const stepsDiv = document.getElementById('action-steps');
+  stepsDiv.innerHTML = result.actions.map((a, i) => 
+    `<div class="action-step"><span class="step-num">${i+1}</span>${a}</div>`
+  ).join('');
+  
+  drawRadar();
+}
+
+function drawRadar() {
+  const container = document.getElementById('radar-chart');
+  const dims = ["感知敏锐度", "情绪反应", "社交能耗", "抗干扰力", "自我认知"];
+  const maxDimScore = 16;
+  const center = 125, radius = 100;
+  
+  let svg = `<svg class="radar-svg" viewBox="0 0 250 250">`;
+  
+  for (let level = 1; level <= 4; level++) {
+    let pts = [];
+    for (let i = 0; i < 5; i++) {
+      const angle = Math.PI * 2 * i / 5 - Math.PI / 2;
+      const r = radius * level / 4;
+      pts.push(`${center + r * Math.cos(angle)},${center + r * Math.sin(angle)}`);
+    }
+    svg += `<polygon points="${pts.join(' ')}" fill="none" stroke="#C3D9F0" stroke-width="1" opacity="0.6"/>`;
+  }
+  
+  for (let i = 0; i < 5; i++) {
+    const angle = Math.PI * 2 * i / 5 - Math.PI / 2;
+    svg += `<line x1="${center}" y1="${center}" x2="${center + radius * Math.cos(angle)}" y2="${center + radius * Math.sin(angle)}" stroke="#C3D9F0" stroke-width="1"/>`;
+  }
+  
+  let dataPts = [];
+  for (let i = 0; i < 5; i++) {
+    const angle = Math.PI * 2 * i / 5 - Math.PI / 2;
+    const r = radius * Math.min(scores[dims[i]] / maxDimScore, 1);
+    dataPts.push(`${center + r * Math.cos(angle)},${center + r * Math.sin(angle)}`);
+  }
+  svg += `<polygon points="${dataPts.join(' ')}" fill="rgba(135,206,250,0.25)" stroke="#87CEFA" stroke-width="2.5"/>`;
+  
+  for (let i = 0; i < 5; i++) {
+    const angle = Math.PI * 2 * i / 5 - Math.PI / 2;
+    const r = radius * Math.min(scores[dims[i]] / maxDimScore, 1);
+    svg += `<circle cx="${center + r * Math.cos(angle)}" cy="${center + r * Math.sin(angle)}" r="5" fill="#64B5E6"/>`;
+  }
+  
+  for (let i = 0; i < 5; i++) {
+    const angle = Math.PI * 2 * i / 5 - Math.PI / 2;
+    const labelR = radius + 24;
+    const x = center + labelR * Math.cos(angle);
+    const y = center + labelR * Math.sin(angle);
+    const anchor = Math.abs(x - center) < 15 ? 'middle' : (x < center ? 'end' : 'start');
+    svg += `<text x="${x}" y="${y}" text-anchor="${anchor}" dominant-baseline="middle" font-size="11" fill="#5A6D82">${dims[i]}</text>`;
+  }
+  
+  svg += '</svg>';
+  container.innerHTML = svg;
+}
+
+function restartTest() {
+  document.getElementById('result-page').classList.add('hidden');
+  document.getElementById('welcome-page').classList.remove('hidden');
+  currentQuestion = 0;
+  answers = [];
+  scores = { "感知敏锐度": 0, "情绪反应": 0, "社交能耗": 0, "抗干扰力": 0, "自我认知": 0 };
+}
+
+function shareResult() {
+  const name = document.getElementById('result-name').textContent;
+  const desc = document.getElementById('result-desc').textContent;
+  const text = `测了「你是高敏感人格还是钝感力人格」：${name} - ${desc}`;
+  if (navigator.share) {
+    navigator.share({ title: '你是高敏感人格还是钝感力人格？', text: text });
+  } else {
+    navigator.clipboard.writeText(text).then(() => alert('结果已复制，粘贴分享给朋友吧！'));
+  }
+}
+</script>
+</body>
+</html>
