@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>你是吸渣体质还是被宠体质？ - 20题完整版情感测试</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #8EA1B4 0%, #B0C4D1 100%);
+  min-height: 100vh;
+  color: #373A40;
+}
+.container {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+}
+.card {
+  background: #F6F5F8;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 16px rgba(142,161,180,0.12);
+}
+.welcome-page .logo {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.welcome-page .logo h1 {
+  font-size: 24px;
+  color: #8EA1B4;
+  margin-bottom: 8px;
+}
+.welcome-page .logo p {
+  font-size: 14px;
+  color: #8294A6;
+}
+.welcome-page .desc {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #646A73;
+  margin-bottom: 24px;
+  text-align: center;
+}
+.welcome-page .unlock-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #8EA1B4, #B0C4D1);
+  color: #FAF9FC;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.progress-bar {
+  background: #E2E6EC;
+  height: 6px;
+  border-radius: 3px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.progress-fill {
+  background: linear-gradient(90deg, #8EA1B4, #B0C4D1);
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+.progress-text {
+  font-size: 12px;
+  color: #949AA2;
+  text-align: right;
+  margin-bottom: 8px;
+}
+.question-page .category-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #8EA1B4, #B0C4D1);
+  color: #FAF9FC;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+.question-page .question-text {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  color: #373A40;
+}
+.option-list { list-style: none; }
+.option-item {
+  background: #EEF0F4;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #373A40;
+}
+.option-item:hover { background: #E4E8F0; }
+.option-item.selected {
+  background: linear-gradient(135deg, rgba(142,161,180,0.08), rgba(176,196,209,0.08));
+  border-color: #8EA1B4;
+  color: #8EA1B4;
+  font-weight: 500;
+}
+.option-label {
+  font-weight: bold;
+  color: #8EA1B4;
+  margin-right: 8px;
+}
+.btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+.btn-primary {
+  background: linear-gradient(135deg, #8EA1B4, #B0C4D1);
+  color: #FAF9FC;
+}
+.btn-primary:hover { opacity: 0.9; }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-share {
+  background: linear-gradient(135deg, #A5B6C8, #8EA1B4);
+  color: #FAF9FC;
+  margin-top: 10px;
+}
+.result-page .result-type { text-align: center; margin-bottom: 24px; }
+.result-type-icon { font-size: 48px; margin-bottom: 8px; }
+.result-type-name { font-size: 22px; font-weight: 700; color: #8EA1B4; margin-bottom: 4px; }
+.result-type-desc { font-size: 14px; color: #646A73; }
+.radar-chart { width: 240px; height: 240px; margin: 16px auto; position: relative; }
+.radar-svg { width: 100%; height: 100%; }
+.score-section { text-align: center; margin-bottom: 20px; }
+.score-number { font-size: 48px; font-weight: 700; color: #8EA1B4; }
+.score-label { font-size: 14px; color: #646A73; }
+.score-bar { background: #E2E6EC; height: 8px; border-radius: 4px; margin: 8px 0; overflow: hidden; }
+.score-bar-fill { background: linear-gradient(90deg, #8EA1B4, #B0C4D1); height: 100%; border-radius: 4px; }
+.interpret-card {
+  background: linear-gradient(135deg, rgba(142,161,180,0.05), rgba(176,196,209,0.05));
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.interpret-card h4 { font-size: 15px; color: #8EA1B4; margin-bottom: 8px; }
+.interpret-card p { font-size: 14px; line-height: 1.6; color: #646A73; }
+.path-compare { display: flex; gap: 12px; margin-bottom: 16px; }
+.path-card { flex: 1; background: #EEF0F4; border-radius: 12px; padding: 14px; text-align: center; }
+.path-card h5 { font-size: 14px; margin-bottom: 6px; }
+.path-card p { font-size: 12px; line-height: 1.4; color: #646A73; }
+.path-a { border: 2px solid #8EA1B4; }
+.path-a h5 { color: #8EA1B4; }
+.path-b { border: 2px solid #A5B6C8; }
+.path-b h5 { color: #A5B6C8; }
+.action-plan {
+  background: linear-gradient(135deg, #8EA1B4, #B0C4D1);
+  color: #FAF9FC;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.action-plan h4 { font-size: 15px; margin-bottom: 12px; }
+.action-step { display: flex; align-items: flex-start; margin-bottom: 10px; font-size: 13px; line-height: 1.5; }
+.action-step .step-num {
+  background: rgba(250,249,252,0.3);
+  border-radius: 50%;
+  width: 24px; height: 24px;
+  text-align: center; line-height: 24px;
+  font-size: 12px; font-weight: bold;
+  margin-right: 10px; flex-shrink: 0;
+}
+.hidden { display: none !important; }
+.fade-in { animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 380px) {
+  .container { padding: 12px; }
+  .card { padding: 16px; }
+  .question-page .question-text { font-size: 15px; }
+  .option-item { padding: 12px; font-size: 14px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- 欢迎页 -->
+<div id="welcome-page" class="welcome-page">
+  <div class="card">
+    <div class="logo">
+      <h1>💙 你是吸渣体质还是被宠体质？</h1>
+      <p>20 题完整版 · 情感模式诊断</p>
+    </div>
+    <div class="desc">
+      <span class="unlock-tag">解锁完整版测试</span><br>
+      覆盖<strong>关系模式、边界感、配得感、吸引力、自我认知</strong>五大维度<br>
+      生成专属情感模式报告 + 90天成长方案
+    </div>
+    <button class="btn btn-primary" onclick="startTest()">开始测试 →</button>
+  </div>
+</div>
+
+<!-- 题目页 -->
+<div id="question-page" class="question-page hidden">
+  <div class="card">
+    <div class="progress-text" id="progress-text">第 1/20 题</div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:5%"></div></div>
+    <div class="category-tag" id="category-tag">关系模式</div>
+    <div class="question-text" id="question-text"></div>
+    <ul class="option-list" id="option-list"></ul>
+    <button class="btn btn-primary" id="next-btn" disabled onclick="nextQuestion()">下一题 →</button>
+  </div>
+</div>
+
+<!-- 结果页 -->
+<div id="result-page" class="result-page hidden">
+  <div class="card">
+    <div class="result-type">
+      <div class="result-type-icon" id="result-icon"></div>
+      <div class="result-type-name" id="result-name"></div>
+      <div class="result-type-desc" id="result-desc"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="score-section">
+      <div class="score-label">情感模式评分</div>
+      <div class="score-number" id="score-number"></div>
+      <div class="score-bar"><div class="score-bar-fill" id="score-bar-fill"></div></div>
+      <div style="font-size:12px;color:#949AA2" id="score-hint"></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="font-size:16px;color:#8EA1B4;margin-bottom:12px">📊 五维情感模式雷达图</h3>
+    <div class="radar-chart" id="radar-chart"></div>
+  </div>
+  <div class="card">
+    <div class="interpret-card">
+      <h4>🔍 核心解读</h4>
+      <p id="interpret-core"></p>
+    </div>
+    <div class="interpret-card">
+      <h4>🧠 情感行为模式</h4>
+      <p id="interpret-mechanism"></p>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="font-size:16px;color:#8EA1B4;margin-bottom:12px">🛤️ 吸渣体质 → 被宠体质 转变路径</h3>
+    <div class="path-compare">
+      <div class="path-card path-a"><h5 id="path-a-title">当下状态</h5><p id="path-a-desc"></p></div>
+      <div class="path-card path-b"><h5 id="path-b-title">成长方向</h5><p id="path-b-desc"></p></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="action-plan">
+      <h4>🌿 90 天情感成长行动方案</h4>
+      <div id="action-steps"></div>
+    </div>
+  </div>
+  <div class="card" style="text-align:center">
+    <button class="btn btn-primary" onclick="restartTest()">🔄 重新测试</button>
+    <button class="btn btn-share" onclick="shareResult()">📤 分享结果</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+const questions = [
+  // 维度1：关系模式 (4题)
+  { category: "关系模式", text: "你在感情中通常是什么样的角色？", options: ["照顾者，总是我在付出和迁就", "被照顾者，对方会主动关心我", "相互的，彼此付出也彼此接受", "还在摸索，每一段都不一样"] },
+  { category: "关系模式", text: "分手后，你通常会怎么想？", options: ["是不是我哪里不够好", "缘分到了，各自安好", "复盘一下，学到什么", "没怎么想，向前看"] },
+  { category: "关系模式", text: "看到朋友被伴侣宠着，你的第一反应是：", options: ["羡慕，觉得自己遇不到这样的人", "祝福，也觉得自己值得拥有", "好奇他们是怎么做到的", "觉得那是别人的生活，跟我没关系"] },
+  { category: "关系模式", text: "当一段感情让你很累时，你会：", options: ["咬牙坚持，觉得总会好起来", "设定期限，到时间还累就放手", "主动沟通，看看能不能改善", "直接结束，不浪费彼此时间"] },
+  // 维度2：边界感 (4题)
+  { category: "边界感", text: "当对方做了让你不舒服的事，你会：", options: ["忍一忍，觉得说出来会破坏关系", "直接说出来，沟通清楚界限", "看事情大小，小事就过去了", "不知道怎么开口，会生闷气"] },
+  { category: "边界感", text: "对方临时放你鸽子，你的反应是：", options: ["虽然不开心，但会说「没事」", "表达失望，要求下次提前沟通", "看理由是否充分再决定态度", "表面没事，心里默默扣分"] },
+  { category: "边界感", text: "约会时，你会迁就对方的口味和喜好吗？", options: ["几乎总是迁就对方", "轮流决定，这次你下次我", "一起商量，找双方都喜欢的", "不迁就，各点各的"] },
+  { category: "边界感", text: "对方频繁查看你手机，你会：", options: ["虽然不舒服但给他看，不想吵架", "明确拒绝，这是个人隐私", "先沟通为什么想看，再做决定", "反问他是不是不信任我"] },
+  // 维度3：配得感 (4题)
+  { category: "配得感", text: "有人对你好，你的第一反应是：", options: ["有点不好意思，想着怎么还回去", "开心接受，觉得自己值得被好好对待", "会开心，但也会观察对方是不是真心的", "有点警惕，怕对方有别的目的"] },
+  { category: "配得感", text: "收到贵重的礼物，你的感受更接近：", options: ["压力很大，想着怎么回礼", "开心，觉得自己值得被宠爱", "感动，但也会有点不安", "先确认对方是不是真心"] },
+  { category: "配得感", text: "有人说「你值得更好的」，你内心：", options: ["怀疑，觉得这是安慰的话", "认同，我知道自己值得", "不确定，有时候信有时候不信", "无所谓，不太在意这些"] },
+  { category: "配得感", text: "想象一个完美伴侣站在你面前，你的感觉是：", options: ["觉得自己配不上对方", "觉得这是应该的，我值得", "有点紧张，但愿意试试", "先看看对方是不是真的那么好"] },
+  // 维度4：吸引力 (4题)
+  { category: "吸引力", text: "回顾过往的感情经历，你发现：", options: ["总是被同一类人吸引，结果也差不多", "遇到的人越来越好，关系越来越健康", "有好有坏，说不准什么规律", "感情经历不多，还在了解自己"] },
+  { category: "吸引力", text: "你觉得什么样的人最容易吸引你？", options: ["有点「坏坏的」、需要我照顾的人", "温柔可靠、让人有安全感的人", "有趣有才华、能聊到一起的人", "还不确定，每段都不一样"] },
+  { category: "吸引力", text: "如果有人一开始对你特别好，你会：", options: ["被感动，觉得终于遇到对的人了", "开心但保持理性，慢慢观察", "有点怀疑，怕是有目的的", "享受当下，不急着下判断"] },
+  { category: "吸引力", text: "你相信「吸引力法则」吗？", options: ["不太信，我觉得自己运气不好", "相信，我吸引的都是和我匹配的", "半信半疑，有时候准有时候不准", "没想过这个问题"] },
+  // 维度5：自我认知 (4题)
+  { category: "自我认知", text: "如果用一个词形容你的情感状态，更接近：", options: ["总是疲惫——爱得很累", "安稳满足——被爱包围", "忽上忽下——像过山车", "还在学习——在成长中"] },
+  { category: "自我认知", text: "单身的你，是因为：", options: ["遇不到合适的人，宁缺毋滥", "享受单身，不急着找", "想找但不知道怎么找", "刚结束一段感情，需要时间"] },
+  { category: "自我认知", text: "你觉得爱情在你生命中的位置是：", options: ["很重要，没有爱情人生不完整", "重要但不是全部，锦上添花", "随缘，来了欢迎不来也行", "目前不太想考虑这件事"] },
+  { category: "自我认知", text: "如果用一个比喻形容你的心，更像：", options: ["一座需要被攻克的城堡", "一扇敞开的门，欢迎对的人", "一扇虚掩的门，需要时间打开", "还没找到钥匙的锁"] }
+];
+
+const resultTypes = {
+  victim: {
+    icon: "💔",
+    name: "吸渣体质",
+    desc: "你的情感模式偏向「吸渣体质」——总是付出却很少被好好对待，需要重新学习爱自己",
+    core: "你的情感模式偏向「吸渣体质」。你在关系中习惯性地付出、迁就、忍耐，却很少得到对等的回应。这不是你不够好，而是你的「情感雷达」需要重新校准——你值得被宠爱，只是还没学会相信这一点。",
+    mechanism: "你的行为模式有三大特征：低边界感（不敢拒绝、不敢表达不满）、低配得感（觉得被爱需要「赚取」而非理所当然）、重复吸引（潜意识被熟悉的模式吸引，即便它不健康）。好消息是，这些都是可以改变的。",
+    pathA: { title: "吸渣模式", desc: "习惯性付出→不被珍惜→自我怀疑→更加付出，这是一个循环。打破它需要从「敢于拒绝」开始。" },
+    pathB: { title: "被宠方向", desc: "建立清晰边界→提升配得感→吸引健康的人→进入良性循环。改变从「学会爱自己」开始。" },
+    actions: [
+      "第1-14天：记录每次「想说不敢说」的瞬间，练习在安全场合表达真实感受",
+      "第15-30天：列出「我值得被爱的10个理由」，每天读一遍，建立配得感",
+      "第31-60天：审视过往3段关系的共同模式，找出自己的「吸引陷阱」",
+      "第61-90天：主动接触3个与以往类型不同的异性，感受不同的互动模式"
+    ]
+  },
+  cherished: {
+    icon: "💝",
+    name: "被宠体质",
+    desc: "你的情感模式是「被宠体质」——自信、有边界、懂得筛选，自带幸福吸引力",
+    core: "你的情感模式是「被宠体质」。你拥有清晰的情感边界、健康的配得感，以及筛选而非将就的智慧。你吸引到的往往是对你好的、尊重你的人——这不是运气，是你内在状态的投射。",
+    mechanism: "你的行为模式有三大特征：高边界感（知道什么可以接受、什么不可以）、高配得感（被爱是理所当然的，不需要「赚取」）、健康吸引力（你散发的是「我值得被好好对待」的信号）。保持这种状态，继续筛选和成长。",
+    pathA: { title: "保持优势", desc: "继续强化边界感和配得感，在健康的关系中持续成长，成为更好的自己。" },
+    pathB: { title: "帮助他人", desc: "你的经验可以帮到身边「吸渣」的朋友。分享你的边界感心得，助人也是助己。" },
+    actions: [
+      "第1-14天：复盘你现在的边界感来源——是哪段经历让你学会了保护自己",
+      "第15-30天：写下「我的情感价值观」，明确你在感情中的核心原则",
+      "第31-60天：帮助一个正在「吸渣」的朋友，分享你的边界感经验",
+      "第61-90天：在现有关系中继续成长，尝试更深层次的亲密和信任"
+    ]
+  },
+  mixed: {
+    icon: "🔄",
+    name: "混合体质",
+    desc: "你的情感模式是「混合体质」——时而被宠时而吸渣，关键在于学会稳定自己的情感状态",
+    core: "你的情感模式是「混合体质」。你在不同的关系中表现出不同的状态——有时候被宠得像公主/王子，有时候却陷入消耗型关系。这不是你人格分裂，而是你的「情感状态」还不够稳定。关键是学会识别什么让你「被宠」、什么让你「吸渣」。",
+    mechanism: "你的行为模式是「情境驱动」——你的边界感和配得感会随着对方的反馈而波动。遇到对你好的人时你光芒万丈，遇到消耗你的人时你却容易陷入。你需要把「情感锚」定在自己身上，而非依赖对方的态度。",
+    pathA: { title: "不稳定状态", desc: "边界忽高忽低→状态随对方变化→时而幸福时而痛苦→需要找到内在的稳定锚。" },
+    pathB: { title: "稳定方向", desc: "建立情感锚点→不管对方什么态度都不动摇→稳定吸引健康关系→进入被宠状态。" },
+    actions: [
+      "第1-14天：画出你的「情感波动图」——回顾过去6个月，标注什么时候感到被宠、什么时候吸渣",
+      "第15-30天：找出波动规律——是什么触发了你的「吸渣模式」？是孤单？压力？还是特定类型的人？",
+      "第31-60天：设定3条「情感底线」，无论对方是谁都不妥协（如：不被尊重就离开）",
+      "第61-90天：在下一段互动中严格执行底线，感受「不妥协」带来的力量感"
+    ]
+  },
+  growing: {
+    icon: "🌱",
+    name: "成长体质",
+    desc: "你的情感模式是「成长体质」——正在学习爱自己，每一步都在靠近更好的状态",
+    core: "你的情感模式是「成长体质」。你可能感情经历不多，或者正在从一段消耗中恢复。这不是缺点——而是你正处于最有潜力的阶段。你像一块海绵，正在吸收关于爱和自我的认知，每一步都在靠近更好的状态。",
+    mechanism: "你的行为模式还处于「学习和重塑期」——你还没有固化的「吸渣」或「被宠」模式，这意味着你有最大的可塑性。现在的关键是：在建立情感认知的阶段，用正确的输入来塑造未来的自己。",
+    pathA: { title: "自我探索", desc: "先不急着进入关系，花时间了解自己的需求、边界和价值观。最好的关系从最好的自己开始。" },
+    pathB: { title: "安全实践", desc: "在安全的关系中（友谊、家庭）练习表达边界和需求，积累被尊重对待的正面经验。" },
+    actions: [
+      "第1-14天：写下「我想要什么样的感情」——不是对方什么样，而是你希望被怎样对待",
+      "第15-30天：阅读1-2本关于情感边界和配得感的书，建立知识框架",
+      "第31-60天：在友谊中练习表达真实感受——从不重要的小事开始",
+      "第61-90天：参加社交活动，以「交朋友」而非「找对象」的心态接触新人，练习筛选"
+    ]
+  }
+};
+
+let currentQuestion = 0;
+let answers = [];
+let scores = { "关系模式": 0, "边界感": 0, "配得感": 0, "吸引力": 0, "自我认知": 0 };
+
+function startTest() {
+  document.getElementById('welcome-page').classList.add('hidden');
+  document.getElementById('question-page').classList.remove('hidden');
+  document.getElementById('question-page').classList.add('fade-in');
+  currentQuestion = 0;
+  answers = [];
+  scores = { "关系模式": 0, "边界感": 0, "配得感": 0, "吸引力": 0, "自我认知": 0 };
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('progress-text').textContent = `第 ${currentQuestion + 1}/20 题`;
+  document.getElementById('progress-fill').style.width = `${(currentQuestion + 1) / 20 * 100}%`;
+  document.getElementById('category-tag').textContent = q.category;
+  document.getElementById('question-text').textContent = q.text;
+  const optionList = document.getElementById('option-list');
+  optionList.innerHTML = '';
+  const labels = ['A', 'B', 'C', 'D'];
+  q.options.forEach((opt, i) => {
+    const li = document.createElement('li');
+    li.className = 'option-item';
+    li.innerHTML = `<span class="option-label">${labels[i]}.</span> ${opt}`;
+    li.onclick = () => selectOption(i, li);
+    optionList.appendChild(li);
+  });
+  document.getElementById('next-btn').disabled = true;
+  document.getElementById('next-btn').textContent = currentQuestion < 19 ? '下一题 →' : '查看结果 ✨';
+}
+
+function selectOption(index, element) {
+  document.querySelectorAll('.option-item').forEach(el => el.classList.remove('selected'));
+  element.classList.add('selected');
+  document.getElementById('next-btn').disabled = false;
+  element.dataset.selectedIndex = index;
+}
+
+function nextQuestion() {
+  const selected = document.querySelector('.option-item.selected');
+  if (!selected) return;
+  const idx = parseInt(selected.dataset.selectedIndex);
+  answers.push(idx);
+  
+  // 计分：A=1(低边界/低配得), B=4(高边界/高配得), C=3, D=2
+  const q = questions[currentQuestion];
+  const scoreMap = { 0: 1, 1: 4, 2: 3, 3: 2 };
+  scores[q.category] += scoreMap[idx];
+  
+  currentQuestion++;
+  if (currentQuestion < 20) {
+    showQuestion();
+    document.getElementById('question-page').classList.remove('fade-in');
+    void document.getElementById('question-page').offsetWidth;
+    document.getElementById('question-page').classList.add('fade-in');
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  document.getElementById('question-page').classList.add('hidden');
+  document.getElementById('result-page').classList.remove('hidden');
+  document.getElementById('result-page').classList.add('fade-in');
+
+  // 计算总分和类型
+  const totalScore = Object.values(scores).reduce((a, b) => a + b, 0);
+  const maxScore = 80; // 20题 × 4分
+  const percentage = Math.round(totalScore / maxScore * 100);
+  
+  let resultKey;
+  if (percentage >= 65) resultKey = 'cherished';
+  else if (percentage >= 45) resultKey = 'mixed';
+  else if (percentage >= 25) resultKey = 'growing';
+  else resultKey = 'victim';
+  
+  const result = resultTypes[resultKey];
+  
+  // 显示结果
+  document.getElementById('result-icon').textContent = result.icon;
+  document.getElementById('result-name').textContent = result.name;
+  document.getElementById('result-desc').textContent = result.desc;
+  document.getElementById('score-number').textContent = percentage + '%';
+  document.getElementById('score-bar-fill').style.width = percentage + '%';
+  
+  const hints = { victim: '偏低——但这不是坏事，说明你有巨大的成长空间', cherished: '很高——你已经是情感磁场的主角', mixed: '中等——你的状态有波动，正在稳定中', growing: '发展中——你正处于最有潜力的阶段' };
+  document.getElementById('score-hint').textContent = hints[resultKey];
+  
+  document.getElementById('interpret-core').textContent = result.core;
+  document.getElementById('interpret-mechanism').textContent = result.mechanism;
+  document.getElementById('path-a-title').textContent = result.pathA.title;
+  document.getElementById('path-a-desc').textContent = result.pathA.desc;
+  document.getElementById('path-b-title').textContent = result.pathB.title;
+  document.getElementById('path-b-desc').textContent = result.pathB.desc;
+  
+  const stepsDiv = document.getElementById('action-steps');
+  stepsDiv.innerHTML = result.actions.map((a, i) => 
+    `<div class="action-step"><span class="step-num">${i+1}</span>${a}</div>`
+  ).join('');
+  
+  // 雷达图
+  drawRadar();
+}
+
+function drawRadar() {
+  const container = document.getElementById('radar-chart');
+  const dims = ["关系模式", "边界感", "配得感", "吸引力", "自我认知"];
+  const maxDimScore = 16; // 4题 × 4分
+  const center = 120, radius = 95;
+  
+  let svg = `<svg class="radar-svg" viewBox="0 0 240 240">`;
+  
+  // 网格
+  for (let level = 1; level <= 4; level++) {
+    let pts = [];
+    for (let i = 0; i < 5; i++) {
+      const angle = Math.PI * 2 * i / 5 - Math.PI / 2;
+      const r = radius * level / 4;
+      pts.push(`${center + r * Math.cos(angle)},${center + r * Math.sin(angle)}`);
+    }
+    svg += `<polygon points="${pts.join(' ')}" fill="none" stroke="#C3CFD9" stroke-width="1" opacity="0.6"/>`;
+  }
+  
+  // 轴线
+  for (let i = 0; i < 5; i++) {
+    const angle = Math.PI * 2 * i / 5 - Math.PI / 2;
+    svg += `<line x1="${center}" y1="${center}" x2="${center + radius * Math.cos(angle)}" y2="${center + radius * Math.sin(angle)}" stroke="#C3CFD9" stroke-width="1"/>`;
+  }
+  
+  // 数据多边形
+  let dataPts = [];
+  for (let i = 0; i < 5; i++) {
+    const angle = Math.PI * 2 * i / 5 - Math.PI / 2;
+    const r = radius * Math.min(scores[dims[i]] / maxDimScore, 1);
+    dataPts.push(`${center + r * Math.cos(angle)},${center + r * Math.sin(angle)}`);
+  }
+  svg += `<polygon points="${dataPts.join(' ')}" fill="rgba(142,161,180,0.25)" stroke="#8EA1B4" stroke-width="2"/>`;
+  
+  // 数据点
+  for (let i = 0; i < 5; i++) {
+    const angle = Math.PI * 2 * i / 5 - Math.PI / 2;
+    const r = radius * Math.min(scores[dims[i]] / maxDimScore, 1);
+    svg += `<circle cx="${center + r * Math.cos(angle)}" cy="${center + r * Math.sin(angle)}" r="4" fill="#8EA1B4"/>`;
+  }
+  
+  // 标签
+  for (let i = 0; i < 5; i++) {
+    const angle = Math.PI * 2 * i / 5 - Math.PI / 2;
+    const labelR = radius + 22;
+    const x = center + labelR * Math.cos(angle);
+    const y = center + labelR * Math.sin(angle);
+    const anchor = Math.abs(x - center) < 20 ? 'middle' : (x < center ? 'end' : 'start');
+    svg += `<text x="${x}" y="${y}" text-anchor="${anchor}" dominant-baseline="middle" font-size="11" fill="#646A73">${dims[i]}</text>`;
+  }
+  
+  svg += '</svg>';
+  container.innerHTML = svg;
+}
+
+function restartTest() {
+  document.getElementById('result-page').classList.add('hidden');
+  document.getElementById('welcome-page').classList.remove('hidden');
+  currentQuestion = 0;
+  answers = [];
+  scores = { "关系模式": 0, "边界感": 0, "配得感": 0, "吸引力": 0, "自我认知": 0 };
+}
+
+function shareResult() {
+  const name = document.getElementById('result-name').textContent;
+  const desc = document.getElementById('result-desc').textContent;
+  const text = `测了「你是吸渣体质还是被宠体质」：${name} - ${desc}`;
+  if (navigator.share) {
+    navigator.share({ title: '你是吸渣体质还是被宠体质？', text: text });
+  } else {
+    navigator.clipboard.writeText(text).then(() => alert('结果已复制，粘贴分享给朋友吧！'));
+  }
+}
+</script>
+</body>
+</html>
