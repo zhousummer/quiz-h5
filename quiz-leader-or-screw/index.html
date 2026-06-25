@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>你适合当领导还是当螺丝钉？ - 20题完整版职场测试</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #E65100 0%, #FF9800 100%);
+  min-height: 100vh;
+  color: #333;
+}
+.container {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+}
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+.welcome-page .logo {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.welcome-page .logo h1 {
+  font-size: 24px;
+  color: #E65100;
+  margin-bottom: 8px;
+}
+.welcome-page .logo p {
+  font-size: 14px;
+  color: #666;
+}
+.welcome-page .desc {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #555;
+  margin-bottom: 24px;
+  text-align: center;
+}
+.welcome-page .price-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #E65100, #FF9800);
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.progress-bar {
+  background: #e8e8e8;
+  height: 6px;
+  border-radius: 3px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.progress-fill {
+  background: linear-gradient(90deg, #E65100, #FF9800);
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+.progress-text {
+  font-size: 12px;
+  color: #999;
+  text-align: right;
+  margin-bottom: 8px;
+}
+.question-page .category-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #E65100, #FF9800);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+.question-page .question-text {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  color: #333;
+}
+.option-list {
+  list-style: none;
+}
+.option-item {
+  background: #FFF8E1;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.option-item:hover {
+  background: #FFE0B2;
+}
+.option-item.selected {
+  background: linear-gradient(135deg, rgba(230,81,0,0.1), rgba(255,152,0,0.1));
+  border-color: #E65100;
+  color: #E65100;
+  font-weight: 500;
+}
+.option-label {
+  font-weight: bold;
+  color: #E65100;
+  margin-right: 8px;
+}
+.btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+.btn-primary {
+  background: linear-gradient(135deg, #E65100, #FF9800);
+  color: #fff;
+}
+.btn-primary:hover { opacity: 0.9; }
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-secondary {
+  background: #f0f0f0;
+  color: #666;
+  margin-top: 10px;
+}
+.btn-share {
+  background: linear-gradient(135deg, #E65100, #BF360C);
+  color: #fff;
+  margin-top: 10px;
+}
+.result-page .result-type {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.result-type-icon {
+  font-size: 48px;
+  margin-bottom: 8px;
+}
+.result-type-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: #E65100;
+  margin-bottom: 4px;
+}
+.result-type-desc {
+  font-size: 14px;
+  color: #666;
+}
+.radar-chart {
+  width: 240px;
+  height: 240px;
+  margin: 16px auto;
+  position: relative;
+}
+.radar-svg {
+  width: 100%;
+  height: 100%;
+}
+.score-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.score-number {
+  font-size: 48px;
+  font-weight: 700;
+  color: #E65100;
+}
+.score-label {
+  font-size: 14px;
+  color: #666;
+}
+.score-bar {
+  background: #e8e8e8;
+  height: 8px;
+  border-radius: 4px;
+  margin: 8px 0;
+  overflow: hidden;
+}
+.score-bar-fill {
+  background: linear-gradient(90deg, #E65100, #FF9800);
+  height: 100%;
+  border-radius: 4px;
+}
+.interpret-card {
+  background: linear-gradient(135deg, rgba(230,81,0,0.05), rgba(255,152,0,0.05));
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.interpret-card h4 {
+  font-size: 15px;
+  color: #E65100;
+  margin-bottom: 8px;
+}
+.interpret-card p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #555;
+}
+.path-compare {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.path-card {
+  flex: 1;
+  background: #f7f7f7;
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+}
+.path-card h5 {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+.path-card p {
+  font-size: 12px;
+  line-height: 1.4;
+  color: #666;
+}
+.path-a { border: 2px solid #E65100; }
+.path-a h5 { color: #E65100; }
+.path-b { border: 2px solid #4CAF50; }
+.path-b h5 { color: #4CAF50; }
+.action-plan {
+  background: linear-gradient(135deg, #E65100, #FF9800);
+  color: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.action-plan h4 {
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+.action-step {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.action-step .step-num {
+  background: rgba(255,255,255,0.3);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  line-height: 24px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+.hidden { display: none !important; }
+.fade-in {
+  animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 380px) {
+  .container { padding: 12px; }
+  .card { padding: 16px; }
+  .question-page .question-text { font-size: 15px; }
+  .option-item { padding: 12px; font-size: 14px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- 欢迎页 -->
+<div id="welcome-page" class="welcome-page">
+  <div class="card">
+    <div class="logo">
+      <h1>👑 你适合当领导还是当螺丝钉？</h1>
+      <p>20 题完整版 · 职场角色诊断</p>
+    </div>
+    <div class="desc">
+      <span class="price-tag">¥1.99 正版测试</span><br>
+      覆盖<strong>决策力、抗压力、影响力、自主性、大局观</strong>五大维度<br>
+      生成专属领导力报告 + 90天进阶方案
+    </div>
+    <button class="btn btn-primary" onclick="startTest()">开始测试 →</button>
+  </div>
+</div>
+
+<!-- 题目页 -->
+<div id="question-page" class="question-page hidden">
+  <div class="card">
+    <div class="progress-text" id="progress-text">第 1/20 题</div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:5%"></div></div>
+    <div class="category-tag" id="category-tag">决策力</div>
+    <div class="question-text" id="question-text"></div>
+    <ul class="option-list" id="option-list"></ul>
+    <button class="btn btn-primary" id="next-btn" disabled onclick="nextQuestion()">下一题 →</button>
+  </div>
+</div>
+
+<!-- 结果页 -->
+<div id="result-page" class="result-page hidden">
+  <div class="card">
+    <div class="result-type">
+      <div class="result-type-icon" id="result-icon"></div>
+      <div class="result-type-name" id="result-name"></div>
+      <div class="result-type-desc" id="result-desc"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="score-section">
+      <div class="score-label">领导力评分</div>
+      <div class="score-number" id="score-number"></div>
+      <div class="score-bar"><div class="score-bar-fill" id="score-bar-fill"></div></div>
+      <div style="font-size:12px;color:#999" id="score-hint"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="font-size:16px;color:#E65100;margin-bottom:12px">📊 五维雷达图</h3>
+    <div class="radar-chart" id="radar-chart"></div>
+  </div>
+
+  <div class="card">
+    <div class="interpret-card">
+      <h4>🔍 核心解读</h4>
+      <p id="interpret-core"></p>
+    </div>
+    <div class="interpret-card">
+      <h4>🧠 心理机制</h4>
+      <p id="interpret-mechanism"></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="font-size:16px;color:#E65100;margin-bottom:12px">🛤️ 两条职业路径对比</h3>
+    <div class="path-compare">
+      <div class="path-card path-a">
+        <h5 id="path-a-title">路径 A</h5>
+        <p id="path-a-desc"></p>
+      </div>
+      <div class="path-card path-b">
+        <h5 id="path-b-title">路径 B</h5>
+        <p id="path-b-desc"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="action-plan">
+      <h4>📋 90 天进阶行动方案</h4>
+      <div id="action-steps"></div>
+    </div>
+  </div>
+
+  <div class="card" style="text-align:center">
+    <button class="btn btn-primary" onclick="restartTest()">🔄 重新测试</button>
+    <button class="btn btn-share" onclick="shareResult()">📤 分享结果</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+// ============ 题目数据 ============
+const questions = [
+  // 维度1：决策力 (4题)
+  { category: "决策力", text: "遇到团队分歧，你的第一反应是：", options: ["拍板决定，错了也认", "先听听各方意见再定", "交给上级或更有经验的人", "拖延，等自然消解"] },
+  { category: "决策力", text: "你做一个重要决策的速度通常是：", options: ["很快，直觉加经验就够了", "中等速度，需要收集信息再判断", "偏慢，总想再多验证一下", "很慢，经常纠结到deadline"] },
+  { category: "决策力", text: "你的决策被证明是错的，你会：", options: ["迅速调整方向，从错误中学习", "复盘原因，修正后继续推进", "感到挫败，需要时间恢复信心", "很受打击，之后更不敢做决定"] },
+  { category: "决策力", text: "面对两难选择，你更信任：", options: ["自己的判断和直觉", "数据和客观分析", "团队共识和讨论", "上级的指示和经验"] },
+  // 维度2：抗压力 (4题)
+  { category: "抗压力", text: "项目快deadline出了大bug，你会：", options: ["亲自带队攻坚，睡公司也要搞定", "分配任务，盯关键节点", "按要求加班，但不越界", "按规定流程报备，等领导指示"] },
+  { category: "抗压力", text: "领导突然否定了你的方案，你的反应：", options: ["当场反驳，用逻辑说服", "冷静接受，复盘后重新提交", "心里不服但表面服从", "很受伤，需要好几天才能恢复"] },
+  { category: "抗压力", text: "连续高压工作两周后，你的状态是：", options: ["依然高效，甚至更专注了", "有点疲惫但还能保持输出", "明显下滑，开始拖延和敷衍", "接近崩溃，需要强制休息"] },
+  { category: "抗压力", text: "别人觉得不可能的任务，你通常：", options: ["直接接过来，觉得是机会", "评估风险后决定是否挑战", "建议降低目标，更务实", "直接拒绝，不想冒风险"] },
+  // 维度3：影响力 (4题)
+  { category: "影响力", text: "你说服别人按你的方案执行，通常靠：", options: ["气场和逻辑，一言定音", "数据和案例，理性说服", "人情和关系，软性推动", "很少主动说服，顺其自然"] },
+  { category: "影响力", text: "团队开会时，你通常是：", options: ["主导话题，推动结论", "积极发言，但不强行主导", "偶尔发言，补充细节", "安静听，很少主动表达"] },
+  { category: "影响力", text: "你更擅长影响哪种人：", options: ["所有人，天然有号召力", "同级别的人，平等沟通", "下属或新人，比较有耐心", "不太擅长影响别人"] },
+  { category: "影响力", text: "你对「被认可」的需求强度：", options: ["很强，需要持续的正反馈", "中等，偶尔认可就够了", "不强，自己认可自己就行", "几乎不需要，低调做事就好"] },
+  // 维度4：自主性 (4题)
+  { category: "自主性", text: "领导给你一个模糊任务，你会：", options: ["自己拆解定义，主动推进", "先确认边界和预期，再动手", "等领导进一步明确再执行", "按惯例做，不出错就行"] },
+  { category: "自主性", text: "你更喜欢哪种工作方式：", options: ["自己定方向和节奏，全权负责", "有框架但允许自由发挥", "明确指令，按步骤执行", "严格流程，减少不确定性"] },
+  { category: "自主性", text: "你对「创新尝试」的态度：", options: ["主动发起，哪怕有风险", "支持别人的创新，但自己偏保守", "观望，看到成功案例再跟进", "抵触，更喜欢成熟方案"] },
+  { category: "自主性", text: "你的职业规划清晰度如何：", options: ["非常清晰，有明确的3-5年路线", "有大致方向，细节在调整中", "比较模糊，看机会说话", "几乎没有，随波逐流"] },
+  // 维度5：大局观 (4题)
+  { category: "大局观", text: "你发现公司流程有大问题，你会：", options: ["直接提出改革方案，推动落地", "先在小范围试改革，成功再推广", "向上反馈，等决策层推动", "默默适应，不做出头鸟"] },
+  { category: "大局观", text: "你的关注范围通常是：", options: ["全公司甚至行业趋势", "跨部门协作和系统效率", "本团队的工作产出", "自己手头的任务"] },
+  { category: "大局观", text: "做取舍时，你优先考虑：", options: ["长期战略价值，愿意牺牲短期", "平衡短期和长期，尽量兼顾", "短期稳妥，长期看情况", "眼前任务优先，少想远的"] },
+  { category: "大局观", text: "你对「牺牲个人利益换团队成功」的态度：", options: ["毫不犹豫，团队赢才是真赢", "可以接受，但要有回报预期", "不太情愿，除非实在必要", "绝不，各人自扫门前雪"] }
+];
+
+// ============ 结果数据 ============
+const resultTypes = {
+  leader: {
+    icon: "👑",
+    name: "天生领袖型",
+    desc: "你天生就适合站在最前面——决策、扛压、号召，是你的本能",
+    core: "你具备领导者的核心素质：果断决策、高压不垮、自然号召力。这不是学来的，而是你的性格底层代码。关键不是「要不要当领导」，而是「在哪当、带谁走、往哪去」。",
+    mechanism: "你的领导力来自三个底层驱动：高内控感（相信自己能掌控结果）、高风险偏好（不确定反而让你兴奋）、高影响力需求（被认可比安全更重要）。这三个驱动加在一起，你天然就是那个站出来的人。",
+    pathA: { title: "路径 A：创业/带队", desc: "用你的领导力开创自己的事业或团队。高风险高回报，你天生适合这种节奏。" },
+    pathB: { title: "路径 B：内部晋升", desc: "在现有公司向上攀登，从管理者到决策层。稳中有升，风险可控。" },
+    actions: [
+      "第1-14天：找一个需要你拍板的小项目，刻意练习「快速决策+即时复盘」",
+      "第15-30天：主动带一个3人小组完成挑战性任务，锻炼号召力",
+      "第31-60天：向上级表达你的管理意向，申请更大的责任范围",
+      "第61-90天：完成一次跨部门项目，证明你的大局观和资源整合能力"
+    ]
+  },
+  manager: {
+    icon: "⚡",
+    name: "潜力管理型",
+    desc: "你有领导潜力，但还在打磨期——方向对了，方法需要升级",
+    core: "你的领导力基础不错，但缺少关键催化剂：可能是决策不够果断，影响力不够强，或大局观需要拓宽。你不是不行，而是还差一到两个关键突破。",
+    mechanism: "你处于「管理者养成期」——有管理意识但执行不稳定，能带小团队但在大场面容易犹豫。核心瓶颈是：你的领导行为还不够自动化，还需要刻意练习才能变成本能反应。",
+    pathA: { title: "路径 A：刻意修炼", desc: "聚焦1-2个短板维度，用90天密集训练突破。从「能做到」升级到「能本能做到」。" },
+    pathB: { title: "路径 B：找到舞台", desc: "换个能给你更大施展空间的环境。有时候不是你不行，而是舞台太小。" },
+    actions: [
+      "第1-14天：诊断你的最弱维度（决策力？影响力？），制定专项提升计划",
+      "第15-30天：每周至少做1次「强制拍板」练习——设定2分钟决策时限",
+      "第31-60天：申请一个需要跨团队协调的项目，实战锻炼影响力",
+      "第61-90天：复盘3个月变化，明确下一步是内部晋升还是外部机会"
+    ]
+  },
+  specialist: {
+    icon: "🔧",
+    name: "稳稳螺丝钉型",
+    desc: "你是不可替代的专业力量——螺丝钉也有自己的王冠",
+    core: "你的价值不在于带领多少人，而在于你做的事别人做不到。你的执行力、稳定性和专业深度，是任何团队都不可或缺的基石。不是每个人都需要当领导，螺丝钉也能戴王冠。",
+    mechanism: "你的性格底层是「高确定性偏好」——清晰指令、稳定环境、可控结果让你发挥最好。领导角色的不确定性和人际消耗反而会降低你的效能。你不是能力不够，而是性格不适合。",
+    pathA: { title: "路径 A：专业深耕", desc: "继续深耕你的专业领域，成为行业顶尖专家。影响力来自不可替代性。" },
+    pathB: { title: "路径 B：技术管理", desc: "从纯执行转向技术管理，用专业能力带小团队。不需要转型，只需要扩展。" },
+    actions: [
+      "第1-14天：盘点你的专业技能稀缺度，找到最有价值深耕的方向",
+      "第15-30天：争取一个能展示专业影响力的项目或分享机会",
+      "第31-60天：学习1个与专业相关的管理技能（如项目排期、资源分配）",
+      "第61-90天：评估深耕vs管理两条路径的收益，锁定下一步方向"
+    ]
+  },
+  freelancer: {
+    icon: "🚀",
+    name: "自由兵型",
+    desc: "你拒绝被定义——既不是螺丝钉，也不是领导者，你只属于自己",
+    core: "你不想被框在「领导」或「螺丝钉」里。你的自主性很强，影响力也不弱，但你更在意自由和掌控感。你适合独立作战、自由职业、或小团队共创。",
+    mechanism: "你的核心驱动力是「自主性」——比影响力更强，比抗压力更优先。当工作给你足够自由度时，你的产出可以超过大多数领导和螺丝钉。但一旦被束缚，你的效能会急剧下降。",
+    pathA: { title: "路径 A：自由职业", desc: "用你的综合能力接项目、做顾问、开课程。完全自主，收入上限自己定。" },
+    pathB: { title: "路径 B：小团队共创", desc: "找2-3个互补的人组小团队，你有决策力但不被管理架构束缚。" },
+    actions: [
+      "第1-14天：测试你的自由职业可行性——用周末接1个小项目试水",
+      "第15-30天：梳理你的可售卖技能清单，定价并发布到2个平台",
+      "第31-60天：积累3个成功案例，建立个人品牌和客户池",
+      "第61-90天：评估自由收入vs固定收入的差距，做出正式选择"
+    ]
+  }
+};
+
+// ============ 状态变量 ============
+let currentQuestion = 0;
+let answers = [];
+let scores = { "决策力": 0, "抗压力": 0, "影响力": 0, "自主性": 0, "大局观": 0 };
+
+// ============ 逻辑函数 ============
+function startTest() {
+  document.getElementById('welcome-page').classList.add('hidden');
+  document.getElementById('question-page').classList.remove('hidden');
+  document.getElementById('question-page').classList.add('fade-in');
+  currentQuestion = 0;
+  answers = [];
+  scores = { "决策力": 0, "抗压力": 0, "影响力": 0, "自主性": 0, "大局观": 0 };
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('progress-text').textContent = `第 ${currentQuestion + 1}/20 题`;
+  document.getElementById('progress-fill').style.width = `${(currentQuestion + 1) / 20 * 100}%`;
+  document.getElementById('category-tag').textContent = q.category;
+  document.getElementById('question-text').textContent = q.text;
+
+  const optionList = document.getElementById('option-list');
+  optionList.innerHTML = '';
+  const labels = ['A', 'B', 'C', 'D'];
+  q.options.forEach((opt, i) => {
+    const li = document.createElement('li');
+    li.className = 'option-item';
+    li.innerHTML = `<span class="option-label">${labels[i]}.</span> ${opt}`;
+    li.onclick = () => selectOption(i, li);
+    optionList.appendChild(li);
+  });
+
+  document.getElementById('next-btn').disabled = true;
+  if (currentQuestion === 19) {
+    document.getElementById('next-btn').textContent = '查看结果 →';
+  } else {
+    document.getElementById('next-btn').textContent = '下一题 →';
+  }
+}
+
+function selectOption(index, element) {
+  const items = document.querySelectorAll('.option-item');
+  items.forEach(item => item.classList.remove('selected'));
+  element.classList.add('selected');
+  answers[currentQuestion] = index;
+  document.getElementById('next-btn').disabled = false;
+}
+
+function nextQuestion() {
+  if (answers[currentQuestion] === undefined) return;
+
+  const q = questions[currentQuestion];
+  scores[q.category] += (answers[currentQuestion] + 1);
+
+  currentQuestion++;
+  if (currentQuestion < 20) {
+    showQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  document.getElementById('question-page').classList.add('hidden');
+  document.getElementById('result-page').classList.remove('hidden');
+  document.getElementById('result-page').classList.add('fade-in');
+
+  // 判断结果类型
+  const totalScore = Object.values(scores).reduce((a, b) => a + b, 0);
+  const avg = totalScore / 5;
+  let resultKey;
+
+  if (avg <= 8) resultKey = 'freelancer';
+  else if (avg <= 12) resultKey = 'specialist';
+  else if (avg <= 16) resultKey = 'manager';
+  else resultKey = 'leader';
+
+  const result = resultTypes[resultKey];
+
+  // 基础信息
+  document.getElementById('result-icon').textContent = result.icon;
+  document.getElementById('result-name').textContent = result.name;
+  document.getElementById('result-desc').textContent = result.desc;
+
+  // 领导力评分
+  const leadScore = Math.round(avg * 6.25);
+  const displayScore = Math.max(25, Math.min(95, leadScore));
+  document.getElementById('score-number').textContent = displayScore;
+  document.getElementById('score-bar-fill').style.width = `${displayScore}%`;
+  document.getElementById('score-hint').textContent = displayScore >= 80 ? '你有很强的领导力潜能' : displayScore >= 55 ? '你的领导力正在成长中' : '你更适合专业深耕或独立作战';
+
+  // 雷达图
+  drawRadar(scores);
+
+  // 解读
+  document.getElementById('interpret-core').textContent = result.core;
+  document.getElementById('interpret-mechanism').textContent = result.mechanism;
+
+  // 路径对比
+  document.getElementById('path-a-title').textContent = result.pathA.title;
+  document.getElementById('path-a-desc').textContent = result.pathA.desc;
+  document.getElementById('path-b-title').textContent = result.pathB.title;
+  document.getElementById('path-b-desc').textContent = result.pathB.desc;
+
+  // 90天行动方案
+  const stepsDiv = document.getElementById('action-steps');
+  stepsDiv.innerHTML = '';
+  result.actions.forEach((action, i) => {
+    stepsDiv.innerHTML += `<div class="action-step"><span class="step-num">${i + 1}</span><span>${action}</span></div>`;
+  });
+}
+
+function drawRadar(scores) {
+  const container = document.getElementById('radar-chart');
+  const categories = ["决策力", "抗压力", "影响力", "自主性", "大局观"];
+  const maxScore = 16;
+  const cx = 120, cy = 120, r = 90;
+
+  let svg = `<svg viewBox="0 0 240 240" class="radar-svg">`;
+
+  for (let level = 1; level <= 4; level++) {
+    const lr = r * level / 4;
+    const points = categories.map((_, i) => {
+      const angle = (i * 72 - 90) * Math.PI / 180;
+      return `${cx + lr * Math.cos(angle)},${cy + lr * Math.sin(angle)}`;
+    }).join(' ');
+    svg += `<polygon points="${points}" fill="none" stroke="#ddd" stroke-width="1"/>`;
+  }
+
+  categories.forEach((_, i) => {
+    const angle = (i * 72 - 90) * Math.PI / 180;
+    svg += `<line x1="${cx}" y1="${cy}" x2="${cx + r * Math.cos(angle)}" y2="${cy + r * Math.sin(angle)}" stroke="#ccc" stroke-width="1"/>`;
+  });
+
+  const dataPoints = categories.map((cat, i) => {
+    const val = scores[cat] / maxScore;
+    const angle = (i * 72 - 90) * Math.PI / 180;
+    const dr = r * val;
+    return `${cx + dr * Math.cos(angle)},${cy + dr * Math.sin(angle)}`;
+  }).join(' ');
+  svg += `<polygon points="${dataPoints}" fill="rgba(230,81,0,0.3)" stroke="#E65100" stroke-width="2"/>`;
+
+  categories.forEach((cat, i) => {
+    const val = scores[cat] / maxScore;
+    const angle = (i * 72 - 90) * Math.PI / 180;
+    const dr = r * val;
+    svg += `<circle cx="${cx + dr * Math.cos(angle)}" cy="${cy + dr * Math.sin(angle)}" r="4" fill="#E65100"/>`;
+  });
+
+  categories.forEach((cat, i) => {
+    const angle = (i * 72 - 90) * Math.PI / 180;
+    const lx = cx + (r + 20) * Math.cos(angle);
+    const ly = cy + (r + 20) * Math.sin(angle);
+    svg += `<text x="${lx}" y="${ly}" text-anchor="middle" font-size="11" fill="#666">${cat}</text>`;
+  });
+
+  svg += `</svg>`;
+  container.innerHTML = svg;
+}
+
+function restartTest() {
+  document.getElementById('result-page').classList.add('hidden');
+  startTest();
+}
+
+function shareResult() {
+  const resultName = document.getElementById('result-name').textContent;
+  const text = `我刚做了「你适合当领导还是当螺丝钉」20题测试，结果是【${resultName}】！你也来试试 👇`;
+  if (navigator.share) {
+    navigator.share({ title: '职场测试结果', text: text });
+  } else {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    alert('已复制到剪贴板，可分享到社交平台！');
+  }
+}
+</script>
+</body>
+</html>
