@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>测测你的花钱人格 - 20题完整版消费心理测试</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #87CEFA 0%, #AFC8F0 100%);
+  min-height: 100vh; color: #2D374B;
+}
+.container { max-width: 420px; margin: 0 auto; padding: 20px; min-height: 100vh; }
+.card {
+  background: #F8F9FE; border-radius: 18px; padding: 24px; margin-bottom: 16px;
+  box-shadow: 0 4px 20px rgba(135,206,250,0.15);
+}
+.welcome-page .logo { text-align: center; margin-bottom: 24px; }
+.welcome-page .logo h1 { font-size: 23px; color: #4696D5; margin-bottom: 6px; line-height: 1.4; }
+.welcome-page .logo p { font-size: 14px; color: #64B5E6; }
+.welcome-page .desc { font-size: 15px; line-height: 1.8; color: #5A6D82; margin-bottom: 24px; text-align: center; }
+.welcome-page .unlock-tag {
+  display: inline-block; background: linear-gradient(135deg, #87CEFA, #AFC8F0);
+  color: #FCFBFF; padding: 8px 22px; border-radius: 22px; font-size: 16px; font-weight: bold; margin-bottom: 20px;
+}
+.welcome-page .vs-row {
+  display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 20px;
+}
+.welcome-page .vs-item {
+  background: #EEF3FA; border-radius: 14px; padding: 12px 16px; text-align: center; font-size: 14px; color: #5A6D82;
+}
+.welcome-page .vs-divider { font-size: 20px; font-weight: bold; color: #64B5E6; }
+.progress-bar { background: #E1ECF8; height: 8px; border-radius: 4px; margin-bottom: 16px; overflow: hidden; }
+.progress-fill { background: linear-gradient(90deg, #87CEFA, #64B5E6); height: 100%; border-radius: 4px; transition: width 0.3s ease; }
+.progress-text { font-size: 12px; color: #8AA0B8; text-align: right; margin-bottom: 8px; }
+.question-page .category-tag {
+  display: inline-block; background: linear-gradient(135deg, #87CEFA, #AFC8F0);
+  color: #FCFBFF; padding: 5px 14px; border-radius: 14px; font-size: 13px; margin-bottom: 12px;
+}
+.question-page .question-text { font-size: 18px; font-weight: 600; line-height: 1.6; margin-bottom: 20px; color: #2D374B; }
+.option-list { list-style: none; }
+.option-item {
+  background: #EEF3FA; border: 2px solid transparent; border-radius: 14px;
+  padding: 15px 18px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s ease;
+  font-size: 15px; line-height: 1.5; color: #2D374B;
+}
+.option-item:hover { background: #E4ECF8; }
+.option-item.selected {
+  background: linear-gradient(135deg, rgba(135,206,250,0.1), rgba(175,200,240,0.1));
+  border-color: #87CEFA; color: #4696D5; font-weight: 500;
+}
+.option-label { font-weight: bold; color: #64B5E6; margin-right: 8px; }
+.btn { display: block; width: 100%; padding: 15px; border: none; border-radius: 14px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; text-align: center; }
+.btn-primary { background: linear-gradient(135deg, #87CEFA, #64B5E6); color: #FCFBFF; }
+.btn-primary:hover { opacity: 0.9; }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-share { background: linear-gradient(135deg, #AFC8F0, #87CEFA); color: #FCFBFF; margin-top: 10px; }
+.result-page .result-type { text-align: center; margin-bottom: 24px; }
+.result-type-icon { font-size: 52px; margin-bottom: 8px; }
+.result-type-name { font-size: 24px; font-weight: 700; color: #4696D5; margin-bottom: 4px; }
+.result-type-desc { font-size: 14px; color: #5A6D82; }
+.radar-chart { width: 250px; height: 250px; margin: 16px auto; position: relative; }
+.radar-svg { width: 100%; height: 100%; }
+.score-section { text-align: center; margin-bottom: 20px; }
+.score-number { font-size: 52px; font-weight: 700; color: #4696D5; }
+.score-label { font-size: 14px; color: #5A6D82; }
+.score-bar { background: #E1ECF8; height: 10px; border-radius: 5px; margin: 8px 0; overflow: hidden; }
+.score-bar-fill { background: linear-gradient(90deg, #87CEFA, #64B5E6); height: 100%; border-radius: 5px; }
+.interpret-card { background: linear-gradient(135deg, rgba(135,206,250,0.06), rgba(175,200,240,0.06)); border-radius: 14px; padding: 18px; margin-bottom: 12px; }
+.interpret-card h4 { font-size: 15px; color: #4696D5; margin-bottom: 8px; }
+.interpret-card p { font-size: 14px; line-height: 1.7; color: #5A6D82; }
+.path-compare { display: flex; gap: 12px; margin-bottom: 16px; }
+.path-card { flex: 1; background: #EEF3FA; border-radius: 14px; padding: 15px; text-align: center; }
+.path-card h5 { font-size: 14px; margin-bottom: 6px; }
+.path-card p { font-size: 12px; line-height: 1.5; color: #5A6D82; }
+.path-a { border: 2px solid #87CEFA; } .path-a h5 { color: #87CEFA; }
+.path-b { border: 2px solid #AFC8F0; } .path-b h5 { color: #AFC8F0; }
+.action-plan { background: linear-gradient(135deg, #87CEFA, #AFC8F0); color: #FCFBFF; border-radius: 14px; padding: 18px; margin-bottom: 16px; }
+.action-plan h4 { font-size: 16px; margin-bottom: 12px; }
+.action-step { display: flex; align-items: flex-start; margin-bottom: 10px; font-size: 13px; line-height: 1.6; }
+.action-step .step-num { background: rgba(252,251,255,0.35); border-radius: 50%; width: 26px; height: 26px; text-align: center; line-height: 26px; font-size: 13px; font-weight: bold; margin-right: 10px; flex-shrink: 0; }
+.hidden { display: none !important; }
+.fade-in { animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 380px) { .container { padding: 12px; } .card { padding: 16px; } .question-page .question-text { font-size: 16px; } .option-item { padding: 12px; font-size: 14px; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div id="welcome-page" class="welcome-page">
+  <div class="card">
+    <div class="logo">
+      <h1>💰 测测你的花钱人格<br>你是月光族还是守财奴？</h1>
+      <p>20 题完整版 · 消费心理测试</p>
+    </div>
+    <div class="vs-row">
+      <div class="vs-item">💸 发了工资先犒劳自己</div>
+      <div class="vs-divider">VS</div>
+      <div class="vs-item">🏦 每一分钱都要存起来</div>
+    </div>
+    <div class="desc">
+      <span class="unlock-tag">解锁完整版测试</span><br>
+      覆盖<strong>消费冲动、金钱观念、储蓄习惯、消费决策、金钱态度</strong>五大维度<br>
+      生成专属花钱人格报告 + 90天理财成长方案
+    </div>
+    <button class="btn btn-primary" onclick="startTest()">✨ 测测你是哪种 →</button>
+  </div>
+</div>
+
+<div id="question-page" class="question-page hidden">
+  <div class="card">
+    <div class="progress-text" id="progress-text">第 1/20 题</div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:5%"></div></div>
+    <div class="category-tag" id="category-tag">消费冲动</div>
+    <div class="question-text" id="question-text"></div>
+    <ul class="option-list" id="option-list"></ul>
+    <button class="btn btn-primary" id="next-btn" disabled onclick="nextQuestion()">下一题 →</button>
+  </div>
+</div>
+
+<div id="result-page" class="result-page hidden">
+  <div class="card">
+    <div class="result-type">
+      <div class="result-type-icon" id="result-icon"></div>
+      <div class="result-type-name" id="result-name"></div>
+      <div class="result-type-desc" id="result-desc"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="score-section">
+      <div class="score-label">消费冲动指数</div>
+      <div class="score-number" id="score-number"></div>
+      <div class="score-bar"><div class="score-bar-fill" id="score-bar-fill"></div></div>
+      <div style="font-size:12px;color:#8AA0B8" id="score-hint"></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="font-size:16px;color:#4696D5;margin-bottom:12px">📊 五维花钱人格雷达图</h3>
+    <div class="radar-chart" id="radar-chart"></div>
+  </div>
+  <div class="card">
+    <div class="interpret-card"><h4>🔍 核心解读</h4><p id="interpret-core"></p></div>
+    <div class="interpret-card"><h4>🧠 消费心理机制</h4><p id="interpret-mechanism"></p></div>
+  </div>
+  <div class="card">
+    <h3 style="font-size:16px;color:#4696D5;margin-bottom:12px">🛤️ 月光族 → 理财达人 转变路径</h3>
+    <div class="path-compare">
+      <div class="path-card path-a"><h5 id="path-a-title">当前模式</h5><p id="path-a-desc"></p></div>
+      <div class="path-card path-b"><h5 id="path-b-title">成长方向</h5><p id="path-b-desc"></p></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="action-plan"><h4>💰 90 天理财成长行动方案</h4><div id="action-steps"></div></div>
+  </div>
+  <div class="card" style="text-align:center">
+    <button class="btn btn-primary" onclick="restartTest()">🔄 重新测试</button>
+    <button class="btn btn-share" onclick="shareResult()">📤 分享结果</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+const questions = [
+  { category: "消费冲动", text: "发了工资，你的第一反应是：", options: ["先犒劳自己！吃顿好的/买个想要的", "先存起来，剩下的再花", "还信用卡/花呗，剩下的规划着花", "开心一下但不会花太多"] },
+  { category: "消费冲动", text: "看到「限时折扣」四个字，你的反应：", options: ["必须冲！不买就亏了", "看看是不是真的需要", "有需要才看，不需要再便宜也不买", "会心动但能忍住"] },
+  { category: "消费冲动", text: "深夜刷淘宝，你最容易：", options: ["冲动下单，第二天就忘了买了啥", "加入购物车，第二天再决定", "不太会深夜买东西", "偶尔冲动，但金额不大"] },
+  { category: "消费冲动", text: "朋友约你去一个很贵的餐厅，你会：", options: ["去！体验比钱重要", "看这个月预算够不够", "提议换个便宜点的地方", "去了但心里在滴血"] },
+  { category: "金钱观念", text: "你对「钱是赚出来的不是省出来的」这句话：", options: ["双手赞同！钱就是用来花的", "不太同意，省钱也是赚钱", "一半同意，开源和节流都重要", "看情况"] },
+  { category: "金钱观念", text: "你更认同哪种说法？", options: ["人生苦短，及时行乐", "未雨绸缪，有备无患", "适度享受，量力而行", "有时候想花有时候想省"] },
+  { category: "金钱观念", text: "你小时候的零花钱通常：", options: ["拿到就花光，等下次", "存起来买大件", "花一半存一半", "不太记得了"] },
+  { category: "金钱观念", text: "你对「精致穷」的态度：", options: ["我可能就是精致穷本人", "不理解，没钱就别装", "理解但不赞同", "看情况"] },
+  { category: "储蓄习惯", text: "你的银行卡余额通常：", options: ["月初有，月底光，循环往复", "稳定增长，看着数字就安心", "有一定储蓄，但偶尔会动用", "忽高忽低，不太稳定"] },
+  { category: "储蓄习惯", text: "你每个月能存下收入的：", options: ["几乎存不下，月光", "30%以上", "10%-30%", "不稳定，有时候多有时候少"] },
+  { category: "储蓄习惯", text: "如果突然多了一笔意外之财（比如1万块），你会：", options: ["终于可以买那个一直想买的东西了！", "存起来，一分不动", "花一部分存一部分", "先放着，想好了再说"] },
+  { category: "储蓄习惯", text: "你对「存款数字」的感觉：", options: ["不太关心，够花就行", "很在意，安全感来源", "会在意但不会焦虑", "想存但存不下来"] },
+  { category: "消费决策", text: "看到一个很想买但有点贵的东西，你会：", options: ["买了再说！开心最重要", "比价、看测评、等打折，能省则省", "评估一下是否真的需要再决定", "纠结很久，买了又后悔"] },
+  { category: "消费决策", text: "买大件物品前，你通常会：", options: ["看到喜欢的就直接下单", "花几天时间全网比价", "做功课但不会太久", "纠结到朋友都烦了"] },
+  { category: "消费决策", text: "你买过最后悔的东西是：", options: ["冲动消费的太多了，数不过来", "几乎没有，我买东西很理性", "有一些，但不多", "买完后悔，下次还买"] },
+  { category: "消费决策", text: "你更愿意花钱在：", options: ["体验和享受——旅行、美食、娱乐", "安全和保障——保险、存款、投资", "平衡——该体验体验，该保障保障", "不一定，看心情"] },
+  { category: "金钱态度", text: "如果用一句话形容你和钱的关系：", options: ["好朋友！来了就一起玩，走了也不强求", "守护者！每一分都要好好保管", "管理者！合理规划，适度享受", "过山车！时而亲密时而紧张"] },
+  { category: "金钱态度", text: "和朋友一起花钱时，你通常是：", options: ["抢着买单的那个", "AA制算得很清楚", "轮流请客，大致平衡", "不太主动，但也不会欠"] },
+  { category: "金钱态度", text: "你对自己的财务状况：", options: ["不太清楚，花到哪算哪", "了如指掌，每笔都有记录", "大概知道，不会太细", "想知道但懒得管"] },
+  { category: "金钱态度", text: "如果给「月光程度」打分（0=铁公鸡，10=月光族），你给自己：", options: ["7-10分，我就是月光本光", "0-3分，我存钱能力很强", "4-6分，中间偏理性", "不确定，波动很大"] }
+];
+
+const resultTypes = {
+  spender: {
+    icon: "💸", name: "月光享受型",
+    desc: "赚多少花多少，快乐至上——你是朋友圈里活得最潇洒的那个，但月底可能要靠泡面续命。",
+    core: "你属于「月光享受型」。钱对你来说是快乐的媒介，不是安全的保障。你信奉「人生苦短，及时行乐」，在消费中获取满足感和自由感。你的挑战不是「学会省钱」，而是「在享受和保障之间找到平衡」。",
+    mechanism: "你的消费心理有三大特征：高即时满足（当下的快乐 > 未来的安全）、低延迟满足（等待让你焦虑）、体验驱动（你更看重体验而非占有）。优势：生活有滋味、朋友喜欢和你玩；注意：需要建立基本的财务安全垫。",
+    pathA: { title: "月光模式", desc: "发工资→犒劳自己→月底紧张→焦虑→下个月继续。循环快乐但缺乏安全感。" },
+    pathB: { title: "平衡方向", desc: "发工资→先存20%→剩下80%尽情享受→月底不焦虑→快乐更持久。" },
+    actions: ["第1-14天：开一个「不碰账户」，设置发薪日自动转20%进去", "第15-30天：记录一个月的每一笔开销，不用改变习惯，先建立意识", "第31-60天：找出3笔「花完就后悔」的消费，分析背后的情绪触发点", "第61-90天：尝试「72小时冷静法则」——任何超过500元的消费等72小时再决定"]
+  },
+  saver: {
+    icon: "🏦", name: "守财安全型",
+    desc: "存钱是最大的安全感——你的存款数字稳步增长，但有时候也需要问问自己：钱到底是为了什么？",
+    core: "你属于「守财安全型」。钱对你来说是安全感的基石，存钱本身就是一种快乐。你对每一笔开销都心中有数，很少冲动消费。你的挑战不是「学会存钱」，而是「学会适度花钱享受生活」。",
+    mechanism: "你的消费心理有三大特征：高延迟满足（未来的安全 > 当下的快乐）、强风险规避（不确定性让你焦虑）、数字驱动（存款数字比消费体验更让你满足）。优势：财务安全、抗风险能力强；注意：有时候需要允许自己享受当下。",
+    pathA: { title: "守财模式", desc: "收入→存起来→舍不得花→存款多了但生活少了滋味→继续存。" },
+    pathB: { title: "平衡方向", desc: "收入→存一部分→设定「快乐基金」→定期犒劳自己→既有安全感又有幸福感。" },
+    actions: ["第1-14天：设立「快乐基金」——每月收入的5%-10%必须花掉，专门用来享受", "第15-30天：做一件「没有性价比但让你开心」的事，不计算值不值", "第31-60天：请自己或朋友吃一顿好饭，不AA、不算计、纯粹享受", "第61-90天：复盘——花了「快乐基金」后，你的生活质量有什么变化？"]
+  },
+  balanced: {
+    icon: "⚖️", name: "精打细算型",
+    desc: "该花的花，该省的省——你是朋友圈里最让人佩服的「理财达人」，既能享受生活又能守住底线。",
+    core: "你属于「精打细算型」。你和钱的关系是健康的——你不被消费主义裹挟，也不被守财心理束缚。你懂得规划、知道取舍、能在享受和保障之间找到自己的节奏。你的挑战是保持这种平衡，同时帮助身边的人。",
+    mechanism: "你的消费心理是「理性驱动」——消费决策基于实际需求而非情绪冲动。你既有储蓄的安全感，也有消费的愉悦感。优势：财务健康、心态稳定；可以精进的地方：帮助身边的人建立健康的金钱观。",
+    pathA: { title: "保持优势", desc: "你已经找到了和钱的最佳相处方式——继续保持，分享你的经验给更多人。" },
+    pathB: { title: "深度精进", desc: "在现有基础上学习理财投资，让你的钱不仅会省、还会生钱。" },
+    actions: ["第1-14天：复盘你的理财体系——是什么让你能做到理性消费？", "第15-30天：学习一个理财新技能——基金、股票、保险或其他", "第31-60天：帮助一个「月光族」朋友制定他的第一个存钱计划", "第61-90天：设定一个「财务小目标」并实现它（如：存够3个月生活费）"]
+  },
+  rollercoaster: {
+    icon: "🎢", name: "忽紧忽松型",
+    desc: "时而放纵时而愧疚——你和钱的关系像过山车，月初挥霍月底忏悔，循环往复。",
+    core: "你属于「忽紧忽松型」。你和钱的关系充满了矛盾——你知道应该存钱，但控制不住消费冲动；花完之后又后悔，发誓下个月一定省，然后下个月继续。这不是意志力的问题，而是你的消费触发机制需要被重新设定。",
+    mechanism: "你的消费心理是「情绪驱动」——压力大时花钱、开心时花钱、不开心时也花钱。你的消费行为更多受情绪而非理性控制。关键转变：从「情绪消费」到「有意识的消费」，建立消费前的「暂停机制」。",
+    pathA: { title: "过山车模式", desc: "冲动消费→后悔→发誓省钱→压力/诱惑→又冲动→更后悔。循环加剧。" },
+    pathB: { title: "稳定方向", desc: "识别消费触发点→建立暂停机制→用替代行为满足情绪→消费回归理性。" },
+    actions: ["第1-14天：做「消费情绪日记」——记录每次花钱前的心情和触发事件", "第15-30天：找出你的3个「消费触发点」（如：压力大、无聊、社交比较）", "第31-60天：为每个触发点设计一个「替代行为」（如：压力大去跑步而不是逛淘宝）", "第61-90天：给自己设定一个「无愧疚消费额度」，在这个额度内尽情花不后悔"]
+  }
+};
+
+let currentQuestion = 0, answers = [], scores = { "消费冲动": 0, "金钱观念": 0, "储蓄习惯": 0, "消费决策": 0, "金钱态度": 0 };
+
+function startTest() {
+  document.getElementById('welcome-page').classList.add('hidden');
+  document.getElementById('question-page').classList.remove('hidden');
+  document.getElementById('question-page').classList.add('fade-in');
+  currentQuestion = 0; answers = [];
+  scores = { "消费冲动": 0, "金钱观念": 0, "储蓄习惯": 0, "消费决策": 0, "金钱态度": 0 };
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('progress-text').textContent = `第 ${currentQuestion + 1}/20 题`;
+  document.getElementById('progress-fill').style.width = `${(currentQuestion + 1) / 20 * 100}%`;
+  document.getElementById('category-tag').textContent = q.category;
+  document.getElementById('question-text').textContent = q.text;
+  const ol = document.getElementById('option-list'); ol.innerHTML = '';
+  ['A','B','C','D'].forEach((lbl, i) => {
+    const li = document.createElement('li'); li.className = 'option-item';
+    li.innerHTML = `<span class="option-label">${lbl}.</span> ${q.options[i]}`;
+    li.onclick = () => selectOption(i, li); ol.appendChild(li);
+  });
+  document.getElementById('next-btn').disabled = true;
+  document.getElementById('next-btn').textContent = currentQuestion < 19 ? '下一题 →' : '查看结果 ✨';
+}
+
+function selectOption(index, element) {
+  document.querySelectorAll('.option-item').forEach(el => el.classList.remove('selected'));
+  element.classList.add('selected');
+  document.getElementById('next-btn').disabled = false;
+  element.dataset.selectedIndex = index;
+}
+
+function nextQuestion() {
+  const sel = document.querySelector('.option-item.selected');
+  if (!sel) return;
+  const idx = parseInt(sel.dataset.selectedIndex);
+  answers.push(idx);
+  const q = questions[currentQuestion];
+  const sm = { 0: 4, 1: 1, 2: 3, 3: 2 };
+  scores[q.category] += sm[idx];
+  currentQuestion++;
+  if (currentQuestion < 20) { showQuestion(); document.getElementById('question-page').classList.remove('fade-in'); void document.getElementById('question-page').offsetWidth; document.getElementById('question-page').classList.add('fade-in'); }
+  else showResult();
+}
+
+function showResult() {
+  document.getElementById('question-page').classList.add('hidden');
+  document.getElementById('result-page').classList.remove('hidden');
+  document.getElementById('result-page').classList.add('fade-in');
+  const total = Object.values(scores).reduce((a,b)=>a+b,0);
+  const pct = Math.round(total / 80 * 100);
+  let rk;
+  if (pct >= 70) rk = 'spender';
+  else if (pct >= 50) rk = 'rollercoaster';
+  else if (pct >= 30) rk = 'balanced';
+  else rk = 'saver';
+  const r = resultTypes[rk];
+  document.getElementById('result-icon').textContent = r.icon;
+  document.getElementById('result-name').textContent = r.name;
+  document.getElementById('result-desc').textContent = r.desc;
+  document.getElementById('score-number').textContent = pct + '%';
+  document.getElementById('score-bar-fill').style.width = pct + '%';
+  const hints = { spender: '偏高——快乐至上，记得留点安全垫', saver: '偏低——安全感满满，偶尔犒劳一下自己吧', balanced: '适中——你和钱的关系最健康', rollercoaster: '中等偏高——情绪驱动消费，学会暂停' };
+  document.getElementById('score-hint').textContent = hints[rk];
+  document.getElementById('interpret-core').textContent = r.core;
+  document.getElementById('interpret-mechanism').textContent = r.mechanism;
+  document.getElementById('path-a-title').textContent = r.pathA.title;
+  document.getElementById('path-a-desc').textContent = r.pathA.desc;
+  document.getElementById('path-b-title').textContent = r.pathB.title;
+  document.getElementById('path-b-desc').textContent = r.pathB.desc;
+  document.getElementById('action-steps').innerHTML = r.actions.map((a,i)=>`<div class="action-step"><span class="step-num">${i+1}</span>${a}</div>`).join('');
+  drawRadar();
+}
+
+function drawRadar() {
+  const c = document.getElementById('radar-chart');
+  const dims = ["消费冲动","金钱观念","储蓄习惯","消费决策","金钱态度"];
+  const maxD = 16, cx = 125, cy = 125, R = 100;
+  let s = `<svg class="radar-svg" viewBox="0 0 250 250">`;
+  for (let lv=1; lv<=4; lv++) {
+    let pts = []; for (let i=0; i<5; i++) { const a = Math.PI*2*i/5 - Math.PI/2; const r = R*lv/4; pts.push(`${cx+r*Math.cos(a)},${cy+r*Math.sin(a)}`); }
+    s += `<polygon points="${pts.join(' ')}" fill="none" stroke="#C3D9F0" stroke-width="1" opacity="0.6"/>`;
+  }
+  for (let i=0; i<5; i++) { const a = Math.PI*2*i/5 - Math.PI/2; s += `<line x1="${cx}" y1="${cy}" x2="${cx+R*Math.cos(a)}" y2="${cy+R*Math.sin(a)}" stroke="#C3D9F0" stroke-width="1"/>`; }
+  let dp = []; for (let i=0; i<5; i++) { const a = Math.PI*2*i/5 - Math.PI/2; const r = R*Math.min(scores[dims[i]]/maxD,1); dp.push(`${cx+r*Math.cos(a)},${cy+r*Math.sin(a)}`); }
+  s += `<polygon points="${dp.join(' ')}" fill="rgba(135,206,250,0.25)" stroke="#87CEFA" stroke-width="2.5"/>`;
+  for (let i=0; i<5; i++) { const a = Math.PI*2*i/5 - Math.PI/2; const r = R*Math.min(scores[dims[i]]/maxD,1); s += `<circle cx="${cx+r*Math.cos(a)}" cy="${cy+r*Math.sin(a)}" r="5" fill="#64B5E6"/>`; }
+  for (let i=0; i<5; i++) { const a = Math.PI*2*i/5 - Math.PI/2; const lr = R+24; const x = cx+lr*Math.cos(a); const y = cy+lr*Math.sin(a); const anc = Math.abs(x-cx)<15?'middle':(x<cx?'end':'start'); s += `<text x="${x}" y="${y}" text-anchor="${anc}" dominant-baseline="middle" font-size="11" fill="#5A6D82">${dims[i]}</text>`; }
+  s += '</svg>'; c.innerHTML = s;
+}
+
+function restartTest() { document.getElementById('result-page').classList.add('hidden'); document.getElementById('welcome-page').classList.remove('hidden'); currentQuestion=0; answers=[]; scores={"消费冲动":0,"金钱观念":0,"储蓄习惯":0,"消费决策":0,"金钱态度":0}; }
+
+function shareResult() {
+  const n = document.getElementById('result-name').textContent, d = document.getElementById('result-desc').textContent;
+  const t = `测了「花钱人格」：${n} - ${d}`;
+  navigator.share ? navigator.share({title:'测测你的花钱人格',text:t}) : (navigator.clipboard.writeText(t), alert('结果已复制！'));
+}
+</script>
+</body>
+</html>
