@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>你身上最吸引人的气质 - 20题完整版气质魅力测试</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#F0F8FF;min-height:100vh;color:#3D5A6C}
+.container{max-width:500px;margin:0 auto;padding:20px}
+
+.welcome{text-align:center;padding-top:50px}
+.welcome .emoji-top{font-size:64px;margin-bottom:16px}
+.welcome h1{font-size:32px;color:#2C5F6E;margin-bottom:10px;line-height:1.4}
+.welcome .subtitle{font-size:15px;color:#6B8E9A;margin-bottom:28px;line-height:1.6}
+.welcome .dims{text-align:left;margin-bottom:36px;background:white;border-radius:20px;padding:20px 24px;box-shadow:0 4px 20px rgba(135,206,250,0.1)}
+.welcome .dim-item{display:flex;align-items:center;gap:12px;padding:9px 0;font-size:15px;color:#5A8A9A}
+.welcome .dim-item .dot{width:8px;height:8px;border-radius:50%;background:#87CEFA;flex-shrink:0}
+
+.btn{display:inline-block;padding:16px 60px;background:linear-gradient(135deg,#87CEFA,#64B5E6);color:white;font-size:20px;font-weight:bold;border:none;border-radius:40px;cursor:pointer;text-decoration:none;box-shadow:0 6px 24px rgba(135,206,250,0.4);transition:all 0.3s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(135,206,250,0.5)}
+.btn:active{transform:translateY(0)}
+.btn-small{padding:12px 40px;font-size:16px}
+
+.quiz-page{display:none}.quiz-page.active{display:block}
+.progress-bar{width:100%;height:8px;background:#E0E0E0;border-radius:4px;margin-bottom:10px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#87CEFA,#64B5E6);border-radius:4px;transition:width 0.4s ease}
+.progress-text{text-align:center;font-size:14px;color:#6B8E9A;margin-bottom:28px}
+
+.question{margin-bottom:26px}
+.question .q-num{display:inline-block;width:36px;height:36px;line-height:36px;text-align:center;background:#87CEFA;color:white;border-radius:50%;font-weight:bold;font-size:16px;margin-right:10px;vertical-align:middle}
+.question h3{display:inline;font-size:20px;color:#2C5F6E;line-height:1.5}
+
+.options{margin-top:18px}
+.option{display:block;width:100%;padding:18px 20px;margin-bottom:12px;background:white;border:2px solid #E8F4FD;border-radius:16px;font-size:16px;color:#3D5A6C;text-align:left;cursor:pointer;transition:all 0.3s}
+.option:hover{border-color:#87CEFA;background:#F0F8FF}
+.option.selected{border-color:#87CEFA;background:#F0F8FF;box-shadow:0 2px 12px rgba(135,206,250,0.2)}
+.option .opt-label{display:inline-block;width:28px;height:28px;line-height:28px;text-align:center;background:#87CEFA;color:white;border-radius:50%;font-weight:bold;font-size:14px;margin-right:12px}
+
+.quick-result{display:none;text-align:center;padding-top:30px}
+.quick-result.active{display:block}
+.quick-result .result-type{font-size:52px;margin-bottom:8px}
+.quick-result .result-name{font-size:28px;font-weight:bold;color:#2C5F6E;margin-bottom:10px}
+.quick-result .result-desc{font-size:15px;color:#6B8E9A;margin-bottom:28px;line-height:1.6}
+.quick-result .result-chart{margin:16px auto;max-width:280px}
+.quick-result .upgrade-box{background:white;border-radius:20px;padding:28px 20px;margin-top:28px;box-shadow:0 4px 20px rgba(135,206,250,0.1)}
+.quick-result .upgrade-box h4{font-size:20px;color:#2C5F6E;margin-bottom:12px}
+.quick-result .upgrade-box p{font-size:14px;color:#6B8E9A;margin-bottom:20px;line-height:1.6}
+
+.full-result{display:none;text-align:center;padding-top:24px}
+.full-result.active{display:block}
+.full-result .result-type{font-size:60px;margin-bottom:8px}
+.full-result .result-name{font-size:32px;font-weight:bold;color:#2C5F6E;margin-bottom:8px}
+.full-result .score{display:inline-block;padding:8px 24px;background:#F0F8FF;border-radius:20px;font-size:16px;color:#5A8A9A;margin-bottom:20px}
+.full-result .result-desc{font-size:15px;color:#3D5A6C;line-height:1.8;text-align:left;margin-bottom:20px;padding:20px;background:white;border-radius:16px}
+.full-result .chart-box{background:white;border-radius:20px;padding:20px;margin:20px 0;box-shadow:0 4px 20px rgba(135,206,250,0.1)}
+.full-result .chart-box h4{font-size:18px;color:#2C5F6E;margin-bottom:14px}
+.full-result .radar-container{width:280px;height:280px;margin:0 auto}
+.full-result .action-plan{text-align:left;background:white;border-radius:16px;padding:20px;margin:20px 0}
+.full-result .action-plan h4{font-size:18px;color:#2C5F6E;margin-bottom:16px;text-align:center}
+.full-result .action-item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #F0F8FF}
+.full-result .action-item:last-child{border-bottom:none}
+.full-result .action-num{width:28px;height:28px;line-height:28px;text-align:center;background:#87CEFA;color:white;border-radius:50%;font-weight:bold;font-size:14px;flex-shrink:0}
+.full-result .action-text{font-size:14px;color:#3D5A6C;line-height:1.6}
+.full-result .path-box{text-align:left;background:white;border-radius:16px;padding:20px;margin:20px 0}
+.full-result .path-box h4{font-size:18px;color:#2C5F6E;margin-bottom:14px;text-align:center}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="container" id="app">
+
+<div class="welcome" id="welcome">
+  <div class="emoji-top">✨</div>
+  <h1>你身上最吸引人的气质</h1>
+  <p class="subtitle">20题深度扫描你的气质魅力密码</p>
+  <div class="dims">
+    <div class="dim-item"><span class="dot"></span> 神秘感 —— 别人看不透但想了解的程度</div>
+    <div class="dim-item"><span class="dot"></span> 自信力 —— 你气场强大到什么程度</div>
+    <div class="dim-item"><span class="dot"></span> 亲和力 —— 让人感到温暖和安全的能力</div>
+    <div class="dim-item"><span class="dot"></span> 独立性 —— 不依附不讨好的自由度</div>
+    <div class="dim-item"><span class="dot"></span> 表达力 —— 你说话做事的感染力</div>
+  </div>
+  <button class="btn" onclick="startQuiz()">开始测试</button>
+</div>
+
+<div class="quiz-page" id="quizPage">
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-text" id="progressText">1/5</div>
+  <div class="question"><span class="q-num" id="qNum">1</span><h3 id="qText"></h3></div>
+  <div class="options" id="optionsBox"></div>
+  <button class="btn btn-small hidden" id="nextBtn" onclick="nextQuestion()">下一题</button>
+</div>
+
+<div class="quick-result" id="quickResult">
+  <div class="result-type" id="qrType"></div>
+  <div class="result-name" id="qrName"></div>
+  <div class="result-desc" id="qrDesc"></div>
+  <div class="result-chart"><canvas id="quickRadar" width="260" height="260"></canvas></div>
+  <div class="upgrade-box">
+    <h4>🎯 以上只是5题快速版</h4>
+    <p>完成全部20题，你将获得：<br>
+    ✅ 精确的气质魅力指数评分<br>
+    ✅ 五维雷达图深度分析<br>
+    ✅ 你的气质进化路径<br>
+    ✅ 90天气质提升行动方案</p>
+    <button class="btn" onclick="showFullQuiz()">解锁完整20题测试</button>
+  </div>
+</div>
+
+<div class="quiz-page" id="fullQuizPage">
+  <div class="progress-bar"><div class="progress-fill" id="fullProgressFill"></div></div>
+  <div class="progress-text" id="fullProgressText">6/25</div>
+  <div class="question"><span class="q-num" id="fullQNum">6</span><h3 id="fullQText"></h3></div>
+  <div class="options" id="fullOptionsBox"></div>
+  <button class="btn btn-small hidden" id="fullNextBtn" onclick="fullNextQuestion()">下一题</button>
+</div>
+
+<div class="full-result" id="fullResult"></div>
+
+</div>
+
+<script>
+const quickQuestions=[
+  {q:"第一次见面，别人最常对你的印象是？",opts:["有点神秘，不容易看透","气场很强，一看就不好惹","冷静淡定，好像什么都不在意","温暖亲切，让人觉得很舒服"],scores:[4,3,2,1]},
+  {q:"在社交场合，你更倾向于？",opts:["安静观察，偶尔说几句很有分量的话","自然成为焦点，大家都会注意到你","不在意是否被关注，做自己就好","主动照顾每个人的感受"],scores:[4,3,2,1]},
+  {q:"面对冲突时，你的反应是？",opts:["用沉默和冷静让对方自己收敛","正面交锋，气场碾压","不情绪化，理性分析解决","先安抚对方情绪，再解决问题"],scores:[4,3,2,1]},
+  {q:"别人对你的评价最可能包含？",opts:["看不透但很想了解","很有存在感，不容易忽视","独立自主，不随波逐流","让人感到安心和被理解"],scores:[4,3,2,1]},
+  {q:"你觉得真正吸引人的特质是？",opts:["神秘感和不可预测性","自信和掌控力","独立和不依附","真诚和温暖"],scores:[4,3,2,1]}
+];
+
+const fullQuestions=[
+  // 维度1: 神秘感 (6-9)
+  {q:"你会主动分享自己的私人生活吗？",opts:["很少，我有明确的边界","选择性分享，只说该说的","觉得没什么需要隐藏的","很乐意分享，希望大家了解我"],scores:[4,3,2,1]},
+  {q:"当别人试图深入了解你时，你的反应？",opts:["有所保留，不会全盘托出","看对方值不值得","无所谓，问什么答什么","很高兴，觉得被重视了"],scores:[4,3,2,1]},
+  {q:"你的朋友圈/社交媒体风格？",opts:["很少发，偶尔发很有质感的","发的少但每条都很有风格","真实记录，想发就发","经常分享日常，互动很多"],scores:[4,3,2,1]},
+  {q:"有人说你「很难被看透」，你的反应？",opts:["这就是我要的效果","有点意外，我没刻意隐藏","不完全认同，我其实挺直接的","不太喜欢，我希望被理解"],scores:[4,3,2,1]},
+  // 维度2: 自信力 (10-13)
+  {q:"走进一个陌生场合，你的状态？",opts:["自信从容，不会不安","有点紧张但很快适应","需要观察一阵才敢行动","会找熟人，不喜欢独自进入"],scores:[4,3,2,1]},
+  {q:"别人夸你时，你的反应？",opts:["微笑接受，我确实不错","感谢但不太当回事","有点不好意思","很开心，反复回味"],scores:[4,3,2,1]},
+  {q:"你对自己的外貌/能力的评价？",opts:["我很清楚自己的优势和短板","总体不错，有些地方需提升","还行吧，不算特别出众","总觉得自己不够好"],scores:[4,3,2,1]},
+  {q:"在重要场合发言/演讲，你的表现？",opts:["游刃有余，甚至享受这个过程","有点紧张但能镇住场","需要充分准备才敢上台","尽量避免，太紧张了"],scores:[4,3,2,1]},
+  // 维度3: 亲和力 (14-17)
+  {q:"陌生人主动跟你聊天，你的反应？",opts:["礼貌回应但不会太热情","看对方是否有趣再决定","冷淡回应，不太想聊","很热情，觉得遇到新朋友"],scores:[2,3,1,4]},
+  {q:"朋友遇到困难找你倾诉，你通常？",opts:["帮他分析问题，给出建议","倾听但不会太深入","告诉他要自己解决","认真倾听，给予情感支持"],scores:[2,3,1,4]},
+  {q:"你更擅长让别人感到？",opts:["好奇和想要靠近","敬佩和仰慕","尊重但保持距离","被理解和温暖"],scores:[4,3,2,1]},
+  {q:"你在团队中的角色通常是？",opts:["独特存在，不太融入集体","领导者/意见核心","独立工作者","团队的温暖担当"],scores:[4,3,2,1]},
+  // 维度4: 独立性 (18-21)
+  {q:"做重大决定时，你更依赖？",opts:["自己的判断，很少征求他人意见","会考虑他人意见但最终自己决定","需要和家人/伴侣商量","一定要得到重要的人认可才安心"],scores:[4,3,2,1]},
+  {q:"独处时你的状态？",opts:["非常享受，独处是我的充电时间","挺好的，可以做自己的事","有点无聊但能忍受","不喜欢独处，需要有人陪伴"],scores:[4,3,2,1]},
+  {q:"别人对你的生活方式提出质疑，你？",opts:["无所谓，我活我自己的","会解释但不会改变","有点动摇但坚持己见","很在意，可能调整"],scores:[4,3,2,1]},
+  {q:"你更认同哪种生活哲学？",opts:["做自己，不需要所有人理解","掌控自己的人生方向","追求内心的平静和自由","和身边的人一起幸福才是真"],scores:[4,3,2,1]},
+  // 维度5: 表达力 (22-25)
+  {q:"你表达观点的方式更像？",opts:["少说多做，偶尔一击致命","气场表达，不用说话就能影响人","理性清晰，条理分明","温柔有感染力，打动人心"],scores:[4,3,2,1]},
+  {q:"你的穿搭/形象风格？",opts:["低调但有质感，细节藏着品味","大胆有风格，一眼就能认出","简洁干净，舒适优先","温柔亲和，让人觉得亲近"],scores:[4,3,2,1]},
+  {q:"写文字/说话时，你的特点？",opts:["简洁有力，字字到位","果断明确，不留歧义","逻辑清晰，论证充分","细腻感人，容易共情"],scores:[4,3,2,1]},
+  {q:"别人记住你，通常因为？",opts:["某句话或某个瞬间，印象深刻","你的气场和存在感","你的冷静和理性","你的温暖和真诚"],scores:[4,3,2,1]}
+];
+
+const results=[
+  {type:"✨",name:"神秘磁力型",desc:"你自带一种让人想靠近却看不透的磁场。你不需要刻意吸引谁，你的神秘感本身就是最大的魅力。别人对你的好奇，远比你主动展现的更有吸引力。",scoreLabel:"气质魅力指数",scoreRange:"80-100",scoreDesc:"极高神秘吸引力"},
+  {type:"🔥",name:"自信气场型",desc:"你的气场自带焦点效应——走进任何场合，别人都会注意到你。你不需要讨好谁，自信本身就是你最强大的气质武器。掌控感让你在任何环境都游刃有余。",scoreLabel:"气质魅力指数",scoreRange:"60-80",scoreDesc:"强大气场吸引力"},
+  {type:"🧊",name:"清冷独立型",desc:"你不依附、不讨好、不随波逐流。你的独立和自洽让人觉得你活得很通透。清冷不是冷漠，而是「我很好，不需要谁来完整我」的自在感。",scoreLabel:"气质魅力指数",scoreRange:"40-60",scoreDesc:"独立自在吸引力"},
+  {type:"🌸",name:"温柔治愈型",desc:"你的温暖和真诚是最大的磁场。别人靠近你时会感到安全和被理解。你的气质不是锋利的，而是柔和有力量的——像春天的风，不声不响却让人念念不忘。",scoreLabel:"气质魅力指数",scoreRange:"30-50",scoreDesc:"温暖治愈吸引力"}
+];
+
+const dimNames=["神秘感","自信力","亲和力","独立性","表达力"];
+
+let quickAnswers=[],quickCurrent=0,fullAnswers=[],fullCurrent=0;
+
+function startQuiz(){
+  document.getElementById('welcome').style.display='none';
+  document.getElementById('quizPage').classList.add('active');
+  document.getElementById('quizPage').style.display='block';
+  quickCurrent=0;quickAnswers=[];showQuickQuestion();
+}
+
+function showQuickQuestion(){
+  if(quickCurrent>=5){showQuickResult();return}
+  const q=quickQuestions[quickCurrent];
+  document.getElementById('qNum').textContent=quickCurrent+1;
+  document.getElementById('qText').textContent=q.q;
+  document.getElementById('progressFill').style.width=(quickCurrent/5*100)+'%';
+  document.getElementById('progressText').textContent=(quickCurrent+1)+'/5';
+  let html='';
+  q.opts.forEach((opt,i)=>{
+    const sel=quickAnswers[quickCurrent]===i?' selected':'';
+    html+=`<button class="option${sel}" onclick="selectQuick(${i})"><span class="opt-label">${String.fromCharCode(65+i)}</span>${opt}</button>`;
+  });
+  document.getElementById('optionsBox').innerHTML=html;
+  document.getElementById('nextBtn').classList.add('hidden');
+}
+
+function selectQuick(idx){
+  quickAnswers[quickCurrent]=idx;
+  document.querySelectorAll('.option').forEach((el,i)=>el.classList.toggle('selected',i===idx));
+  document.getElementById('nextBtn').classList.remove('hidden');
+}
+function nextQuestion(){quickCurrent++;showQuickQuestion()}
+
+function showQuickResult(){
+  document.getElementById('quizPage').style.display='none';
+  document.getElementById('quizPage').classList.remove('active');
+  document.getElementById('quickResult').classList.add('active');
+  document.getElementById('quickResult').style.display='block';
+  let total=0;
+  quickAnswers.forEach((a,i)=>{total+=quickQuestions[i].scores[a]});
+  let score=Math.round((total-5)/(20-5)*100);
+  score=Math.max(0,Math.min(100,score));
+  let ri=score>=70?0:score>=55?1:score>=40?2:3;
+  const r=results[ri];
+  document.getElementById('qrType').textContent=r.type;
+  document.getElementById('qrName').textContent=r.name;
+  document.getElementById('qrDesc').textContent=r.desc;
+  setTimeout(()=>drawRadar('quickRadar',[65,55,70,60,50]),200);
+}
+
+function showFullQuiz(){
+  document.getElementById('quickResult').style.display='none';
+  document.getElementById('quickResult').classList.remove('active');
+  document.getElementById('fullQuizPage').classList.add('active');
+  document.getElementById('fullQuizPage').style.display='block';
+  fullCurrent=0;fullAnswers=[];showFullQuestion();
+}
+
+function showFullQuestion(){
+  if(fullCurrent>=20){showFullResult();return}
+  const q=fullQuestions[fullCurrent];
+  document.getElementById('fullQNum').textContent=fullCurrent+6;
+  document.getElementById('fullQText').textContent=q.q;
+  document.getElementById('fullProgressFill').style.width=((fullCurrent+5)/25*100)+'%';
+  document.getElementById('fullProgressText').textContent=(fullCurrent+6)+'/25';
+  let html='';
+  q.opts.forEach((opt,i)=>{
+    const sel=fullAnswers[fullCurrent]===i?' selected':'';
+    html+=`<button class="option${sel}" onclick="selectFull(${i})"><span class="opt-label">${String.fromCharCode(65+i)}</span>${opt}</button>`;
+  });
+  document.getElementById('fullOptionsBox').innerHTML=html;
+  document.getElementById('fullNextBtn').classList.add('hidden');
+}
+
+function selectFull(idx){
+  fullAnswers[fullCurrent]=idx;
+  document.querySelectorAll('#fullOptionsBox .option').forEach((el,i)=>el.classList.toggle('selected',i===idx));
+  document.getElementById('fullNextBtn').classList.remove('hidden');
+}
+function fullNextQuestion(){fullCurrent++;showFullQuestion()}
+
+function showFullResult(){
+  document.getElementById('fullQuizPage').style.display='none';
+  document.getElementById('fullQuizPage').classList.remove('active');
+  let dimScores=[0,0,0,0,0];
+  fullAnswers.forEach((a,i)=>{dimScores[Math.floor(i/4)]+=fullQuestions[i].scores[a]});
+  let dimNorm=dimScores.map(s=>Math.round(s/16*100));
+  let totalScore=dimScores.reduce((a,b)=>a+b,0);
+  let finalScore=Math.round(totalScore/80*100);
+  finalScore=Math.max(0,Math.min(100,finalScore));
+
+  let ri=finalScore>=70?0:finalScore>=55?1:finalScore>=40?2:3;
+  const r=results[ri];
+
+  let pathText;
+  if(ri===0)pathText="✨ 神秘磁力型 → 强化磁场：保持你的边界感和质感，同时适度打开——神秘+偶尔的真诚才是致命吸引力。";
+  else if(ri===1)pathText="🔥 自信气场型 → 深化气场：自信是你的底牌，但加上温度会更无敌——气场+共情力=不可抗拒。";
+  else if(ri===2)pathText="🧊 清冷独立型 → 自在进阶：独立是你的内核，适度展现柔软面会让人更想靠近——独立+偶尔的温暖=最高级的气质。";
+  else pathText="🌸 温柔治愈型 → 升维温暖：你的温暖是天赋，但别忘了保护自己的边界——温暖+边界感=治愈而不消耗。";
+
+  const actions=[
+    ["第1-30天：气质认知","观察自己在不同场合的表现，记录别人对你的3个最常见评价，找到你的气质锚点"],
+    ["第1-30天：气质强化","每天做一件强化你主气质的事——神秘型保持沉默质感、自信型主动表达、独立型独处充电、温暖型真诚倾听"],
+    ["第31-60天：气质升级","加入一个让你有压力的场合（演讲、社交、新圈子），在压力中磨炼你的气质表达力"],
+    ["第61-90天：气质定调","复盘30+60天的变化，确定你的气质关键词，写一份「我的气质宣言」"]
+  ];
+
+  let html=`
+    <div class="result-type">${r.type}</div>
+    <div class="result-name">${r.name}</div>
+    <div class="score">${r.scoreLabel}：${finalScore}分 · ${r.scoreDesc}</div>
+    <div class="result-desc">${r.desc}</div>
+    <div class="chart-box">
+      <h4>📊 五维雷达图分析</h4>
+      <div class="radar-container"><canvas id="fullRadar" width="280" height="280"></canvas></div>
+    </div>
+    <div class="path-box">
+      <h4>🛤️ 你的气质进化路径</h4>
+      <p style="font-size:14px;color:#3D5A6C;line-height:1.8">${pathText}</p>
+    </div>
+    <div class="action-plan">
+      <h4>📋 90天气质提升计划</h4>
+      ${actions.map((a,i)=>`
+        <div class="action-item">
+          <div class="action-num">${i+1}</div>
+          <div class="action-text"><strong>${a[0]}</strong><br>${a[1]}</div>
+        </div>`).join('')}
+    </div>
+    <p style="font-size:13px;color:#6B8E9A;margin-top:16px">💡 气质不是天生的固定值，而是可以持续修炼的<br>最吸引人的气质，是活出真实自己的那种自在</p>
+  `;
+
+  document.getElementById('fullResult').innerHTML=html;
+  document.getElementById('fullResult').classList.add('active');
+  document.getElementById('fullResult').style.display='block';
+  setTimeout(()=>drawRadar('fullRadar',dimNorm),300);
+}
+
+function drawRadar(cid,data){
+  const c=document.getElementById(cid);
+  if(!c)return;
+  const ctx=c.getContext('2d'),cx=c.width/2,cy=c.height/2,r=100,sides=5;
+  ctx.clearRect(0,0,c.width,c.height);
+  for(let lv=1;lv<=5;lv++){
+    ctx.beginPath();
+    for(let i=0;i<sides;i++){
+      const a=(Math.PI*2/sides)*i-Math.PI/2;
+      const rr=(r/5)*lv;
+      const x=cx+rr*Math.cos(a),y=cy+rr*Math.sin(a);
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.closePath();ctx.strokeStyle='#E0E0E0';ctx.lineWidth=1;ctx.stroke();
+  }
+  for(let i=0;i<sides;i++){
+    const a=(Math.PI*2/sides)*i-Math.PI/2;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));
+    ctx.strokeStyle='#E0E0E0';ctx.stroke();
+  }
+  ctx.beginPath();
+  for(let i=0;i<sides;i++){
+    const a=(Math.PI*2/sides)*i-Math.PI/2;
+    const rr=(data[i]/100)*r;
+    const x=cx+rr*Math.cos(a),y=cy+rr*Math.sin(a);
+    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  }
+  ctx.closePath();ctx.fillStyle='rgba(135,206,250,0.3)';ctx.fill();ctx.strokeStyle='#87CEFA';ctx.lineWidth=2;ctx.stroke();
+  for(let i=0;i<sides;i++){
+    const a=(Math.PI*2/sides)*i-Math.PI/2;
+    const rr=(data[i]/100)*r;
+    ctx.beginPath();ctx.arc(cx+rr*Math.cos(a),cy+rr*Math.sin(a),5,0,Math.PI*2);ctx.fillStyle='#64B5E6';ctx.fill();
+  }
+  ctx.fillStyle='#3D5A6C';ctx.font='12px -apple-system,sans-serif';ctx.textAlign='center';
+  for(let i=0;i<sides;i++){
+    const a=(Math.PI*2/sides)*i-Math.PI/2;
+    ctx.fillText(dimNames[i],cx+(r+25)*Math.cos(a),cy+(r+25)*Math.sin(a)+4);
+  }
+}
+</script>
+</body>
+</html>
