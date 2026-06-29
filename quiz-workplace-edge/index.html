@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>你在职场上更容易靠什么脱颖而出 - 20题完整版职场竞争力测试</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#F0F8FF;min-height:100vh;color:#3D5A6C}
+.container{max-width:500px;margin:0 auto;padding:20px}
+.welcome{text-align:center;padding-top:50px}
+.welcome .emoji-top{font-size:64px;margin-bottom:16px}
+.welcome h1{font-size:30px;color:#2C5F6E;margin-bottom:10px;line-height:1.4}
+.welcome .subtitle{font-size:15px;color:#6B8E9A;margin-bottom:28px;line-height:1.6}
+.welcome .dims{text-align:left;margin-bottom:36px;background:white;border-radius:20px;padding:20px 24px;box-shadow:0 4px 20px rgba(135,206,250,0.1)}
+.welcome .dim-item{display:flex;align-items:center;gap:12px;padding:9px 0;font-size:15px;color:#5A8A9A}
+.welcome .dim-item .dot{width:8px;height:8px;border-radius:50%;background:#87CEFA;flex-shrink:0}
+.btn{display:inline-block;padding:16px 60px;background:linear-gradient(135deg,#87CEFA,#64B5E6);color:white;font-size:20px;font-weight:bold;border:none;border-radius:40px;cursor:pointer;text-decoration:none;box-shadow:0 6px 24px rgba(135,206,250,0.4);transition:all 0.3s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(135,206,250,0.5)}
+.btn:active{transform:translateY(0)}
+.btn-small{padding:12px 40px;font-size:16px}
+.quiz-page{display:none}.quiz-page.active{display:block}
+.progress-bar{width:100%;height:8px;background:#E0E0E0;border-radius:4px;margin-bottom:10px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#87CEFA,#64B5E6);border-radius:4px;transition:width 0.4s ease}
+.progress-text{text-align:center;font-size:14px;color:#6B8E9A;margin-bottom:28px}
+.question{margin-bottom:26px}
+.question .q-num{display:inline-block;width:36px;height:36px;line-height:36px;text-align:center;background:#87CEFA;color:white;border-radius:50%;font-weight:bold;font-size:16px;margin-right:10px;vertical-align:middle}
+.question h3{display:inline;font-size:20px;color:#2C5F6E;line-height:1.5}
+.options{margin-top:18px}
+.option{display:block;width:100%;padding:18px 20px;margin-bottom:12px;background:white;border:2px solid #E8F4FD;border-radius:16px;font-size:16px;color:#3D5A6C;text-align:left;cursor:pointer;transition:all 0.3s}
+.option:hover{border-color:#87CEFA;background:#F0F8FF}
+.option.selected{border-color:#87CEFA;background:#F0F8FF;box-shadow:0 2px 12px rgba(135,206,250,0.2)}
+.option .opt-label{display:inline-block;width:28px;height:28px;line-height:28px;text-align:center;background:#87CEFA;color:white;border-radius:50%;font-weight:bold;font-size:14px;margin-right:12px}
+.quick-result{display:none;text-align:center;padding-top:30px}
+.quick-result.active{display:block}
+.quick-result .result-type{font-size:52px;margin-bottom:8px}
+.quick-result .result-name{font-size:28px;font-weight:bold;color:#2C5F6E;margin-bottom:10px}
+.quick-result .result-desc{font-size:15px;color:#6B8E9A;margin-bottom:28px;line-height:1.6}
+.quick-result .result-chart{margin:16px auto;max-width:280px}
+.quick-result .upgrade-box{background:white;border-radius:20px;padding:28px 20px;margin-top:28px;box-shadow:0 4px 20px rgba(135,206,250,0.1)}
+.quick-result .upgrade-box h4{font-size:20px;color:#2C5F6E;margin-bottom:12px}
+.quick-result .upgrade-box p{font-size:14px;color:#6B8E9A;margin-bottom:20px;line-height:1.6}
+.full-result{display:none;text-align:center;padding-top:24px}
+.full-result.active{display:block}
+.full-result .result-type{font-size:60px;margin-bottom:8px}
+.full-result .result-name{font-size:32px;font-weight:bold;color:#2C5F6E;margin-bottom:8px}
+.full-result .score{display:inline-block;padding:8px 24px;background:#F0F8FF;border-radius:20px;font-size:16px;color:#5A8A9A;margin-bottom:20px}
+.full-result .result-desc{font-size:15px;color:#3D5A6C;line-height:1.8;text-align:left;margin-bottom:20px;padding:20px;background:white;border-radius:16px}
+.full-result .chart-box{background:white;border-radius:20px;padding:20px;margin:20px 0;box-shadow:0 4px 20px rgba(135,206,250,0.1)}
+.full-result .chart-box h4{font-size:18px;color:#2C5F6E;margin-bottom:14px}
+.full-result .radar-container{width:280px;height:280px;margin:0 auto}
+.full-result .action-plan{text-align:left;background:white;border-radius:16px;padding:20px;margin:20px 0}
+.full-result .action-plan h4{font-size:18px;color:#2C5F6E;margin-bottom:16px;text-align:center}
+.full-result .action-item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #F0F8FF}
+.full-result .action-item:last-child{border-bottom:none}
+.full-result .action-num{width:28px;height:28px;line-height:28px;text-align:center;background:#87CEFA;color:white;border-radius:50%;font-weight:bold;font-size:14px;flex-shrink:0}
+.full-result .action-text{font-size:14px;color:#3D5A6C;line-height:1.6}
+.full-result .path-box{text-align:left;background:white;border-radius:16px;padding:20px;margin:20px 0}
+.full-result .path-box h4{font-size:18px;color:#2C5F6E;margin-bottom:14px;text-align:center}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="container" id="app">
+
+<div class="welcome" id="welcome">
+  <div class="emoji-top">🏆</div>
+  <h1>你在职场上更容易靠什么脱颖而出</h1>
+  <p class="subtitle">20题深度扫描你的职场突围密码</p>
+  <div class="dims">
+    <div class="dim-item"><span class="dot"></span> 创新能力 —— 你能否提出别人没想到的方案？</div>
+    <div class="dim-item"><span class="dot"></span> 人际手腕 —— 你能否整合资源搞定关键人物？</div>
+    <div class="dim-item"><span class="dot"></span> 执行效率 —— 你能否说到做到快速出结果？</div>
+    <div class="dim-item"><span class="dot"></span> 专业深度 —— 你是否拥有无可替代的硬实力？</div>
+    <div class="dim-item"><span class="dot"></span> 战略眼光 —— 你能否看准方向提前布局？</div>
+  </div>
+  <button class="btn" onclick="startQuiz()">开始测试</button>
+</div>
+
+<div class="quiz-page" id="quizPage">
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-text" id="progressText">1/5</div>
+  <div class="question"><span class="q-num" id="qNum">1</span><h3 id="qText"></h3></div>
+  <div class="options" id="optionsBox"></div>
+  <button class="btn btn-small hidden" id="nextBtn" onclick="nextQuestion()">下一题</button>
+</div>
+
+<div class="quick-result" id="quickResult">
+  <div class="result-type" id="qrType"></div>
+  <div class="result-name" id="qrName"></div>
+  <div class="result-desc" id="qrDesc"></div>
+  <div class="result-chart"><canvas id="quickRadar" width="260" height="260"></canvas></div>
+  <div class="upgrade-box">
+    <h4>🎯 以上只是5题快速版</h4>
+    <p>完成全部20题，你将获得：<br>
+    ✅ 精确的职场突围指数评分<br>
+    ✅ 五维雷达图深度分析<br>
+    ✅ 你的职场突围路径<br>
+    ✅ 90天职场竞争力提升计划</p>
+    <button class="btn" onclick="showFullQuiz()">解锁完整20题测试</button>
+  </div>
+</div>
+
+<div class="quiz-page" id="fullQuizPage">
+  <div class="progress-bar"><div class="progress-fill" id="fullProgressFill"></div></div>
+  <div class="progress-text" id="fullProgressText">6/25</div>
+  <div class="question"><span class="q-num" id="fullQNum">6</span><h3 id="fullQText"></h3></div>
+  <div class="options" id="fullOptionsBox"></div>
+  <button class="btn btn-small hidden" id="fullNextBtn" onclick="fullNextQuestion()">下一题</button>
+</div>
+
+<div class="full-result" id="fullResult"></div>
+
+</div>
+
+<script>
+const quickQuestions=[
+  {q:"领导交代一个模糊的任务，你会怎么做？",opts:["先想想怎么做出超出预期的效果","找关键人物沟通，搞清楚真正要什么","快速行动，先做出一版再迭代","深入研究相关领域，做到最专业"],scores:[4,3,2,1]},
+  {q:"团队遇到瓶颈时，你通常怎么做？",opts:["提出一个全新的思路或方向","找到合适的人来帮忙突破","制定详细计划，一步步推进","深入研究问题根源，找到技术解法"],scores:[4,3,2,1]},
+  {q:"你在同事中最大的优势是什么？",opts:["想法多，总能提出不一样的观点","认识很多人，能快速找到资源","做事快，说到做到从不拖延","专业扎实，别人搞不定的事我能搞定"],scores:[4,3,2,1]},
+  {q:"升职加薪时，你觉得最重要的因素是？",opts:["做出了创新性的成果","有重要领导的支持和认可","业绩数据足够亮眼","专业能力无可替代"],scores:[4,3,2,1]},
+  {q:"如果只能在职场深耕一个方向，你选？",opts:["创新和战略规划","人际关系和资源整合","项目管理高效执行","专业技术深度钻研"],scores:[4,3,2,1]}
+];
+
+const fullQuestions=[
+  // 维度1: 创新能力 (6-9)
+  {q:"面对一个反复出现的老问题，你的第一反应是？",opts:["为什么一直没人从根本上解决它？先想新方案","找到有经验的人，看看有没有更好的做法","制定流程SOP，让问题不再重复出现","从技术层面深入研究，找到彻底根治的方法"],scores:[4,3,2,1]},
+  {q:"你对「按规矩办事」的态度是？",opts:["规矩是框架，突破框架才是价值","规矩是人定的，可以找人灵活处理","规矩定了就执行，效率最重要","规矩通常有专业依据，应该严格遵守"],scores:[4,3,2,1]},
+  {q:"你更喜欢什么样的工作任务？",opts:["从零到一的全新项目","需要多方协调的复杂项目","有明确目标和时间节点的任务","需要深度研究分析的技术课题"],scores:[4,3,2,1]},
+  {q:"你会主动提出改进建议吗？",opts:["经常，有时候领导都没想到的方案我先提了","偶尔，主要在涉及合作流程时提","不太提，先把手头的事做好","偶尔，主要在技术改进方面提"],scores:[4,3,2,1]},
+  // 维度2: 人际手腕 (10-13)
+  {q:"你需要推动一个跨部门项目，你的策略是？",opts:["设计一个让大家都有利益的新方案","先搞定关键部门的负责人，再往下推","制定清晰计划和分工表，按进度推进","准备充分的技术方案和数据说服各方"],scores:[4,3,2,1]},
+  {q:"领导对你印象不够好，你会？",opts:["做一个让他意想不到的成果扭转印象","通过其他关键人物间接影响他","闷头做事，等业绩说话","在某次技术讨论中展现专业深度"],scores:[4,3,2,1]},
+  {q:"公司里你更重视什么关系？",opts:["能碰撞出新想法的同频伙伴","能在关键时刻帮到你的贵人","能高效配合的实干队友","能交流专业见解的行业高手"],scores:[4,3,2,1]},
+  {q:"遇到办公室政治，你通常？",opts:["用创新成果让所有人无法忽视你","看懂局面，找到自己该站的位置","不参与，专心做好自己的事","用专业实力说话，不靠关系"],scores:[4,3,2,1]},
+  // 维度3: 执行效率 (14-17)
+  {q:"一个项目deadline很紧，你的做法？",opts:["重新设计方案，用更高效的方式完成","协调更多资源同时推进","制定详细排期，严格按节点推进","优先攻克最核心的技术难点"],scores:[2,3,4,1]},
+  {q:"你做事最大的特点是什么？",opts:["喜欢跳出常规思路再动手","善于调动各方力量一起推进","说到做到deadline从不拖延","死磕细节直到做到最好"],scores:[4,3,2,1]},
+  {q:"你更习惯的工作节奏？",opts:["爆发式——灵感来了集中产出","多线程——同时推进几个关系","流水线——每天固定节奏稳步推进","深钻式——花大量时间攻克一个难题"],scores:[4,3,2,1]},
+  {q:"项目出了意外状况，你的反应？",opts:["重新设计方案绕过障碍","马上联系能帮忙的人解决","快速评估影响调整排期","冷静分析找到技术替代方案"],scores:[4,3,2,1]},
+  // 维度4: 专业深度 (18-21)
+  {q:"同事问一个你不太了解的问题，你会？",opts:["提出一个相关的创新视角来回应","推荐一个更懂的人来回答","先快速给个方向，回头再补细节","说不太了解，但会研究后给出专业答案"],scores:[4,3,2,1]},
+  {q:"你觉得职场核心竞争力是什么？",opts:["持续创新的能力","整合资源的能力","高效执行的能力","不可替代的专业能力"],scores:[4,3,2,1]},
+  {q:"你更愿意花时间在？",opts:["学习新趋势和新方法论","维护和拓展人脉网络","优化流程提升效率","深钻一个领域做到极致"],scores:[4,3,2,1]},
+  {q:"别人遇到难题来找你，通常是因为？",opts:["你总能提出不一样的解法","你认识能解决问题的人","你做事靠谱能快速搞定","你在某个领域足够专业"],scores:[4,3,2,1]},
+  // 维度5: 战略眼光 (22-25)
+  {q:"你对行业趋势的关注程度？",opts:["非常关注，总在想下一个风口在哪","关注但不深入，主要通过圈内人了解","不太关注，专注做好手头的事","关注技术趋势，但不太关心商业方向"],scores:[4,3,2,1]},
+  {q:"做职业选择时，你更看重？",opts:["这个方向未来的创新空间","这个平台有多少关键人脉","这个岗位晋升路径是否清晰","这个岗位能否深度修炼专业"],scores:[4,3,2,1]},
+  {q:"你更认同哪种职场哲学？",opts:["做第一个吃螃蟹的人","关键选择比努力更重要","执行力是一切的基础","专业深度是最大的护城河"],scores:[4,3,2,1]},
+  {q:"你如何看待「职场天花板」？",opts:["天花板是给不创新的人准备的","天花板要看你认识谁","天花板靠业绩打破","天花板靠专业突破"],scores:[4,3,2,1]}
+];
+
+const results=[
+  {type:"💡",name:"创新破局型",desc:"你靠想法取胜。在别人还在按规矩办事的时候，你已经开始思考怎么做出不一样的效果。创新不是天马行空，而是能在约束中找到突破口——这是你最稀缺的职场价值。",scoreLabel:"职场突围指数",scoreRange:"80-100",scoreDesc:"极高创新突破力"},
+  {type:"🤝",name:"人际整合型",desc:"你靠人脉和关系取胜。你天生就知道「搞定关键人物」比「埋头苦干」更重要。你的超能力是资源整合——知道谁能做什么、谁能帮什么，把碎片拼成完整版图。",scoreLabel:"职场突围指数",scoreRange:"60-80",scoreDesc:"强大资源整合力"},
+  {type:"⚡",name:"高效执行型",desc:"你靠速度和结果取胜。说到做到、deadline从不拖延是你的标签。在职场中，很多人想法很好但做不到——而你是那个让想法变成结果的人。执行力本身就是一种稀缺能力。",scoreLabel:"职场突围指数",scoreRange:"40-60",scoreDesc:"极强落地执行力"},
+  {type:"📊",name:"专业深度型",desc:"你靠硬实力取胜。别人搞不定的事你能搞定，这就是你的护城河。在信息爆炸时代，浅层能力越来越不值钱——而你拥有的是别人花5年也追不上的专业深度。",scoreLabel:"职场突围指数",scoreRange:"30-50",scoreDesc:"不可替代专业力"}
+];
+
+const dimNames=["创新能力","人际手腕","执行效率","专业深度","战略眼光"];
+
+let quickAnswers=[],quickCurrent=0,fullAnswers=[],fullCurrent=0;
+
+function startQuiz(){
+  document.getElementById('welcome').style.display='none';
+  document.getElementById('quizPage').classList.add('active');
+  document.getElementById('quizPage').style.display='block';
+  quickCurrent=0;quickAnswers=[];showQuickQuestion();
+}
+
+function showQuickQuestion(){
+  if(quickCurrent>=5){showQuickResult();return}
+  const q=quickQuestions[quickCurrent];
+  document.getElementById('qNum').textContent=quickCurrent+1;
+  document.getElementById('qText').textContent=q.q;
+  document.getElementById('progressFill').style.width=(quickCurrent/5*100)+'%';
+  document.getElementById('progressText').textContent=(quickCurrent+1)+'/5';
+  let html='';
+  q.opts.forEach((opt,i)=>{
+    const sel=quickAnswers[quickCurrent]===i?' selected':'';
+    html+=`<button class="option${sel}" onclick="selectQuick(${i})"><span class="opt-label">${String.fromCharCode(65+i)}</span>${opt}</button>`;
+  });
+  document.getElementById('optionsBox').innerHTML=html;
+  document.getElementById('nextBtn').classList.add('hidden');
+}
+
+function selectQuick(idx){
+  quickAnswers[quickCurrent]=idx;
+  document.querySelectorAll('.option').forEach((el,i)=>el.classList.toggle('selected',i===idx));
+  document.getElementById('nextBtn').classList.remove('hidden');
+}
+function nextQuestion(){quickCurrent++;showQuickQuestion()}
+
+function showQuickResult(){
+  document.getElementById('quizPage').style.display='none';
+  document.getElementById('quizPage').classList.remove('active');
+  document.getElementById('quickResult').classList.add('active');
+  document.getElementById('quickResult').style.display='block';
+  let total=0;
+  quickAnswers.forEach((a,i)=>{total+=quickQuestions[i].scores[a]});
+  let score=Math.round((total-5)/(20-5)*100);
+  score=Math.max(0,Math.min(100,score));
+  let ri=score>=70?0:score>=50?1:score>=35?2:3;
+  const r=results[ri];
+  document.getElementById('qrType').textContent=r.type;
+  document.getElementById('qrName').textContent=r.name;
+  document.getElementById('qrDesc').textContent=r.desc;
+  setTimeout(()=>drawRadar('quickRadar',[65,55,70,60,50]),200);
+}
+
+function showFullQuiz(){
+  document.getElementById('quickResult').style.display='none';
+  document.getElementById('quickResult').classList.remove('active');
+  document.getElementById('fullQuizPage').classList.add('active');
+  document.getElementById('fullQuizPage').style.display='block';
+  fullCurrent=0;fullAnswers=[];showFullQuestion();
+}
+
+function showFullQuestion(){
+  if(fullCurrent>=20){showFullResult();return}
+  const q=fullQuestions[fullCurrent];
+  document.getElementById('fullQNum').textContent=fullCurrent+6;
+  document.getElementById('fullQText').textContent=q.q;
+  document.getElementById('fullProgressFill').style.width=((fullCurrent+5)/25*100)+'%';
+  document.getElementById('fullProgressText').textContent=(fullCurrent+6)+'/25';
+  let html='';
+  q.opts.forEach((opt,i)=>{
+    const sel=fullAnswers[fullCurrent]===i?' selected':'';
+    html+=`<button class="option${sel}" onclick="selectFull(${i})"><span class="opt-label">${String.fromCharCode(65+i)}</span>${opt}</button>`;
+  });
+  document.getElementById('fullOptionsBox').innerHTML=html;
+  document.getElementById('fullNextBtn').classList.add('hidden');
+}
+
+function selectFull(idx){
+  fullAnswers[fullCurrent]=idx;
+  document.querySelectorAll('#fullOptionsBox .option').forEach((el,i)=>el.classList.toggle('selected',i===idx));
+  document.getElementById('fullNextBtn').classList.remove('hidden');
+}
+function fullNextQuestion(){fullCurrent++;showFullQuestion()}
+
+function showFullResult(){
+  document.getElementById('fullQuizPage').style.display='none';
+  document.getElementById('fullQuizPage').classList.remove('active');
+  let dimScores=[0,0,0,0,0];
+  fullAnswers.forEach((a,i)=>{dimScores[Math.floor(i/4)]+=fullQuestions[i].scores[a]});
+  let dimNorm=dimScores.map(s=>Math.round(s/16*100));
+  let totalScore=dimScores.reduce((a,b)=>a+b,0);
+  let finalScore=Math.round(totalScore/80*100);
+  finalScore=Math.max(0,Math.min(100,finalScore));
+  let ri=finalScore>=70?0:finalScore>=50?1:finalScore>=35?2:3;
+  const r=results[ri];
+
+  let pathText;
+  if(ri===0)pathText="💡 创新破局型 → 持续突破：保持创新敏感度，同时提升落地能力——想法+执行力=无敌。";
+  else if(ri===1)pathText="🤝 人际整合型 → 深化网络：你的关系网是核心资产，但加上专业深度会更有说服力——人脉+硬实力=不可替代。";
+  else if(ri===2)pathText="⚡ 高效执行型 → 提升视野：执行力是你的底牌，但加上战略眼光会让你的努力更有方向——执行+方向=倍数效果。";
+  else pathText="📊 专业深度型 → 扩大影响：专业是你的护城河，但学会展示和传播会让价值倍增——专业+影响力=行业标杆。";
+
+  const actions=[
+    ["第1-30天：定位优势","盘点过去3个月最有成就感的3件事，找到你的职场突围核心关键词"],
+    ["第1-30天：强化主赛道","每天做一件强化主竞争力的事——创新型提一个新方案、人际型拓展一个关系、执行型拿下一个小目标、专业型深入一个技术点"],
+    ["第31-60天：补短板","刻意练习你最弱的维度——创新型学执行方法、人际型学专业表达、执行型学战略思考、专业型学人际沟通"],
+    ["第61-90天：打出代表作","完成一个能展示你核心竞争力的项目/成果，让它在职场中成为你的标签"]
+  ];
+
+  let html=`
+    <div class="result-type">${r.type}</div>
+    <div class="result-name">${r.name}</div>
+    <div class="score">${r.scoreLabel}：${finalScore}分 · ${r.scoreDesc}</div>
+    <div class="result-desc">${r.desc}</div>
+    <div class="chart-box">
+      <h4>📊 五维雷达图分析</h4>
+      <div class="radar-container"><canvas id="fullRadar" width="280" height="280"></canvas></div>
+    </div>
+    <div class="path-box">
+      <h4>🛤️ 你的职场突围路径</h4>
+      <p style="font-size:14px;color:#3D5A6C;line-height:1.8">${pathText}</p>
+    </div>
+    <div class="action-plan">
+      <h4>📋 90天职场竞争力提升计划</h4>
+      ${actions.map((a,i)=>`
+        <div class="action-item">
+          <div class="action-num">${i+1}</div>
+          <div class="action-text"><strong>${a[0]}</strong><br>${a[1]}</div>
+        </div>`).join('')}
+    </div>
+    <p style="font-size:13px;color:#6B8E9A;margin-top:16px">💡 职场突围=找到你的最强维度+补上关键短板+打出代表作<br>知道自己靠什么赢，比盲目努力重要100倍</p>
+  `;
+
+  document.getElementById('fullResult').innerHTML=html;
+  document.getElementById('fullResult').classList.add('active');
+  document.getElementById('fullResult').style.display='block';
+  setTimeout(()=>drawRadar('fullRadar',dimNorm),300);
+}
+
+function drawRadar(cid,data){
+  const c=document.getElementById(cid);
+  if(!c)return;
+  const ctx=c.getContext('2d'),cx=c.width/2,cy=c.height/2,r=100,sides=5;
+  ctx.clearRect(0,0,c.width,c.height);
+  for(let lv=1;lv<=5;lv++){
+    ctx.beginPath();
+    for(let i=0;i<sides;i++){
+      const a=(Math.PI*2/sides)*i-Math.PI/2;
+      const rr=(r/5)*lv;
+      const x=cx+rr*Math.cos(a),y=cy+rr*Math.sin(a);
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.closePath();ctx.strokeStyle='#E0E0E0';ctx.lineWidth=1;ctx.stroke();
+  }
+  for(let i=0;i<sides;i++){
+    const a=(Math.PI*2/sides)*i-Math.PI/2;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));
+    ctx.strokeStyle='#E0E0E0';ctx.stroke();
+  }
+  ctx.beginPath();
+  for(let i=0;i<sides;i++){
+    const a=(Math.PI*2/sides)*i-Math.PI/2;
+    const rr=(data[i]/100)*r;
+    const x=cx+rr*Math.cos(a),y=cy+rr*Math.sin(a);
+    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  }
+  ctx.closePath();ctx.fillStyle='rgba(135,206,250,0.3)';ctx.fill();ctx.strokeStyle='#87CEFA';ctx.lineWidth=2;ctx.stroke();
+  for(let i=0;i<sides;i++){
+    const a=(Math.PI*2/sides)*i-Math.PI/2;
+    const rr=(data[i]/100)*r;
+    ctx.beginPath();ctx.arc(cx+rr*Math.cos(a),cy+rr*Math.sin(a),5,0,Math.PI*2);ctx.fillStyle='#64B5E6';ctx.fill();
+  }
+  ctx.fillStyle='#3D5A6C';ctx.font='12px -apple-system,sans-serif';ctx.textAlign='center';
+  for(let i=0;i<sides;i++){
+    const a=(Math.PI*2/sides)*i-Math.PI/2;
+    ctx.fillText(dimNames[i],cx+(r+25)*Math.cos(a),cy+(r+25)*Math.sin(a)+4);
+  }
+}
+</script>
+</body>
+</html>
