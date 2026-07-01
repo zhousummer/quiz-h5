@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>你更适合稳定上班还是自由探索 - 20题完整版生活模式测试</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#F0F8FF;min-height:100vh;color:#3D5A6C}
+.container{max-width:500px;margin:0 auto;padding:20px}
+.welcome{text-align:center;padding-top:50px}
+.welcome .emoji-top{font-size:64px;margin-bottom:16px}
+.welcome h1{font-size:30px;color:#2C5F6E;margin-bottom:10px;line-height:1.4}
+.welcome .subtitle{font-size:15px;color:#6B8E9A;margin-bottom:28px;line-height:1.6}
+.welcome .dims{text-align:left;margin-bottom:36px;background:white;border-radius:20px;padding:20px 24px;box-shadow:0 4px 20px rgba(135,206,250,0.1)}
+.welcome .dim-item{display:flex;align-items:center;gap:12px;padding:9px 0;font-size:15px;color:#5A8A9A}
+.welcome .dim-item .dot{width:8px;height:8px;border-radius:50%;background:#87CEFA;flex-shrink:0}
+.btn{display:inline-block;padding:16px 60px;background:linear-gradient(135deg,#87CEFA,#64B5E6);color:white;font-size:20px;font-weight:bold;border:none;border-radius:40px;cursor:pointer;text-decoration:none;box-shadow:0 6px 24px rgba(135,206,250,0.4);transition:all 0.3s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(135,206,250,0.5)}
+.btn:active{transform:translateY(0)}
+.btn-small{padding:12px 40px;font-size:16px}
+.quiz-page{display:none}.quiz-page.active{display:block}
+.progress-bar{width:100%;height:8px;background:#E0E0E0;border-radius:4px;margin-bottom:10px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#87CEFA,#64B5E6);border-radius:4px;transition:width 0.4s ease}
+.progress-text{text-align:center;font-size:14px;color:#6B8E9A;margin-bottom:28px}
+.question{margin-bottom:26px}
+.question .q-num{display:inline-block;width:36px;height:36px;line-height:36px;text-align:center;background:#87CEFA;color:white;border-radius:50%;font-weight:bold;font-size:16px;margin-right:10px;vertical-align:middle}
+.question h3{display:inline;font-size:20px;color:#2C5F6E;line-height:1.5}
+.options{margin-top:18px}
+.option{display:block;width:100%;padding:18px 20px;margin-bottom:12px;background:white;border:2px solid #E8F4FD;border-radius:16px;font-size:16px;color:#3D5A6C;text-align:left;cursor:pointer;transition:all 0.3s}
+.option:hover{border-color:#87CEFA;background:#F0F8FF}
+.option.selected{border-color:#87CEFA;background:#F0F8FF;box-shadow:0 2px 12px rgba(135,206,250,0.2)}
+.option .opt-label{display:inline-block;width:28px;height:28px;line-height:28px;text-align:center;background:#87CEFA;color:white;border-radius:50%;font-weight:bold;font-size:14px;margin-right:12px}
+.quick-result{display:none;text-align:center;padding-top:30px}
+.quick-result.active{display:block}
+.quick-result .result-type{font-size:52px;margin-bottom:8px}
+.quick-result .result-name{font-size:28px;font-weight:bold;color:#2C5F6E;margin-bottom:10px}
+.quick-result .result-desc{font-size:15px;color:#6B8E9A;margin-bottom:28px;line-height:1.6}
+.quick-result .result-chart{margin:16px auto;max-width:280px}
+.quick-result .upgrade-box{background:white;border-radius:20px;padding:28px 20px;margin-top:28px;box-shadow:0 4px 20px rgba(135,206,250,0.1)}
+.quick-result .upgrade-box h4{font-size:20px;color:#2C5F6E;margin-bottom:12px}
+.quick-result .upgrade-box p{font-size:14px;color:#6B8E9A;margin-bottom:20px;line-height:1.6}
+.full-result{display:none;text-align:center;padding-top:24px}
+.full-result.active{display:block}
+.full-result .result-type{font-size:60px;margin-bottom:8px}
+.full-result .result-name{font-size:32px;font-weight:bold;color:#2C5F6E;margin-bottom:8px}
+.full-result .score{display:inline-block;padding:8px 24px;background:#F0F8FF;border-radius:20px;font-size:16px;color:#5A8A9A;margin-bottom:20px}
+.full-result .result-desc{font-size:15px;color:#3D5A6C;line-height:1.8;text-align:left;margin-bottom:20px;padding:20px;background:white;border-radius:16px}
+.full-result .chart-box{background:white;border-radius:20px;padding:20px;margin:20px 0;box-shadow:0 4px 20px rgba(135,206,250,0.1)}
+.full-result .chart-box h4{font-size:18px;color:#2C5F6E;margin-bottom:14px}
+.full-result .radar-container{width:280px;height:280px;margin:0 auto}
+.full-result .action-plan{text-align:left;background:white;border-radius:16px;padding:20px;margin:20px 0}
+.full-result .action-plan h4{font-size:18px;color:#2C5F6E;margin-bottom:16px;text-align:center}
+.full-result .action-item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #F0F8FF}
+.full-result .action-item:last-child{border-bottom:none}
+.full-result .action-num{width:28px;height:28px;line-height:28px;text-align:center;background:#87CEFA;color:white;border-radius:50%;font-weight:bold;font-size:14px;flex-shrink:0}
+.full-result .action-text{font-size:14px;color:#3D5A6C;line-height:1.6}
+.full-result .path-box{text-align:left;background:white;border-radius:16px;padding:20px;margin:20px 0}
+.full-result .path-box h4{font-size:18px;color:#2C5F6E;margin-bottom:14px;text-align:center}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="container" id="app">
+
+<div class="welcome" id="welcome">
+  <div class="emoji-top">⚖️</div>
+  <h1>你更适合稳定上班还是自由探索</h1>
+  <p class="subtitle">20题深度扫描你的生活模式密码</p>
+  <div class="dims">
+    <div class="dim-item"><span class="dot"></span> 安全感需求 —— 你有多需要规律和确定性？</div>
+    <div class="dim-item"><span class="dot"></span> 冒险欲望 —— 你有多渴望新鲜和未知？</div>
+    <div class="dim-item"><span class="dot"></span> 自律能力 —— 你能否在自由中保持节奏？</div>
+    <div class="dim-item"><span class="dot"></span> 自由向往 —— 你对不受束缚有多向往？</div>
+    <div class="dim-item"><span class="dot"></span> 抗压韧性 —— 你能否承受不确定性带来的压力？</div>
+  </div>
+  <button class="btn" onclick="startQuiz()">开始测试</button>
+</div>
+
+<div class="quiz-page" id="quizPage">
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-text" id="progressText">1/5</div>
+  <div class="question"><span class="q-num" id="qNum">1</span><h3 id="qText"></h3></div>
+  <div class="options" id="optionsBox"></div>
+  <button class="btn btn-small hidden" id="nextBtn" onclick="nextQuestion()">下一题</button>
+</div>
+
+<div class="quick-result" id="quickResult">
+  <div class="result-type" id="qrType"></div>
+  <div class="result-name" id="qrName"></div>
+  <div class="result-desc" id="qrDesc"></div>
+  <div class="result-chart"><canvas id="quickRadar" width="260" height="260"></canvas></div>
+  <div class="upgrade-box">
+    <h4>🎯 以上只是5题快速版</h4>
+    <p>完成全部20题，你将获得：<br>
+    ✅ 精确的自由指数评分<br>
+    ✅ 五维雷达图深度分析<br>
+    ✅ 你的生活模式转变路径<br>
+    ✅ 90天生活优化行动方案</p>
+    <button class="btn" onclick="showFullQuiz()">解锁完整20题测试</button>
+  </div>
+</div>
+
+<div class="quiz-page" id="fullQuizPage">
+  <div class="progress-bar"><div class="progress-fill" id="fullProgressFill"></div></div>
+  <div class="progress-text" id="fullProgressText">6/25</div>
+  <div class="question"><span class="q-num" id="fullQNum">6</span><h3 id="fullQText"></h3></div>
+  <div class="options" id="fullOptionsBox"></div>
+  <button class="btn btn-small hidden" id="fullNextBtn" onclick="fullNextQuestion()">下一题</button>
+</div>
+
+<div class="full-result" id="fullResult"></div>
+
+</div>
+
+<script>
+const quickQuestions=[
+  {q:"周一早上醒来，你的第一反应是？",opts:["该上班了，赶紧准备","又是一周，能不能不上班","今天有什么有趣的事等着我","看心情，有时期待有时不想动"],scores:[1,4,3,2]},
+  {q:"你对「朝九晚五」的看法？",opts:["挺好的，规律生活让我有安全感","太无聊了，人生不该这么单调","可以接受，但希望下班后自由","无所谓，能赚钱就行"],scores:[1,4,3,2]},
+  {q:"如果给你一年的自由时间+足够存款，你会？",opts:["还是会找一份工作，闲着不踏实","立刻出发旅行/学习/尝试新事物","一半时间工作一半时间探索","先休息一阵再慢慢规划"],scores:[1,4,3,2]},
+  {q:"你对未来5年的规划更偏向？",opts:["在一家好公司稳定发展","不断尝试新的可能性","主业+副业并行","还没想清楚"],scores:[1,4,3,2]},
+  {q:"你觉得最理想的生活状态是？",opts:["收入稳定、生活规律、家庭美满","自由自在、不受束缚、活出自我","有稳定的底座，也有探索的空间","还在寻找让我真正舒服的状态"],scores:[1,4,3,2]}
+];
+
+const fullQuestions=[
+  // 维度1: 安全感需求 (6-9)
+  {q:"你对「不确定性」的态度是？",opts:["非常不喜欢，我需要确定性","有点紧张但能接受","觉得有趣，不确定性意味着可能性","无所谓，我适应能力强"],scores:[1,2,4,3]},
+  {q:"你的收入如果不稳定，你会？",opts:["非常焦虑，必须想办法稳定下来","有点不安但能调整","觉得是自由探索的代价，可以接受","不太在意，钱总会有的"],scores:[1,2,4,3]},
+  {q:"你对「社保/公积金/五险一金」的看重程度？",opts:["非常重要，这是我的安全感来源","比较重要，但不是唯一考虑","不太重要，自由比保障更重要","看情况，有也行没有也能活"],scores:[1,2,4,3]},
+  {q:"你更倾向于哪种居住方式？",opts:["买房安定下来，有自己的窝","租房就好，随时可以换个城市","买房+偶尔旅行，兼顾两者","不确定，看人生阶段再说"],scores:[1,4,3,2]},
+  // 维度2: 冒险欲望 (10-13)
+  {q:"看到一个新奇的机会（如新城市/新行业/新项目），你？",opts:["评估风险后谨慎考虑","很想尝试，但需要先做好准备","立刻心动，恨不得马上出发","有点犹豫，需要更多信息"],scores:[1,2,4,3]},
+  {q:"你过去一年做过多少「意料之外」的事？",opts:["几乎没有，生活很规律","1-2件，偶尔来点小惊喜","很多，我总在尝试新东西","1-3件，取决于当时的状态"],scores:[1,2,4,3]},
+  {q:"你对「跳出舒适区」的态度？",opts:["舒适区挺好的，不需要跳","偶尔跳一下，对成长有帮助","我一直在跳，舒适区太无聊了","想跳但不敢，需要更多勇气"],scores:[1,2,4,3]},
+  {q:"你更认同哪种人生观？",opts:["稳扎稳打，人生是一场长跑","人生苦短，要活得精彩","既要有根基，也要有翅膀","还在探索中，不急着定义"],scores:[1,4,3,2]},
+  // 维度3: 自律能力 (14-17)
+  {q:"如果没有人监督你，你的工作效率？",opts:["很高，我自律性很强","还行，但偶尔会摸鱼","不太高，需要外部约束","看心情，有时高效有时躺平"],scores:[1,3,2,4]},
+  {q:"自由时间很多时，你的时间管理？",opts:["有清晰的时间表，按计划执行","大致有规划，但灵活调整","容易浪费时间，需要改善","随心所欲，不想管太多"],scores:[1,3,2,4]},
+  {q:"你在没人催的情况下完成工作的方式？",opts:["提前完成，绝不拖延","按时完成，偶尔加急","经常拖到最后才做","什么时候做完什么时候算"],scores:[1,3,2,4]},
+  {q:"如果完全自由安排一天，你会？",opts:["制定日程表高效利用时间","有几个关键安排其余自由","随心所欲想做什么做什么","大部分时间休息偶尔做事"],scores:[1,3,4,2]},
+  // 维度4: 自由向往 (18-21)
+  {q:"你对「打卡上班」的感受？",opts:["习惯了，觉得挺正常","不喜欢但能忍受","反感，限制了我的自由","无所谓，不打卡也行"],scores:[1,2,4,3]},
+  {q:"你理想的工作地点？",opts:["固定办公室，环境熟悉","有时候可以远程/出差","完全远程，随时随地工作","混合模式，看项目需要"],scores:[1,3,4,2]},
+  {q:"你觉得最让你不舒服的约束是？",opts:["收入不稳定","时间被固定安排","必须待在某个地方","做不喜欢的事"],scores:[1,4,3,2]},
+  {q:"如果可以完全自由安排生活，你最想？",opts:["还是按规律生活，只是时间更灵活","旅行+学习+体验不同文化","有稳定的住所但经常换城市","不确定，需要慢慢尝试"],scores:[1,4,3,2]},
+  // 维度5: 抗压韧性 (22-25)
+  {q:"面对突发的变化（如突然失业/搬家），你？",opts:["很慌，需要尽快找到新方案","有点慌但能冷静应对","觉得是新的可能性，趁机重新出发","需要一段时间消化再行动"],scores:[1,2,4,3]},
+  {q:"你对自己的经济抗风险能力？",opts:["很强，有足够的储蓄和保障","还行，能撑几个月","不太强，但相信总能找到出路","不确定，没想过太多"],scores:[1,2,4,3]},
+  {q:"别人对你生活选择的质疑，你？",opts:["很在意，需要别人的认可","有点在意但坚持己见","完全不在乎，我活我的","选择性听取，但最终自己决定"],scores:[1,2,4,3]},
+  {q:"你对自己的未来有多确定？",opts:["很确定，我有清晰的规划","大致确定，但可能调整","不确定，但觉得充满可能性","不太确定，还在迷茫中"],scores:[1,2,4,3]}
+];
+
+const results=[
+  {type:"🏢",name:"稳定踏实型",desc:"你是天生适合稳定上班的人。规律、确定性、安全感是你的能量来源。这不是保守——而是你清楚地知道自己在秩序中才能发挥最大价值。稳定上班不是你的枷锁，而是你的充电站。",scoreLabel:"生活适配度",scoreRange:"0-30",scoreDesc:"高度适配稳定上班模式"},
+  {type:"🧳",name:"自由探索型",desc:"你天生就是自由探索的灵魂。固定的节奏让你窒息，未知和变化才是你的兴奋剂。你可能不适合朝九晚五，但自由职业、创业、数字游民——任何不受束缚的生活方式都是你的主场。",scoreLabel:"生活适配度",scoreRange:"70-100",scoreDesc:"高度适配自由探索模式"},
+  {type:"⚖️",name:"平衡切换型",desc:"你既需要安全感又渴望自由——你不是极端的稳定派或自由派，而是那个懂得在两者之间找到节奏的人。上班时全力以赴，休息时尽情探索，这就是你的最佳模式。",scoreLabel:"生活适配度",scoreRange:"40-60",scoreDesc:"适配平衡混合模式"},
+  {type:"💫",name:"试探过渡型",desc:"你还在寻找最适合自己的节奏——也许在稳定中渴望自由，也许在自由中怀念稳定。这很正常，很多人需要通过试错才能找到真正舒服的模式。你已经在路上了。",scoreLabel:"生活适配度",scoreRange:"30-50",scoreDesc:"仍在探索最佳模式"}
+];
+
+const dimNames=["安全感需求","冒险欲望","自律能力","自由向往","抗压韧性"];
+
+let quickAnswers=[],quickCurrent=0,fullAnswers=[],fullCurrent=0;
+
+function startQuiz(){
+  document.getElementById('welcome').style.display='none';
+  document.getElementById('quizPage').classList.add('active');
+  document.getElementById('quizPage').style.display='block';
+  quickCurrent=0;quickAnswers=[];showQuickQuestion();
+}
+
+function showQuickQuestion(){
+  if(quickCurrent>=5){showQuickResult();return}
+  const q=quickQuestions[quickCurrent];
+  document.getElementById('qNum').textContent=quickCurrent+1;
+  document.getElementById('qText').textContent=q.q;
+  document.getElementById('progressFill').style.width=(quickCurrent/5*100)+'%';
+  document.getElementById('progressText').textContent=(quickCurrent+1)+'/5';
+  let html='';
+  q.opts.forEach((opt,i)=>{
+    const sel=quickAnswers[quickCurrent]===i?' selected':'';
+    html+=`<button class="option${sel}" onclick="selectQuick(${i})"><span class="opt-label">${String.fromCharCode(65+i)}</span>${opt}</button>`;
+  });
+  document.getElementById('optionsBox').innerHTML=html;
+  document.getElementById('nextBtn').classList.add('hidden');
+}
+
+function selectQuick(idx){
+  quickAnswers[quickCurrent]=idx;
+  document.querySelectorAll('.option').forEach((el,i)=>el.classList.toggle('selected',i===idx));
+  document.getElementById('nextBtn').classList.remove('hidden');
+}
+function nextQuestion(){quickCurrent++;showQuickQuestion()}
+
+function showQuickResult(){
+  document.getElementById('quizPage').style.display='none';
+  document.getElementById('quizPage').classList.remove('active');
+  document.getElementById('quickResult').classList.add('active');
+  document.getElementById('quickResult').style.display='block';
+  let total=0;
+  quickAnswers.forEach((a,i)=>{total+=quickQuestions[i].scores[a]});
+  let score=Math.round(total/20*100);
+  score=Math.max(0,Math.min(100,score));
+  let ri=score<=30?0:score>=70?1:score>=50?2:3;
+  const r=results[ri];
+  document.getElementById('qrType').textContent=r.type;
+  document.getElementById('qrName').textContent=r.name;
+  document.getElementById('qrDesc').textContent=r.desc;
+  setTimeout(()=>drawRadar('quickRadar',[70,40,80,30,50]),200);
+}
+
+function showFullQuiz(){
+  document.getElementById('quickResult').style.display='none';
+  document.getElementById('quickResult').classList.remove('active');
+  document.getElementById('fullQuizPage').classList.add('active');
+  document.getElementById('fullQuizPage').style.display='block';
+  fullCurrent=0;fullAnswers=[];showFullQuestion();
+}
+
+function showFullQuestion(){
+  if(fullCurrent>=20){showFullResult();return}
+  const q=fullQuestions[fullCurrent];
+  document.getElementById('fullQNum').textContent=fullCurrent+6;
+  document.getElementById('fullQText').textContent=q.q;
+  document.getElementById('fullProgressFill').style.width=((fullCurrent+5)/25*100)+'%';
+  document.getElementById('fullProgressText').textContent=(fullCurrent+6)+'/25';
+  let html='';
+  q.opts.forEach((opt,i)=>{
+    const sel=fullAnswers[fullCurrent]===i?' selected':'';
+    html+=`<button class="option${sel}" onclick="selectFull(${i})"><span class="opt-label">${String.fromCharCode(65+i)}</span>${opt}</button>`;
+  });
+  document.getElementById('fullOptionsBox').innerHTML=html;
+  document.getElementById('fullNextBtn').classList.add('hidden');
+}
+
+function selectFull(idx){
+  fullAnswers[fullCurrent]=idx;
+  document.querySelectorAll('#fullOptionsBox .option').forEach((el,i)=>el.classList.toggle('selected',i===idx));
+  document.getElementById('fullNextBtn').classList.remove('hidden');
+}
+function fullNextQuestion(){fullCurrent++;showFullQuestion()}
+
+function showFullResult(){
+  document.getElementById('fullQuizPage').style.display='none';
+  document.getElementById('fullQuizPage').classList.remove('active');
+  let dimScores=[0,0,0,0,0];
+  fullAnswers.forEach((a,i)=>{dimScores[Math.floor(i/4)]+=fullQuestions[i].scores[a]});
+  // 反转安全感维度：高分=更需要安全感=不适合自由
+  // 自由指数 = (冒险+自律+自由向往+抗压) - 安全感需求
+  let freeIdx = (dimScores[1]+dimScores[2]+dimScores[3]+dimScores[4]) - dimScores[0];
+  let dimNorm=dimScores.map(s=>Math.round(s/16*100));
+  // 自由指数百分制
+  let finalScore=Math.round(freeIdx/48*100);
+  finalScore=Math.max(0,Math.min(100,finalScore));
+
+  let ri=finalScore<=30?0:finalScore>=70?1:finalScore>=50?2:3;
+  const r=results[ri];
+
+  let pathText;
+  if(ri===0)pathText="🏢 稳定踏实型 → 深耕当下：你已经找到了适合的模式，在稳定中持续精进——安全感+专业深度=你的幸福密码。";
+  else if(ri===1)pathText="🧳 自由探索型 → 拥抱不确定：你的灵魂需要自由，建立「最小稳定底座+最大探索空间」的模式——1份保底收入+N份自由尝试。";
+  else if(ri===2)pathText="⚖️ 平衡切换型 → 优化节奏：上班时专注产出，休息时尽情探索——关键是在两种模式间有清晰切换信号，避免混乱。";
+  else pathText="💫 试探过渡型 → 小步试错：先用3个月尝试一种新模式（远程办公/副业/间隔月），再决定要不要更大改变——不急，慢慢来。";
+
+  const actions=[
+    ["第1-30天：现状盘点","记录一周的时间分配和情绪变化，找出让你最舒服和最不舒服的时刻，明确你的真实需求"],
+    ["第1-30天：模式实验","根据你的类型做一个小实验——稳定型加一点新鲜感、自由型加一点规律、平衡型优化切换节奏、试探型尝试一种新模式"],
+    ["第31-60天：调整节奏","根据实验结果调整日常安排，找到让你能量最高的一种节奏并坚持2周"],
+    ["第61-90天：定调生活","复盘30+60天的变化，确定你的生活模式关键词，写出一份「我的生活节奏宣言」"]
+  ];
+
+  let html=`
+    <div class="result-type">${r.type}</div>
+    <div class="result-name">${r.name}</div>
+    <div class="score">${r.scoreLabel}：${finalScore}分 · ${r.scoreDesc}</div>
+    <div class="result-desc">${r.desc}</div>
+    <div class="chart-box">
+      <h4>📊 五维雷达图分析</h4>
+      <div class="radar-container"><canvas id="fullRadar" width="280" height="280"></canvas></div>
+    </div>
+    <div class="path-box">
+      <h4>🛤️ 你的生活模式路径</h4>
+      <p style="font-size:14px;color:#3D5A6C;line-height:1.8">${pathText}</p>
+    </div>
+    <div class="action-plan">
+      <h4>📋 90天生活优化计划</h4>
+      ${actions.map((a,i)=>`
+        <div class="action-item">
+          <div class="action-num">${i+1}</div>
+          <div class="action-text"><strong>${a[0]}</strong><br>${a[1]}</div>
+        </div>`).join('')}
+    </div>
+    <p style="font-size:13px;color:#6B8E9A;margin-top:16px">💡 稳定和自由不是对立的——找到你的平衡点才是关键<br>最舒服的生活模式，是让你每天醒来都期待的那一种</p>
+  `;
+
+  document.getElementById('fullResult').innerHTML=html;
+  document.getElementById('fullResult').classList.add('active');
+  document.getElementById('fullResult').style.display='block';
+  setTimeout(()=>drawRadar('fullRadar',dimNorm),300);
+}
+
+function drawRadar(cid,data){
+  const c=document.getElementById(cid);
+  if(!c)return;
+  const ctx=c.getContext('2d'),cx=c.width/2,cy=c.height/2,r=100,sides=5;
+  ctx.clearRect(0,0,c.width,c.height);
+  for(let lv=1;lv<=5;lv++){
+    ctx.beginPath();
+    for(let i=0;i<sides;i++){
+      const a=(Math.PI*2/sides)*i-Math.PI/2;
+      const rr=(r/5)*lv;
+      const x=cx+rr*Math.cos(a),y=cy+rr*Math.sin(a);
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.closePath();ctx.strokeStyle='#E0E0E0';ctx.lineWidth=1;ctx.stroke();
+  }
+  for(let i=0;i<sides;i++){
+    const a=(Math.PI*2/sides)*i-Math.PI/2;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));
+    ctx.strokeStyle='#E0E0E0';ctx.stroke();
+  }
+  ctx.beginPath();
+  for(let i=0;i<sides;i++){
+    const a=(Math.PI*2/sides)*i-Math.PI/2;
+    const rr=(data[i]/100)*r;
+    const x=cx+rr*Math.cos(a),y=cy+rr*Math.sin(a);
+    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  }
+  ctx.closePath();ctx.fillStyle='rgba(135,206,250,0.3)';ctx.fill();ctx.strokeStyle='#87CEFA';ctx.lineWidth=2;ctx.stroke();
+  for(let i=0;i<sides;i++){
+    const a=(Math.PI*2/sides)*i-Math.PI/2;
+    const rr=(data[i]/100)*r;
+    ctx.beginPath();ctx.arc(cx+rr*Math.cos(a),cy+rr*Math.sin(a),5,0,Math.PI*2);ctx.fillStyle='#64B5E6';ctx.fill();
+  }
+  ctx.fillStyle='#3D5A6C';ctx.font='12px -apple-system,sans-serif';ctx.textAlign='center';
+  for(let i=0;i<sides;i++){
+    const a=(Math.PI*2/sides)*i-Math.PI/2;
+    ctx.fillText(dimNames[i],cx+(r+25)*Math.cos(a),cy+(r+25)*Math.sin(a)+4);
+  }
+}
+</script>
+</body>
+</html>
