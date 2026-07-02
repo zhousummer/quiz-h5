@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>现在的你更适合恋爱还是独处 - 20题完整版情感状态测试</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#FFF0F5;min-height:100vh;color:#880E4F}
+.container{max-width:500px;margin:0 auto;padding:20px}
+.welcome{text-align:center;padding-top:50px}
+.welcome .emoji-top{font-size:64px;margin-bottom:16px}
+.welcome h1{font-size:30px;color:#AD1457;margin-bottom:10px;line-height:1.4}
+.welcome .subtitle{font-size:15px;color:#D81B60;margin-bottom:28px;line-height:1.6}
+.welcome .dims{text-align:left;margin-bottom:36px;background:white;border-radius:20px;padding:20px 24px;box-shadow:0 4px 20px rgba(248,187,208,0.15)}
+.welcome .dim-item{display:flex;align-items:center;gap:12px;padding:9px 0;font-size:15px;color:#C2185B}
+.welcome .dim-item .dot{width:8px;height:8px;border-radius:50%;background:#F8BBD0;flex-shrink:0}
+.btn{display:inline-block;padding:16px 60px;background:linear-gradient(135deg,#F8BBD0,#F48FB1);color:white;font-size:20px;font-weight:bold;border:none;border-radius:40px;cursor:pointer;text-decoration:none;box-shadow:0 6px 24px rgba(248,187,208,0.4);transition:all 0.3s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(248,187,208,0.5)}
+.btn:active{transform:translateY(0)}
+.btn-small{padding:12px 40px;font-size:16px}
+.quiz-page{display:none}.quiz-page.active{display:block}
+.progress-bar{width:100%;height:8px;background:#E0E0E0;border-radius:4px;margin-bottom:10px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#F8BBD0,#F48FB1);border-radius:4px;transition:width 0.4s ease}
+.progress-text{text-align:center;font-size:14px;color:#D81B60;margin-bottom:28px}
+.question{margin-bottom:26px}
+.question .q-num{display:inline-block;width:36px;height:36px;line-height:36px;text-align:center;background:#F8BBD0;color:white;border-radius:50%;font-weight:bold;font-size:16px;margin-right:10px;vertical-align:middle}
+.question h3{display:inline;font-size:20px;color:#AD1457;line-height:1.5}
+.options{margin-top:18px}
+.option{display:block;width:100%;padding:18px 20px;margin-bottom:12px;background:white;border:2px solid #FFCDD2;border-radius:16px;font-size:16px;color:#880E4F;text-align:left;cursor:pointer;transition:all 0.3s}
+.option:hover{border-color:#F8BBD0;background:#FFF0F5}
+.option.selected{border-color:#F8BBD0;background:#FFF0F5;box-shadow:0 2px 12px rgba(248,187,208,0.2)}
+.option .opt-label{display:inline-block;width:28px;height:28px;line-height:28px;text-align:center;background:#F8BBD0;color:white;border-radius:50%;font-weight:bold;font-size:14px;margin-right:12px}
+.quick-result{display:none;text-align:center;padding-top:30px}
+.quick-result.active{display:block}
+.quick-result .result-type{font-size:52px;margin-bottom:8px}
+.quick-result .result-name{font-size:28px;font-weight:bold;color:#AD1457;margin-bottom:10px}
+.quick-result .result-desc{font-size:15px;color:#D81B60;margin-bottom:28px;line-height:1.6}
+.quick-result .result-chart{margin:16px auto;max-width:280px}
+.quick-result .upgrade-box{background:white;border-radius:20px;padding:28px 20px;margin-top:28px;box-shadow:0 4px 20px rgba(248,187,208,0.15)}
+.quick-result .upgrade-box h4{font-size:20px;color:#AD1457;margin-bottom:12px}
+.quick-result .upgrade-box p{font-size:14px;color:#D81B60;margin-bottom:20px;line-height:1.6}
+.full-result{display:none;text-align:center;padding-top:24px}
+.full-result.active{display:block}
+.full-result .result-type{font-size:60px;margin-bottom:8px}
+.full-result .result-name{font-size:32px;font-weight:bold;color:#AD1457;margin-bottom:8px}
+.full-result .score{display:inline-block;padding:8px 24px;background:#FFF0F5;border-radius:20px;font-size:16px;color:#C2185B;margin-bottom:20px}
+.full-result .result-desc{font-size:15px;color:#880E4F;line-height:1.8;text-align:left;margin-bottom:20px;padding:20px;background:white;border-radius:16px}
+.full-result .chart-box{background:white;border-radius:20px;padding:20px;margin:20px 0;box-shadow:0 4px 20px rgba(248,187,208,0.15)}
+.full-result .chart-box h4{font-size:18px;color:#AD1457;margin-bottom:14px}
+.full-result .radar-container{width:280px;height:280px;margin:0 auto}
+.full-result .action-plan{text-align:left;background:white;border-radius:16px;padding:20px;margin:20px 0}
+.full-result .action-plan h4{font-size:18px;color:#AD1457;margin-bottom:16px;text-align:center}
+.full-result .action-item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #FFF0F5}
+.full-result .action-item:last-child{border-bottom:none}
+.full-result .action-num{width:28px;height:28px;line-height:28px;text-align:center;background:#F8BBD0;color:white;border-radius:50%;font-weight:bold;font-size:14px;flex-shrink:0}
+.full-result .action-text{font-size:14px;color:#880E4F;line-height:1.6}
+.full-result .path-box{text-align:left;background:white;border-radius:16px;padding:20px;margin:20px 0}
+.full-result .path-box h4{font-size:18px;color:#AD1457;margin-bottom:14px;text-align:center}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="container" id="app">
+
+<div class="welcome" id="welcome">
+  <div class="emoji-top">♥️</div>
+  <h1>现在的你更适合恋爱还是独处</h1>
+  <p class="subtitle">20题深度扫描你的情感状态密码</p>
+  <div class="dims">
+    <div class="dim-item"><span class="dot"></span> 情感需求 —— 你有多渴望被爱和陪伴？</div>
+    <div class="dim-item"><span class="dot"></span> 独处能力 —— 你能否在独处中感到充实？</div>
+    <div class="dim-item"><span class="dot"></span> 自我完整度 —— 你是否需要另一半来完整自己？</div>
+    <div class="dim-item"><span class="dot"></span> 依赖倾向 —— 你在感情中容易过度依赖吗？</div>
+    <div class="dim-item"><span class="dot"></span> 成长意愿 —— 你更想先成长自己还是先找到爱？</div>
+  </div>
+  <button class="btn" onclick="startQuiz()">开始测试</button>
+</div>
+
+<div class="quiz-page" id="quizPage">
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-text" id="progressText">1/5</div>
+  <div class="question"><span class="q-num" id="qNum">1</span><h3 id="qText"></h3></div>
+  <div class="options" id="optionsBox"></div>
+  <button class="btn btn-small hidden" id="nextBtn" onclick="nextQuestion()">下一题</button>
+</div>
+
+<div class="quick-result" id="quickResult">
+  <div class="result-type" id="qrType"></div>
+  <div class="result-name" id="qrName"></div>
+  <div class="result-desc" id="qrDesc"></div>
+  <div class="result-chart"><canvas id="quickRadar" width="260" height="260"></canvas></div>
+  <div class="upgrade-box">
+    <h4>🎯 以上只是5题快速版</h4>
+    <p>完成全部20题，你将获得：<br>
+    ✅ 精确的情感适配指数评分<br>
+    ✅ 五维雷达图深度分析<br>
+    ✅ 你的情感状态转变路径<br>
+    ✅ 90天情感优化行动方案</p>
+    <button class="btn" onclick="showFullQuiz()">解锁完整20题测试</button>
+  </div>
+</div>
+
+<div class="quiz-page" id="fullQuizPage">
+  <div class="progress-bar"><div class="progress-fill" id="fullProgressFill"></div></div>
+  <div class="progress-text" id="fullProgressText">6/25</div>
+  <div class="question"><span class="q-num" id="fullQNum">6</span><h3 id="fullQText"></h3></div>
+  <div class="options" id="fullOptionsBox"></div>
+  <button class="btn btn-small hidden" id="fullNextBtn" onclick="fullNextQuestion()">下一题</button>
+</div>
+
+<div class="full-result" id="fullResult"></div>
+
+</div>
+
+<script>
+const quickQuestions=[
+  {q:"周末晚上一个人在家，你的感受是？",opts:["有点空虚，想找人聊天或约会","很舒服，终于可以做自己想做的事","看心情，有时享受有时无聊","会思考，独处让我更清楚自己想要什么"],scores:[4,1,2,3]},
+  {q:"看到朋友秀恩爱，你的反应是？",opts:["羡慕，我也想有个人陪我","无所谓，我自己的生活也很好","偶尔羡慕，但觉得单身也挺好","觉得他们还没找到真正的自己"],scores:[4,1,2,3]},
+  {q:"你对「一个人」的状态怎么理解？",opts:["缺了一半，需要另一半才完整","很自在，一个人也可以很精彩","还行吧，但遇到好的也不排斥","这是修炼的阶段，先活好自己"],scores:[4,1,2,3]},
+  {q:"如果现在出现一个还不错的人，你会？",opts:["很快投入，期待恋爱的感觉","不急，先观察看看再说","看缘分吧，不强求也不拒绝","先确认自己准备好了再考虑"],scores:[4,1,2,3]},
+  {q:"你觉得现在最需要的是什么？",opts:["被爱和陪伴","自由和空间","平衡——有人陪也有独处时间","自我成长和内心充盈"],scores:[4,1,2,3]}
+];
+
+const fullQuestions=[
+  // 维度1: 情感需求 (6-9)
+  {q:"晚上睡前，你最常想的事是？",opts:["有人陪我说话就好了","今天的独处时光真舒服","有时候想有人陪有时候想独处","我在想明天要怎么提升自己"],scores:[4,1,2,3]},
+  {q:"你对「归属感」的渴望程度？",opts:["非常渴望，我想属于一个人","不太渴望，我属于自己就好","有一定渴望但不强烈","先把自我归属感建立好再说"],scores:[4,1,2,3]},
+  {q:"你最近频繁想起某个人的频率？",opts:["经常，心里总空着一个位置","很少，我很少想某个人","偶尔，看到什么会想起某人","更多在想怎么让自己更好"],scores:[4,1,2,3]},
+  {q:"你更享受哪种状态？",opts:["和喜欢的人在一起的时间","自己安排的时间","两种都享受但比例差不多","让自己不断变好的过程"],scores:[4,1,2,3]},
+  // 维度2: 独处能力 (10-13)
+  {q:"连续三天不社交，你的状态？",opts:["会越来越焦虑想找人","越来越舒服想继续独处","第一天无聊第二天开始享受","会用来学习/成长，很充实"],scores:[4,1,2,3]},
+  {q:"独处时你最常做的事？",opts:["刷社交软件找人聊天","看书/运动/做自己的事","一半社交一半独处","学习/写作/深度思考"],scores:[4,1,2,3]},
+  {q:"你的「充电方式」更偏向？",opts:["和亲密的人待在一起","独处做自己喜欢的事","两者都需要，交替使用","通过成长和突破来充电"],scores:[4,1,2,3]},
+  {q:"如果被迫独处一周，你？",opts:["会很煎熬，赶紧找社交","会很开心，难得的清净","前面几天难熬后面习惯了","会用来深度思考人生方向"],scores:[4,1,2,3]},
+  // 维度3: 自我完整度 (11-14)
+  {q:"你觉得没有另一半的自己？",opts:["是不完整的，缺了重要部分","是完整的，一个人也精彩","还算完整但偶尔觉得空","正在变得更完整，不急"],scores:[4,1,2,3]},
+  {q:"你的自我认同感更来源于？",opts:["亲密关系中的角色和定位","自己的兴趣和价值","两者都有但自我为主","对自己的成长和突破"],scores:[4,1,2,3]},
+  {q:"你觉得自己现在的状态？",opts:["准备好了迎接一段感情","完全不需要恋爱","可以恋爱也可以不恋爱","还在修炼自己不急着恋爱"],scores:[4,1,2,3]},
+  {q:"你觉得恋爱对你意味着什么？",opts:["让我的人生更有意义和色彩","不是必需品但有也不错","生活的调味品不是主食","先把自己变成值得被爱的人"],scores:[4,1,2,3]},
+  // 维度4: 依赖倾向 (15-18)
+  {q:"恋爱中你更容易？",opts:["很黏人，想时刻和对方在一起","很独立，有自己的空间","适中，亲密但有边界","先确认对方值得再投入"],scores:[4,1,2,3]},
+  {q:"对方没及时回复你，你会？",opts:["很焦虑，反复想是不是做错了什么","无所谓，我也有自己的事","有点不安但能自我调节","先忙自己的等他回复再说"],scores:[4,1,2,3]},
+  {q:"你失恋后会？",opts:["非常痛苦感觉天塌了","难过但很快能恢复","会痛但知道会过去","把它当作成长的经历"],scores:[4,1,2,3]},
+  {q:"你对「一个人也能幸福」这句话的态度？",opts:["不太认同，幸福需要有人分享","完全认同，幸福是自己的事","部分认同，但有人分享更好","认同，但更好的自己是前提"],scores:[4,1,2,3]},
+  // 维度5: 成长意愿 (19-22)
+  {q:"你现在更想花时间在？",opts:["寻找和经营一段感情","充实和享受独处生活","两者平衡但偏向自我","自我成长和突破"],scores:[4,1,2,3]},
+  {q:"你觉得遇到对的人的前提是？",opts:["缘分到了自然遇到","自己状态好才吸引对的人","先有好心态再去找","先成为最好的自己"],scores:[2,1,3,4]},
+  {q:"你对未来1年的情感规划？",opts:["希望尽快找到合适的人","享受单身不刻意找","看缘分但保持开放","先让自己更好再谈感情"],scores:[4,1,2,3]},
+  {q:"如果只能选一个，恋爱和自我成长？",opts:["恋爱，爱是人生最重要的","自我成长，先把自己活好","两者不矛盾可以并行","自我成长是恋爱最好的准备"],scores:[4,1,2,3]}
+];
+
+const results=[
+  {type:"💕",name:"恋爱渴望型",desc:"现在的你心里有一个等待被填满的位置。你渴望被爱、被陪伴、被需要——这不是弱点，而是你当前的情感状态在呼唤一段关系。恋爱会让现在的你更完整、更有能量。",scoreLabel:"情感适配指数",scoreRange:"70-100",scoreDesc:"更适合恋爱模式"},
+  {type:"🧘",name:"独处充能型",desc:"现在的你最需要的是独处充电。不是你不需要爱，而是你当前的状态在独处中才能获得最大能量。恋爱反而会让你消耗——先把自己充电满，恋爱自然水到渠成。",scoreLabel:"情感适配指数",scoreRange:"0-30",scoreDesc:"更适合独处模式"},
+  {type:"🌙",name:"半满半空型",desc:"你不排斥恋爱也不抗拒独处——你是一种「看情况再说」的状态。遇到对的人你可以投入，没遇到你也能自得其乐。关键是：别因为寂寞而恋爱，也别因为害怕而拒绝爱。",scoreLabel:"情感适配指数",scoreRange:"40-60",scoreDesc:"灵活适配两种模式"},
+  {type:"🦋",name:"自我修炼型",desc:"你把当下的单身当作修炼场——不是等待，而是蓄力。你相信「先成为最好的自己，才能遇到最好的人」。这不是逃避恋爱，而是你在为最值得的那段感情做准备。",scoreLabel:"情感适配指数",scoreRange:"30-50",scoreDesc:"修炼期，为爱做准备"}
+];
+
+const dimNames=["情感需求","独处能力","自我完整度","依赖倾向","成长意愿"];
+
+let quickAnswers=[],quickCurrent=0,fullAnswers=[],fullCurrent=0;
+
+function startQuiz(){
+  document.getElementById('welcome').style.display='none';
+  document.getElementById('quizPage').classList.add('active');
+  document.getElementById('quizPage').style.display='block';
+  quickCurrent=0;quickAnswers=[];showQuickQuestion();
+}
+
+function showQuickQuestion(){
+  if(quickCurrent>=5){showQuickResult();return}
+  const q=quickQuestions[quickCurrent];
+  document.getElementById('qNum').textContent=quickCurrent+1;
+  document.getElementById('qText').textContent=q.q;
+  document.getElementById('progressFill').style.width=(quickCurrent/5*100)+'%';
+  document.getElementById('progressText').textContent=(quickCurrent+1)+'/5';
+  let html='';
+  q.opts.forEach((opt,i)=>{
+    const sel=quickAnswers[quickCurrent]===i?' selected':'';
+    html+=`<button class="option${sel}" onclick="selectQuick(${i})"><span class="opt-label">${String.fromCharCode(65+i)}</span>${opt}</button>`;
+  });
+  document.getElementById('optionsBox').innerHTML=html;
+  document.getElementById('nextBtn').classList.add('hidden');
+}
+
+function selectQuick(idx){
+  quickAnswers[quickCurrent]=idx;
+  document.querySelectorAll('.option').forEach((el,i)=>el.classList.toggle('selected',i===idx));
+  document.getElementById('nextBtn').classList.remove('hidden');
+}
+function nextQuestion(){quickCurrent++;showQuickQuestion()}
+
+function showQuickResult(){
+  document.getElementById('quizPage').style.display='none';
+  document.getElementById('quizPage').classList.remove('active');
+  document.getElementById('quickResult').classList.add('active');
+  document.getElementById('quickResult').style.display='block';
+  let total=0;
+  quickAnswers.forEach((a,i)=>{total+=quickQuestions[i].scores[a]});
+  let score=Math.round(total/20*100);
+  score=Math.max(0,Math.min(100,score));
+  let ri=score>=70?0:score<=30?1:score>=50?2:3;
+  const r=results[ri];
+  document.getElementById('qrType').textContent=r.type;
+  document.getElementById('qrName').textContent=r.name;
+  document.getElementById('qrDesc').textContent=r.desc;
+  setTimeout(()=>drawRadar('quickRadar',[65,55,70,60,50]),200);
+}
+
+function showFullQuiz(){
+  document.getElementById('quickResult').style.display='none';
+  document.getElementById('quickResult').classList.remove('active');
+  document.getElementById('fullQuizPage').classList.add('active');
+  document.getElementById('fullQuizPage').style.display='block';
+  fullCurrent=0;fullAnswers=[];showFullQuestion();
+}
+
+function showFullQuestion(){
+  if(fullCurrent>=20){showFullResult();return}
+  const q=fullQuestions[fullCurrent];
+  document.getElementById('fullQNum').textContent=fullCurrent+6;
+  document.getElementById('fullQText').textContent=q.q;
+  document.getElementById('fullProgressFill').style.width=((fullCurrent+5)/25*100)+'%';
+  document.getElementById('fullProgressText').textContent=(fullCurrent+6)+'/25';
+  let html='';
+  q.opts.forEach((opt,i)=>{
+    const sel=fullAnswers[fullCurrent]===i?' selected':'';
+    html+=`<button class="option${sel}" onclick="selectFull(${i})"><span class="opt-label">${String.fromCharCode(65+i)}</span>${opt}</button>`;
+  });
+  document.getElementById('fullOptionsBox').innerHTML=html;
+  document.getElementById('fullNextBtn').classList.add('hidden');
+}
+
+function selectFull(idx){
+  fullAnswers[fullCurrent]=idx;
+  document.querySelectorAll('#fullOptionsBox .option').forEach((el,i)=>el.classList.toggle('selected',i===idx));
+  document.getElementById('fullNextBtn').classList.remove('hidden');
+}
+function fullNextQuestion(){fullCurrent++;showFullQuestion()}
+
+function showFullResult(){
+  document.getElementById('fullQuizPage').style.display='none';
+  document.getElementById('fullQuizPage').classList.remove('active');
+  let dimScores=[0,0,0,0,0];
+  fullAnswers.forEach((a,i)=>{dimScores[Math.floor(i/4)]+=fullQuestions[i].scores[a]});
+  let dimNorm=dimScores.map(s=>Math.round(s/16*100));
+  let totalScore=dimScores.reduce((a,b)=>a+b,0);
+  let finalScore=Math.round(totalScore/80*100);
+  finalScore=Math.max(0,Math.min(100,finalScore));
+  let ri=finalScore>=70?0:finalScore<=30?1:finalScore>=50?2:3;
+  const r=results[ri];
+
+  let pathText;
+  if(ri===0)pathText="💕 恋爱渴望型 → 勇敢去爱：你的情感需求很强烈，现在的你需要一段滋养型的关系。别压抑渴望——主动去社交，遇到心动的人就勇敢靠近。";
+  else if(ri===1)pathText="🧘 独处充能型 → 先爱自己：你的能量在独处中恢复，恋爱会消耗你。先充好电——等你的独处时间足够充实、内在足够稳定时，恋爱才不会让你失衡。";
+  else if(ri===2)pathText="🌙 半满半空型 → 看缘分行动：你可以恋爱也可以独处，关键是不因寂寞而恋爱、不因恐惧而拒绝。保持开放心态，遇到对的人就靠近，没遇到就享受当下。";
+  else pathText="🦋 自我修炼型 → 蓄力等花开：你在为最好的那段感情做准备。继续修炼——当你内在足够充盈时，吸引到的人也会是高质量的对的人。";
+
+  const actions=[
+    ["第1-30天：情感盘点","记录一周的情绪波动，找出让你最满足和最空虚的时刻，明确你当前的真实情感需求"],
+    ["第1-30天：状态调整","根据你的类型做一件事——渴望型主动社交一次、独处型安排一段高质量独处、半满型平衡两者、修炼型做一次自我突破"],
+    ["第31-60天：能量管理","建立你的「能量补给清单」——恋爱型补充亲密能量、独处型补充独处能量、半满型交替补给、修炼型补充成长能量"],
+    ["第61-90天：定调前行","复盘变化，确定你的情感状态关键词，写下「我的情感宣言」——知道自己要什么，才能不迷失"]
+  ];
+
+  let html=`
+    <div class="result-type">${r.type}</div>
+    <div class="result-name">${r.name}</div>
+    <div class="score">${r.scoreLabel}：${finalScore}分 · ${r.scoreDesc}</div>
+    <div class="result-desc">${r.desc}</div>
+    <div class="chart-box">
+      <h4>📊 五维雷达图分析</h4>
+      <div class="radar-container"><canvas id="fullRadar" width="280" height="280"></canvas></div>
+    </div>
+    <div class="path-box">
+      <h4>🛤️ 你的情感状态路径</h4>
+      <p style="font-size:14px;color:#880E4F;line-height:1.8">${pathText}</p>
+    </div>
+    <div class="action-plan">
+      <h4>📋 90天情感优化计划</h4>
+      ${actions.map((a,i)=>`
+        <div class="action-item">
+          <div class="action-num">${i+1}</div>
+          <div class="action-text"><strong>${a[0]}</strong><br>${a[1]}</div>
+        </div>`).join('')}
+    </div>
+    <p style="font-size:13px;color:#D81B60;margin-top:16px">💡 恋爱和独处不是对立的——找到让你能量最高的模式才是关键<br>不因寂寞而爱，不因恐惧而独处——忠于当下的自己</p>
+  `;
+
+  document.getElementById('fullResult').innerHTML=html;
+  document.getElementById('fullResult').classList.add('active');
+  document.getElementById('fullResult').style.display='block';
+  setTimeout(()=>drawRadar('fullRadar',dimNorm),300);
+}
+
+function drawRadar(cid,data){
+  const c=document.getElementById(cid);
+  if(!c)return;
+  const ctx=c.getContext('2d'),cx=c.width/2,cy=c.height/2,r=100,sides=5;
+  ctx.clearRect(0,0,c.width,c.height);
+  for(let lv=1;lv<=5;lv++){
+    ctx.beginPath();
+    for(let i=0;i<sides;i++){
+      const a=(Math.PI*2/sides)*i-Math.PI/2;
+      const rr=(r/5)*lv;
+      const x=cx+rr*Math.cos(a),y=cy+rr*Math.sin(a);
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.closePath();ctx.strokeStyle='#E0E0E0';ctx.lineWidth=1;ctx.stroke();
+  }
+  for(let i=0;i<sides;i++){
+    const a=(Math.PI*2/sides)*i-Math.PI/2;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));
+    ctx.strokeStyle='#E0E0E0';ctx.stroke();
+  }
+  ctx.beginPath();
+  for(let i=0;i<sides;i++){
+    const a=(Math.PI*2/sides)*i-Math.PI/2;
+    const rr=(data[i]/100)*r;
+    const x=cx+rr*Math.cos(a),y=cy+rr*Math.sin(a);
+    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  }
+  ctx.closePath();ctx.fillStyle='rgba(248,187,208,0.3)';ctx.fill();ctx.strokeStyle='#F8BBD0';ctx.lineWidth=2;ctx.stroke();
+  for(let i=0;i<sides;i++){
+    const a=(Math.PI*2/sides)*i-Math.PI/2;
+    const rr=(data[i]/100)*r;
+    ctx.beginPath();ctx.arc(cx+rr*Math.cos(a),cy+rr*Math.sin(a),5,0,Math.PI*2);ctx.fillStyle='#F48FB1';ctx.fill();
+  }
+  ctx.fillStyle='#880E4F';ctx.font='12px -apple-system,sans-serif';ctx.textAlign='center';
+  for(let i=0;i<sides;i++){
+    const a=(Math.PI*2/sides)*i-Math.PI/2;
+    ctx.fillText(dimNames[i],cx+(r+25)*Math.cos(a),cy+(r+25)*Math.sin(a)+4);
+  }
+}
+</script>
+</body>
+</html>
