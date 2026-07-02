@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>你更容易吸引哪类贵人 - 20题完整版贵人缘测试</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#F0FFF0;min-height:100vh;color:#3D6B5C}
+.container{max-width:500px;margin:0 auto;padding:20px}
+.welcome{text-align:center;padding-top:50px}
+.welcome .emoji-top{font-size:64px;margin-bottom:16px}
+.welcome h1{font-size:30px;color:#3A7D5C;margin-bottom:10px;line-height:1.4}
+.welcome .subtitle{font-size:15px;color:#6B9E8A;margin-bottom:28px;line-height:1.6}
+.welcome .dims{text-align:left;margin-bottom:36px;background:white;border-radius:20px;padding:20px 24px;box-shadow:0 4px 20px rgba(126,207,160,0.1)}
+.welcome .dim-item{display:flex;align-items:center;gap:12px;padding:9px 0;font-size:15px;color:#5A9E78}
+.welcome .dim-item .dot{width:8px;height:8px;border-radius:50%;background:#7ECFA0;flex-shrink:0}
+.btn{display:inline-block;padding:16px 60px;background:linear-gradient(135deg,#7ECFA0,#5BBF7F);color:white;font-size:20px;font-weight:bold;border:none;border-radius:40px;cursor:pointer;text-decoration:none;box-shadow:0 6px 24px rgba(126,207,160,0.4);transition:all 0.3s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(126,207,160,0.5)}
+.btn:active{transform:translateY(0)}
+.btn-small{padding:12px 40px;font-size:16px}
+.quiz-page{display:none}.quiz-page.active{display:block}
+.progress-bar{width:100%;height:8px;background:#E0E0E0;border-radius:4px;margin-bottom:10px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#7ECFA0,#5BBF7F);border-radius:4px;transition:width 0.4s ease}
+.progress-text{text-align:center;font-size:14px;color:#6B9E8A;margin-bottom:28px}
+.question{margin-bottom:26px}
+.question .q-num{display:inline-block;width:36px;height:36px;line-height:36px;text-align:center;background:#7ECFA0;color:white;border-radius:50%;font-weight:bold;font-size:16px;margin-right:10px;vertical-align:middle}
+.question h3{display:inline;font-size:20px;color:#3A7D5C;line-height:1.5}
+.options{margin-top:18px}
+.option{display:block;width:100%;padding:18px 20px;margin-bottom:12px;background:white;border:2px solid #E8F5E9;border-radius:16px;font-size:16px;color:#3D6B5C;text-align:left;cursor:pointer;transition:all 0.3s}
+.option:hover{border-color:#7ECFA0;background:#F0FFF0}
+.option.selected{border-color:#7ECFA0;background:#F0FFF0;box-shadow:0 2px 12px rgba(126,207,160,0.2)}
+.option .opt-label{display:inline-block;width:28px;height:28px;line-height:28px;text-align:center;background:#7ECFA0;color:white;border-radius:50%;font-weight:bold;font-size:14px;margin-right:12px}
+.quick-result{display:none;text-align:center;padding-top:30px}
+.quick-result.active{display:block}
+.quick-result .result-type{font-size:52px;margin-bottom:8px}
+.quick-result .result-name{font-size:28px;font-weight:bold;color:#3A7D5C;margin-bottom:10px}
+.quick-result .result-desc{font-size:15px;color:#6B9E8A;margin-bottom:28px;line-height:1.6}
+.quick-result .result-chart{margin:16px auto;max-width:280px}
+.quick-result .upgrade-box{background:white;border-radius:20px;padding:28px 20px;margin-top:28px;box-shadow:0 4px 20px rgba(126,207,160,0.1)}
+.quick-result .upgrade-box h4{font-size:20px;color:#3A7D5C;margin-bottom:12px}
+.quick-result .upgrade-box p{font-size:14px;color:#6B9E8A;margin-bottom:20px;line-height:1.6}
+.full-result{display:none;text-align:center;padding-top:24px}
+.full-result.active{display:block}
+.full-result .result-type{font-size:60px;margin-bottom:8px}
+.full-result .result-name{font-size:32px;font-weight:bold;color:#3A7D5C;margin-bottom:8px}
+.full-result .score{display:inline-block;padding:8px 24px;background:#F0FFF0;border-radius:20px;font-size:16px;color:#5A9E78;margin-bottom:20px}
+.full-result .result-desc{font-size:15px;color:#3D6B5C;line-height:1.8;text-align:left;margin-bottom:20px;padding:20px;background:white;border-radius:16px}
+.full-result .chart-box{background:white;border-radius:20px;padding:20px;margin:20px 0;box-shadow:0 4px 20px rgba(126,207,160,0.1)}
+.full-result .chart-box h4{font-size:18px;color:#3A7D5C;margin-bottom:14px}
+.full-result .radar-container{width:280px;height:280px;margin:0 auto}
+.full-result .action-plan{text-align:left;background:white;border-radius:16px;padding:20px;margin:20px 0}
+.full-result .action-plan h4{font-size:18px;color:#3A7D5C;margin-bottom:16px;text-align:center}
+.full-result .action-item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #F0FFF0}
+.full-result .action-item:last-child{border-bottom:none}
+.full-result .action-num{width:28px;height:28px;line-height:28px;text-align:center;background:#7ECFA0;color:white;border-radius:50%;font-weight:bold;font-size:14px;flex-shrink:0}
+.full-result .action-text{font-size:14px;color:#3D6B5C;line-height:1.6}
+.full-result .path-box{text-align:left;background:white;border-radius:16px;padding:20px;margin:20px 0}
+.full-result .path-box h4{font-size:18px;color:#3A7D5C;margin-bottom:14px;text-align:center}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="container" id="app">
+
+<div class="welcome" id="welcome">
+  <div class="emoji-top">🌟</div>
+  <h1>你更容易吸引哪类贵人</h1>
+  <p class="subtitle">20题深度扫描你的贵人缘密码</p>
+  <div class="dims">
+    <div class="dim-item"><span class="dot"></span> 领导气质 —— 你是否自带让人想提携的气场？</div>
+    <div class="dim-item"><span class="dot"></span> 真诚程度 —— 你是否让人愿意真心帮你？</div>
+    <div class="dim-item"><span class="dot"></span> 进取之心 —— 你是否让人觉得值得投资？</div>
+    <div class="dim-item"><span class="dot"></span> 感恩之心 —— 你是否会珍惜贵人的帮助？</div>
+    <div class="dim-item"><span class="dot"></span> 识人能力 —— 你能否识别并靠近你的贵人？</div>
+  </div>
+  <button class="btn" onclick="startQuiz()">开始测试</button>
+</div>
+
+<div class="quiz-page" id="quizPage">
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-text" id="progressText">1/5</div>
+  <div class="question"><span class="q-num" id="qNum">1</span><h3 id="qText"></h3></div>
+  <div class="options" id="optionsBox"></div>
+  <button class="btn btn-small hidden" id="nextBtn" onclick="nextQuestion()">下一题</button>
+</div>
+
+<div class="quick-result" id="quickResult">
+  <div class="result-type" id="qrType"></div>
+  <div class="result-name" id="qrName"></div>
+  <div class="result-desc" id="qrDesc"></div>
+  <div class="result-chart"><canvas id="quickRadar" width="260" height="260"></canvas></div>
+  <div class="upgrade-box">
+    <h4>🎯 以上只是5题快速版</h4>
+    <p>完成全部20题，你将获得：<br>
+    ✅ 精确的贵人缘指数评分<br>
+    ✅ 五维雷达图深度分析<br>
+    ✅ 你的贵人吸引路径<br>
+    ✅ 90天贵人缘提升计划</p>
+    <button class="btn" onclick="showFullQuiz()">解锁完整20题测试</button>
+  </div>
+</div>
+
+<div class="quiz-page" id="fullQuizPage">
+  <div class="progress-bar"><div class="progress-fill" id="fullProgressFill"></div></div>
+  <div class="progress-text" id="fullProgressText">6/25</div>
+  <div class="question"><span class="q-num" id="fullQNum">6</span><h3 id="fullQText"></h3></div>
+  <div class="options" id="fullOptionsBox"></div>
+  <button class="btn btn-small hidden" id="fullNextBtn" onclick="fullNextQuestion()">下一题</button>
+</div>
+
+<div class="full-result" id="fullResult"></div>
+
+</div>
+
+<script>
+const quickQuestions=[
+  {q:"当你遇到困难时，你更倾向于找谁帮忙？",opts:["有权力/地位的领导型人物","有见识/经验的智慧型人物","有钱/资源的实干型人物","真心关心你的朋友型人物"],scores:[4,3,2,1]},
+  {q:"你觉得什么样的人最愿意帮你？",opts:["欣赏你野心和冲劲的人","欣赏你真诚和学习力的人","欣赏你踏实和执行力的人","欣赏你温暖和善良的人"],scores:[4,3,2,1]},
+  {q:"你最希望从贵人那里得到什么？",opts:["机会和平台——让我施展才华","方向和指引——让我少走弯路","资源和资金——让我快速推进","支持和陪伴——让我不再孤单"],scores:[4,3,2,1]},
+  {q:"别人通常因为什么原因注意到你？",opts:["你的野心和气场","你的真诚和求知欲","你的靠谱和成果","你的温暖和善良"],scores:[4,3,2,1]},
+  {q:"如果你能选择一种贵人缘分，你选？",opts:["被大佬提携一路向上","被导师指引找到方向","被资源方支持快速落地","被真心朋友温暖前行"],scores:[4,3,2,1]}
+];
+
+const fullQuestions=[
+  // 维度1: 领导气质 (6-9)
+  {q:"走进一个陌生场合，别人的目光会？",opts:["自然落在你身上，你有存在感","不太注意你，但会慢慢被你吸引","看你是不是靠谱可合作的人","觉得你很亲切想主动靠近你"],scores:[4,3,2,1]},
+  {q:"你和比自己地位高的人相处时？",opts:["不卑不亢，反而让对方欣赏你","谦虚请教，让对方愿意指点你","务实沟通，让对方觉得你值得投资","真诚交流，让对方想保护你"],scores:[4,3,2,1]},
+  {q:"你更习惯在关系中扮演什么角色？",opts:["引领者，有自己的判断和方向","学习者，愿意被有经验的人带","执行者，踏实做好被交代的事","陪伴者，给人温暖和安全感"],scores:[4,3,2,1]},
+  {q:"你对「站队」和「靠山」的态度？",opts:["我不靠山，我自己就是山","找一个值得追随的靠山很重要","靠实力说话，靠山只是加速器","不太在意，真诚待人就好"],scores:[4,3,2,1]},
+  // 维度2: 真诚程度 (10-13)
+  {q:"别人帮了你之后，你通常怎么做？",opts:["找机会回报更大的价值","真心感谢并持续汇报进展","用实际行动证明没帮错人","记住这份恩情，以后一定还"],scores:[4,3,2,1]},
+  {q:"你和人交往的方式更像？",opts:["先展示实力再建立信任","先真诚交往再展示价值","先证明靠谱再深入合作","先建立情感再谈其他"],scores:[4,3,2,1]},
+  {q:"你会主动暴露自己的弱点吗？",opts:["很少，我习惯展示强势面","适度暴露，让人觉得我真实","不太暴露，但会坦诚说困难","很自然，我没什么需要隐藏"],scores:[2,4,3,1]},
+  {q:"当有人对你好时，你的反应？",opts:["心想：他为什么对我好？分析动机","很感动，想要好好学习回报","觉得是对我能力的认可","很开心，也想对他好"],scores:[4,3,2,1]},
+  // 维度3: 进取之心 (14-17)
+  {q:"你对未来的野心有多大？",opts:["很大，我想做到行业顶尖","不小，我想找到自己的方向","比较务实，想做好手头的事","不太追求世俗成功，活得舒服就好"],scores:[4,3,2,1]},
+  {q:"你更愿意在哪方面投入时间？",opts:["拓展人脉和争取机会","学习和请教有经验的人","打磨技能和做出成果","经营身边的重要关系"],scores:[4,3,2,1]},
+  {q:"你对自己的成长速度？",opts:["要求很高，必须快速进步","追求深度理解而非速度","追求稳定扎实的积累","不着急，享受过程更重要"],scores:[4,3,2,1]},
+  {q:"你觉得贵人为什么要帮你？",opts:["因为看到我未来的潜力","因为被我的真诚和学习力打动","因为我靠谱能帮他落地","因为我真心对他好"],scores:[4,3,2,1]},
+  // 维度4: 感恩之心 (18-21)
+  {q:"收到贵人的帮助后，你多久会主动联系？",opts:["立刻，让他知道我在行动","一周内，汇报最新进展","尽快，用实际行动回应","当天，发一条真诚的感谢"],scores:[4,3,2,1]},
+  {q:"如果贵人后来也遇到困难，你会？",opts:["全力以赴帮他，这是我的责任","主动提供我能做到的帮助","用我的专业能力帮他解决问题","第一时间去陪伴和支持他"],scores:[4,3,2,1]},
+  {q:"你觉得帮过你的人最在意什么？",opts:["我是否把这个机会用到了极致","我是否真的理解了他的指导","我是否做出了让他骄傲的结果","我是否真心珍惜这份情谊"],scores:[4,3,2,1]},
+  {q:"你对「知恩图报」的理解？",opts:["恩情也是一种投资，我必须让回报超预期","帮过我的人我永远不会忘","做出成果就是对帮助最好的回报","真心相待就是最好的报答"],scores:[4,3,2,1]},
+  // 维度5: 识人能力 (22-25)
+  {q:"你识别贵人/有价值的人的能力？",opts:["很强，我能快速判断谁值得靠近","还行，我愿意花时间了解一个人","更看重对方做了什么而非说了什么","凭直觉，感觉对的人就是对的"],scores:[4,3,2,1]},
+  {q:"你接近目标人物的方式？",opts:["主动出击，展示我的价值","真诚请教，让对方愿意教我","提供我能做的实际帮助","自然融入，让对方感受到我的善意"],scores:[4,3,2,1]},
+  {q:"你在社交中最擅长的是？",opts:["快速判断谁是关键人物并建立联系","倾听和提问，让对方愿意分享","高效沟通和落地执行","温暖和共情，让人觉得舒服"],scores:[4,3,2,1]},
+  {q:"你觉得什么样的贵人最容易错过？",opts:["低调但真正有实力的人","表面严厉但内心想帮你的人","不善表达但愿意给你资源的人","看起来普通但真心对你好的人"],scores:[3,4,2,1]}
+];
+
+const results=[
+  {type:"👑",name:"权力贵人型",desc:"你自带一种让大佬想提携的气场。你的野心、果断和领导气质让有权力的人看到你身上的潜质——他们帮你不是因为你弱，而是因为他们觉得你值得投资，未来可能成为他们的同路人。",scoreLabel:"贵人缘指数",scoreRange:"80-100",scoreDesc:"极强权力贵人吸引力"},
+  {type:"🧭",name:"智慧贵人型",desc:"你吸引的是那些愿意指引方向的导师型人物。你的真诚、求知欲和谦逊让有智慧的人想主动教你——他们帮你不是因为你强，而是因为你让他们想起了年轻时的自己，值得被点亮。",scoreLabel:"贵人缘指数",scoreRange:"60-80",scoreDesc:"强智慧贵人吸引力"},
+  {type:"💰",name:"资源贵人型",desc:"你吸引的是那些愿意给资源和支持的实干型人物。你的靠谱、踏实和执行力让有钱有资源的人觉得投资你不会亏——他们帮你不是因为你好看，而是因为交给你的事一定能落地。",scoreLabel:"贵人缘指数",scoreRange:"40-60",scoreDesc:"中等资源贵人吸引力"},
+  {type:"🤝",name:"真心贵人型",desc:"你吸引的是那些真心对你好的温暖型人物。你的善良、真诚和感恩让身边的人愿意无条件帮你——他们帮你不是因为算计回报，而是因为真心觉得你值得被善待。",scoreLabel:"贵人缘指数",scoreRange:"30-50",scoreDesc:"真心贵人缘深厚"}
+];
+
+const dimNames=["领导气质","真诚程度","进取之心","感恩之心","识人能力"];
+
+let quickAnswers=[],quickCurrent=0,fullAnswers=[],fullCurrent=0;
+
+function startQuiz(){
+  document.getElementById('welcome').style.display='none';
+  document.getElementById('quizPage').classList.add('active');
+  document.getElementById('quizPage').style.display='block';
+  quickCurrent=0;quickAnswers=[];showQuickQuestion();
+}
+
+function showQuickQuestion(){
+  if(quickCurrent>=5){showQuickResult();return}
+  const q=quickQuestions[quickCurrent];
+  document.getElementById('qNum').textContent=quickCurrent+1;
+  document.getElementById('qText').textContent=q.q;
+  document.getElementById('progressFill').style.width=(quickCurrent/5*100)+'%';
+  document.getElementById('progressText').textContent=(quickCurrent+1)+'/5';
+  let html='';
+  q.opts.forEach((opt,i)=>{
+    const sel=quickAnswers[quickCurrent]===i?' selected':'';
+    html+=`<button class="option${sel}" onclick="selectQuick(${i})"><span class="opt-label">${String.fromCharCode(65+i)}</span>${opt}</button>`;
+  });
+  document.getElementById('optionsBox').innerHTML=html;
+  document.getElementById('nextBtn').classList.add('hidden');
+}
+
+function selectQuick(idx){
+  quickAnswers[quickCurrent]=idx;
+  document.querySelectorAll('.option').forEach((el,i)=>el.classList.toggle('selected',i===idx));
+  document.getElementById('nextBtn').classList.remove('hidden');
+}
+function nextQuestion(){quickCurrent++;showQuickQuestion()}
+
+function showQuickResult(){
+  document.getElementById('quizPage').style.display='none';
+  document.getElementById('quizPage').classList.remove('active');
+  document.getElementById('quickResult').classList.add('active');
+  document.getElementById('quickResult').style.display='block';
+  let total=0;
+  quickAnswers.forEach((a,i)=>{total+=quickQuestions[i].scores[a]});
+  let score=Math.round(total/20*100);
+  score=Math.max(0,Math.min(100,score));
+  let ri=score>=70?0:score>=50?1:score>=35?2:3;
+  const r=results[ri];
+  document.getElementById('qrType').textContent=r.type;
+  document.getElementById('qrName').textContent=r.name;
+  document.getElementById('qrDesc').textContent=r.desc;
+  setTimeout(()=>drawRadar('quickRadar',[65,55,70,60,50]),200);
+}
+
+function showFullQuiz(){
+  document.getElementById('quickResult').style.display='none';
+  document.getElementById('quickResult').classList.remove('active');
+  document.getElementById('fullQuizPage').classList.add('active');
+  document.getElementById('fullQuizPage').style.display='block';
+  fullCurrent=0;fullAnswers=[];showFullQuestion();
+}
+
+function showFullQuestion(){
+  if(fullCurrent>=20){showFullResult();return}
+  const q=fullQuestions[fullCurrent];
+  document.getElementById('fullQNum').textContent=fullCurrent+6;
+  document.getElementById('fullQText').textContent=q.q;
+  document.getElementById('fullProgressFill').style.width=((fullCurrent+5)/25*100)+'%';
+  document.getElementById('fullProgressText').textContent=(fullCurrent+6)+'/25';
+  let html='';
+  q.opts.forEach((opt,i)=>{
+    const sel=fullAnswers[fullCurrent]===i?' selected':'';
+    html+=`<button class="option${sel}" onclick="selectFull(${i})"><span class="opt-label">${String.fromCharCode(65+i)}</span>${opt}</button>`;
+  });
+  document.getElementById('fullOptionsBox').innerHTML=html;
+  document.getElementById('fullNextBtn').classList.add('hidden');
+}
+
+function selectFull(idx){
+  fullAnswers[fullCurrent]=idx;
+  document.querySelectorAll('#fullOptionsBox .option').forEach((el,i)=>el.classList.toggle('selected',i===idx));
+  document.getElementById('fullNextBtn').classList.remove('hidden');
+}
+function fullNextQuestion(){fullCurrent++;showFullQuestion()}
+
+function showFullResult(){
+  document.getElementById('fullQuizPage').style.display='none';
+  document.getElementById('fullQuizPage').classList.remove('active');
+  let dimScores=[0,0,0,0,0];
+  fullAnswers.forEach((a,i)=>{dimScores[Math.floor(i/4)]+=fullQuestions[i].scores[a]});
+  let dimNorm=dimScores.map(s=>Math.round(s/16*100));
+  let totalScore=dimScores.reduce((a,b)=>a+b,0);
+  let finalScore=Math.round(totalScore/80*100);
+  finalScore=Math.max(0,Math.min(100,finalScore));
+  let ri=finalScore>=70?0:finalScore>=50?1:finalScore>=35?2:3;
+  const r=results[ri];
+
+  let pathText;
+  if(ri===0)pathText="👑 权力贵人型 → 顺势而为：你已经自带吸引大佬的气场，下一步是找到2-3个关键人物深度绑定，让他们从欣赏变成主动提携。";
+  else if(ri===1)pathText="🧭 智慧贵人型 → 主动求教：你的真诚和学习力是最好的敲门砖，主动向行业前辈请教——好导师不怕被问，怕的是没人值得教。";
+  else if(ri===2)pathText="💰 资源贵人型 → 证明价值：你的靠谱是最大的贵人引力，先做出1-2个让人印象深刻的结果，资源方自然会找上门来。";
+  else pathText="🤝 真心贵人型 → 扩大圈子：你的善良是稀缺品质，但需要扩大社交圈——真心贵人往往在你意想不到的地方出现，多走出去才有更多相遇。";
+
+  const actions=[
+    ["第1-30天：盘点贵人","列出过去3年帮过你的所有人，分析他们为什么帮你，找到你的贵人吸引模式"],
+    ["第1-30天：靠近目标","根据你的贵人类型主动靠近2-3个目标人物——权力型找大佬、智慧型找导师、资源型找实干家、真心型找温暖圈"],
+    ["第31-60天：建立信任","用你最擅长的方式建立信任——权力型展示实力、智慧型真诚请教、资源型做出成果、真心型真心相待"],
+    ["第61-90天：贵人循环","帮过你的人要回报，你帮过的人会再来帮你——建立你的贵人循环网络，让贵人缘可持续"]
+  ];
+
+  let html=`
+    <div class="result-type">${r.type}</div>
+    <div class="result-name">${r.name}</div>
+    <div class="score">${r.scoreLabel}：${finalScore}分 · ${r.scoreDesc}</div>
+    <div class="result-desc">${r.desc}</div>
+    <div class="chart-box">
+      <h4>📊 五维雷达图分析</h4>
+      <div class="radar-container"><canvas id="fullRadar" width="280" height="280"></canvas></div>
+    </div>
+    <div class="path-box">
+      <h4>🛤️ 你的贵人吸引路径</h4>
+      <p style="font-size:14px;color:#3D6B5C;line-height:1.8">${pathText}</p>
+    </div>
+    <div class="action-plan">
+      <h4>📋 90天贵人缘提升计划</h4>
+      ${actions.map((a,i)=>`
+        <div class="action-item">
+          <div class="action-num">${i+1}</div>
+          <div class="action-text"><strong>${a[0]}</strong><br>${a[1]}</div>
+        </div>`).join('')}
+    </div>
+    <p style="font-size:13px;color:#6B9E8A;margin-top:16px">💡 贵人不是天上掉下来的，而是你身上的某种特质吸引来的<br>知道自己吸引哪类贵人，才能主动靠近对的圈子</p>
+  `;
+
+  document.getElementById('fullResult').innerHTML=html;
+  document.getElementById('fullResult').classList.add('active');
+  document.getElementById('fullResult').style.display='block';
+  setTimeout(()=>drawRadar('fullRadar',dimNorm),300);
+}
+
+function drawRadar(cid,data){
+  const c=document.getElementById(cid);
+  if(!c)return;
+  const ctx=c.getContext('2d'),cx=c.width/2,cy=c.height/2,r=100,sides=5;
+  ctx.clearRect(0,0,c.width,c.height);
+  for(let lv=1;lv<=5;lv++){
+    ctx.beginPath();
+    for(let i=0;i<sides;i++){
+      const a=(Math.PI*2/sides)*i-Math.PI/2;
+      const rr=(r/5)*lv;
+      const x=cx+rr*Math.cos(a),y=cy+rr*Math.sin(a);
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.closePath();ctx.strokeStyle='#E0E0E0';ctx.lineWidth=1;ctx.stroke();
+  }
+  for(let i=0;i<sides;i++){
+    const a=(Math.PI*2/sides)*i-Math.PI/2;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));
+    ctx.strokeStyle='#E0E0E0';ctx.stroke();
+  }
+  ctx.beginPath();
+  for(let i=0;i<sides;i++){
+    const a=(Math.PI*2/sides)*i-Math.PI/2;
+    const rr=(data[i]/100)*r;
+    const x=cx+rr*Math.cos(a),y=cy+rr*Math.sin(a);
+    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  }
+  ctx.closePath();ctx.fillStyle='rgba(126,207,160,0.3)';ctx.fill();ctx.strokeStyle='#7ECFA0';ctx.lineWidth=2;ctx.stroke();
+  for(let i=0;i<sides;i++){
+    const a=(Math.PI*2/sides)*i-Math.PI/2;
+    const rr=(data[i]/100)*r;
+    ctx.beginPath();ctx.arc(cx+rr*Math.cos(a),cy+rr*Math.sin(a),5,0,Math.PI*2);ctx.fillStyle='#5BBF7F';ctx.fill();
+  }
+  ctx.fillStyle='#3D6B5C';ctx.font='12px -apple-system,sans-serif';ctx.textAlign='center';
+  for(let i=0;i<sides;i++){
+    const a=(Math.PI*2/sides)*i-Math.PI/2;
+    ctx.fillText(dimNames[i],cx+(r+25)*Math.cos(a),cy+(r+25)*Math.sin(a)+4);
+  }
+}
+</script>
+</body>
+</html>
