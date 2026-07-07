@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>你更容易日久生情还是一见钟情 - 20题完整版恋爱模式测试</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#FFF0F5;min-height:100vh;color:#880E4F}
+.container{max-width:500px;margin:0 auto;padding:20px}
+.welcome{text-align:center;padding-top:50px}
+.welcome .emoji-top{font-size:64px;margin-bottom:16px}
+.welcome h1{font-size:30px;color:#AD1457;margin-bottom:10px;line-height:1.4}
+.welcome .subtitle{font-size:15px;color:#D81B60;margin-bottom:28px;line-height:1.6}
+.welcome .dims{text-align:left;margin-bottom:36px;background:white;border-radius:20px;padding:20px 24px;box-shadow:0 4px 20px rgba(248,187,208,0.15)}
+.welcome .dim-item{display:flex;align-items:center;gap:12px;padding:9px 0;font-size:15px;color:#C2185B}
+.welcome .dim-item .dot{width:8px;height:8px;border-radius:50%;background:#F8BBD0;flex-shrink:0}
+.btn{display:inline-block;padding:16px 60px;background:linear-gradient(135deg,#F8BBD0,#F48FB1);color:white;font-size:20px;font-weight:bold;border:none;border-radius:40px;cursor:pointer;text-decoration:none;box-shadow:0 6px 24px rgba(248,187,208,0.4);transition:all 0.3s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(248,187,208,0.5)}
+.btn:active{transform:translateY(0)}
+.btn-small{padding:12px 40px;font-size:16px}
+.quiz-page{display:none}.quiz-page.active{display:block}
+.progress-bar{width:100%;height:8px;background:#E0E0E0;border-radius:4px;margin-bottom:10px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#F8BBD0,#F48FB1);border-radius:4px;transition:width 0.4s ease}
+.progress-text{text-align:center;font-size:14px;color:#D81B60;margin-bottom:28px}
+.question{margin-bottom:26px}
+.question .q-num{display:inline-block;width:36px;height:36px;line-height:36px;text-align:center;background:#F8BBD0;color:white;border-radius:50%;font-weight:bold;font-size:16px;margin-right:10px;vertical-align:middle}
+.question h3{display:inline;font-size:20px;color:#AD1457;line-height:1.5}
+.options{margin-top:18px}
+.option{display:block;width:100%;padding:18px 20px;margin-bottom:12px;background:white;border:2px solid #FFCDD2;border-radius:16px;font-size:16px;color:#880E4F;text-align:left;cursor:pointer;transition:all 0.3s}
+.option:hover{border-color:#F8BBD0;background:#FFF0F5}
+.option.selected{border-color:#F8BBD0;background:#FFF0F5;box-shadow:0 2px 12px rgba(248,187,208,0.2)}
+.option .opt-label{display:inline-block;width:28px;height:28px;line-height:28px;text-align:center;background:#F8BBD0;color:white;border-radius:50%;font-weight:bold;font-size:14px;margin-right:12px}
+.quick-result{display:none;text-align:center;padding-top:30px}
+.quick-result.active{display:block}
+.quick-result .result-type{font-size:52px;margin-bottom:8px}
+.quick-result .result-name{font-size:28px;font-weight:bold;color:#AD1457;margin-bottom:10px}
+.quick-result .result-desc{font-size:15px;color:#D81B60;margin-bottom:28px;line-height:1.6}
+.quick-result .result-chart{margin:16px auto;max-width:280px}
+.quick-result .upgrade-box{background:white;border-radius:20px;padding:28px 20px;margin-top:28px;box-shadow:0 4px 20px rgba(248,187,208,0.15)}
+.quick-result .upgrade-box h4{font-size:20px;color:#AD1457;margin-bottom:12px}
+.quick-result .upgrade-box p{font-size:14px;color:#D81B60;margin-bottom:20px;line-height:1.6}
+.full-result{display:none;text-align:center;padding-top:24px}
+.full-result.active{display:block}
+.full-result .result-type{font-size:60px;margin-bottom:8px}
+.full-result .result-name{font-size:32px;font-weight:bold;color:#AD1457;margin-bottom:8px}
+.full-result .score{display:inline-block;padding:8px 24px;background:#FFF0F5;border-radius:20px;font-size:16px;color:#C2185B;margin-bottom:20px}
+.full-result .result-desc{font-size:15px;color:#880E4F;line-height:1.8;text-align:left;margin-bottom:20px;padding:20px;background:white;border-radius:16px}
+.full-result .chart-box{background:white;border-radius:20px;padding:20px;margin:20px 0;box-shadow:0 4px 20px rgba(248,187,208,0.15)}
+.full-result .chart-box h4{font-size:18px;color:#AD1457;margin-bottom:14px}
+.full-result .radar-container{width:280px;height:280px;margin:0 auto}
+.full-result .action-plan{text-align:left;background:white;border-radius:16px;padding:20px;margin:20px 0}
+.full-result .action-plan h4{font-size:18px;color:#AD1457;margin-bottom:16px;text-align:center}
+.full-result .action-item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #FFF0F5}
+.full-result .action-item:last-child{border-bottom:none}
+.full-result .action-num{width:28px;height:28px;line-height:28px;text-align:center;background:#F8BBD0;color:white;border-radius:50%;font-weight:bold;font-size:14px;flex-shrink:0}
+.full-result .action-text{font-size:14px;color:#880E4F;line-height:1.6}
+.full-result .path-box{text-align:left;background:white;border-radius:16px;padding:20px;margin:20px 0}
+.full-result .path-box h4{font-size:18px;color:#AD1457;margin-bottom:14px;text-align:center}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="container" id="app">
+
+<div class="welcome" id="welcome">
+  <div class="emoji-top">💕</div>
+  <h1>你更容易日久生情还是一见钟情</h1>
+  <p class="subtitle">20题深度扫描你的恋爱心动密码</p>
+  <div class="dims">
+    <div class="dim-item"><span class="dot"></span> 心动速度 —— 你多久才能对一个人心动？</div>
+    <div class="dim-item"><span class="dot"></span> 安全感需求 —— 你是否需要深入了解才敢投入？</div>
+    <div class="dim-item"><span class="dot"></span> 理性程度 —— 你的心动是直觉驱动还是理性驱动？</div>
+    <div class="dim-item"><span class="dot"></span> 投入深度 —— 一旦心动你会投入多深？</div>
+    <div class="dim-item"><span class="dot"></span> 情感节奏 —— 你的恋爱节奏是快还是慢？</div>
+  </div>
+  <button class="btn" onclick="startQuiz()">开始测试</button>
+</div>
+
+<div class="quiz-page" id="quizPage">
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-text" id="progressText">1/5</div>
+  <div class="question"><span class="q-num" id="qNum">1</span><h3 id="qText"></h3></div>
+  <div class="options" id="optionsBox"></div>
+  <button class="btn btn-small hidden" id="nextBtn" onclick="nextQuestion()">下一题</button>
+</div>
+
+<div class="quick-result" id="quickResult">
+  <div class="result-type" id="qrType"></div>
+  <div class="result-name" id="qrName"></div>
+  <div class="result-desc" id="qrDesc"></div>
+  <div class="result-chart"><canvas id="quickRadar" width="260" height="260"></canvas></div>
+  <div class="upgrade-box">
+    <h4>🎯 以上只是5题快速版</h4>
+    <p>完成全部20题，你将获得：<br>
+    ✅ 精确的心动指数评分<br>
+    ✅ 五维雷达图深度分析<br>
+    ✅ 你的恋爱模式优化路径<br>
+    ✅ 90天恋爱模式提升方案</p>
+    <button class="btn" onclick="showFullQuiz()">解锁完整20题测试</button>
+  </div>
+</div>
+
+<div class="quiz-page" id="fullQuizPage">
+  <div class="progress-bar"><div class="progress-fill" id="fullProgressFill"></div></div>
+  <div class="progress-text" id="fullProgressText">6/25</div>
+  <div class="question"><span class="q-num" id="fullQNum">6</span><h3 id="fullQText"></h3></div>
+  <div class="options" id="fullOptionsBox"></div>
+  <button class="btn btn-small hidden" id="fullNextBtn" onclick="fullNextQuestion()">下一题</button>
+</div>
+
+<div class="full-result" id="fullResult"></div>
+
+</div>
+
+<script>
+const quickQuestions=[
+  {q:"第一次见到一个很有吸引力的人，你的反应是？",opts:["心跳加速，感觉这就是我要找的人","觉得不错但不会立刻动心，需要再了解","心动了一下但很快冷静下来观察","看情况，有时会心动有时不会"],scores:[4,1,3,2]},
+  {q:"你对「感觉」和「了解」的先后顺序？",opts:["感觉最重要，对了就对了","了解最重要，感觉可以慢慢培养","先有感觉再深入了解验证","没有固定顺序，看缘分"],scores:[4,1,3,2]},
+  {q:"你觉得真爱是怎么产生的？",opts:["一瞬间的心动和命中注定","长时间的陪伴和深入了解","心动是起点但时间让它成为真爱","每种方式都可能产生真爱"],scores:[4,1,3,2]},
+  {q:"你过去的心动经历更多是？",opts:["看到某人一眼就心动了","和某人相处很久后才突然心动","初见有好感后来越来越深","两种都有差不多"],scores:[4,1,3,2]},
+  {q:"如果让你选一种恋爱开始的方式？",opts:["轰轰烈烈一见钟情","细水长流慢慢靠近","先心动再慢慢确认","看缘分怎么来就怎么接"],scores:[4,1,3,2]}
+];
+
+const fullQuestions=[
+  // 维度1: 心动速度 (6-9)
+  {q:"你对一个人的好感通常多久产生？",opts:["第一眼/第一次见面就可能心动","至少相处1-2个月才会心动","第一次有好感但需要几周确认","不确定，看具体遇到谁"],scores:[4,1,3,2]},
+  {q:"你更容易被什么瞬间打动？",opts:["第一眼的外貌/气质/气场","长时间相处中的某个温暖瞬间","初见印象+相处后的细节确认","没有特定模式"],scores:[4,1,3,2]},
+  {q:"你对「一见钟情」的看法？",opts:["很相信，心动就是一种命中注定","不太相信，真爱需要时间沉淀","相信心动但不相信一见钟情=真爱","觉得两种都可能"],scores:[4,1,3,2]},
+  {q:"你心动后多久会想表白/行动？",opts:["很快，心动了就想靠近","很慢，确认了很久才敢行动","心动后先观察一段时间再决定","看对方的反应再决定节奏"],scores:[4,1,3,2]},
+  // 维度2: 安全感需求 (10-13)
+  {q:"恋爱前你最需要确认什么？",opts:["感觉对了就行，其他不重要","对方是否靠谱/值得信任","感觉+了解是否匹配","看缘分，不太刻意确认"],scores:[4,1,3,2]},
+  {q:"你对「确定关系」的速度偏好？",opts:["心动就确认，不想等","需要很长时间确认才安心","心动后2-3周确认比较合理","没有偏好看缘分"],scores:[4,1,3,2]},
+  {q:"你更需要哪种安全感？",opts:["心动本身就是安全感","了解对方后才觉得安全","心动+了解都让我安心","安全感不是最重要的"],scores:[4,1,3,2]},
+  {q:"你会在不了解对方的情况下投入感情吗？",opts:["会，心动就投入","不会，必须了解后才投入","部分投入等了解更多再全力投入","看心动程度决定"],scores:[4,1,3,2]},
+  // 维度3: 理性程度 (14-17)
+  {q:"你的心动更多来自？",opts:["直觉和感受，不需要理由","理性分析这个人是否适合我","直觉+理性同时运作","没有固定模式"],scores:[4,1,3,2]},
+  {q:"心动后你会做什么？",opts:["直接跟着感觉走","冷静分析利弊再决定","感觉为主但理性把关","看当时的心情"],scores:[4,1,3,2]},
+  {q:"你更容易被哪种特质吸引？",opts:["直觉型：外貌/气场/声音","理性型：性格/价值观/生活态度","混合型：外在吸引+内在契合","不确定，看具体的人"],scores:[4,1,3,2]},
+  {q:"你对「恋爱要理性」这句话的态度？",opts:["不太认同，恋爱就是感性的","完全认同，冲动恋爱容易受伤","部分认同，感性开始理性收尾","觉得理性感性都不绝对"],scores:[4,1,3,2]},
+  // 维度4: 投入深度 (18-21)
+  {q:"你心动后会投入多少感情？",opts:["全力投入，心动就是全信号","慢慢升温，像温火炖汤","先投入一半等回应再决定投入多少","投入程度看对方回馈"],scores:[4,1,3,2]},
+  {q:"你对感情的投入方式更像？",opts:["闪电式——一心动就全力以赴","蓄水式——慢慢积累越来越深","浪潮式——先猛后稳再深化","看对象决定投入方式"],scores:[4,1,3,2]},
+  {q:"你的感情浓度曲线更像？",opts:["突然升高然后保持高位","缓慢上升慢慢到达高点","先快升再稳住再深化","每段感情都不一样"],scores:[4,1,3,2]},
+  {q:"你对「慢热」这个词的态度？",opts:["不太理解，我从不慢热","这就是我，慢热但深情","我不是慢热但也需要时间深化","觉得慢热和快热都是正常的"],scores:[4,1,3,2]},
+  // 维度5: 情感节奏 (22-25)
+  {q:"你理想的恋爱节奏是？",opts:["快速确认+快速升温","慢慢靠近+慢慢升温","先快确认再慢慢深化","节奏随缘不刻意控制"],scores:[4,1,3,2]},
+  {q:"你在感情中的节奏感更像？",opts:["摇滚——热烈快速直接","古典——优雅缓慢深沉","流行——节奏适中旋律好听","不同阶段不同节奏"],scores:[4,1,3,2]},
+  {q:"你对感情中「慢慢来」的态度？",opts:["不太喜欢，心动就要行动","很喜欢，慢慢来更有质量","可以接受但不能太慢","没有态度看具体情况"],scores:[4,1,3,2]},
+  {q:"你觉得最好的恋爱时间线是？",opts:["见面心动→快速确认→热恋","相识→了解→心动→确认→深化","心动→确认→了解→深化→深爱","没有标准时间线看缘分"],scores:[4,1,3,2]}
+];
+
+const results=[
+  {type:"⚡",name:"一见钟情型",desc:"你天生就是一见钟情的人。心动比思考更快，一眼就知道是对的人——这不是冲动，而是你独特的恋爱直觉。你的感情像闪电，一击即中，热烈直接。对你来说，感觉对了就是最大的安全感。",scoreLabel:"心动指数",scoreRange:"80-100",scoreDesc:"极强一见钟情倾向"},
+  {type:"💕",name:"日久生情型",desc:"你是天生慢热但深情的人。你不会轻易心动，但一旦爱上了就像温水煮茶——越久越醇厚。对你来说，了解和信任是心动的前提，时间不是阻碍而是最好的催化剂。慢热不是缺陷，是你的恋爱护城河。",scoreLabel:"心动指数",scoreRange:"0-30",scoreDesc:"极强日久生情倾向"},
+  {type:"🔥",name:"心动+沉淀型",desc:"你是一见钟情和日久生情的结合体——先心动再沉淀。一见钟情让你点燃，日久生情让你稳固。你的恋爱节奏是：心动→确认→深入了解→深化→深爱。心动是火种，时间是炉灶，两者缺一不可。",scoreLabel:"心动指数",scoreRange:"50-70",scoreDesc:"心动+沉淀混合模式"},
+  {type:"🧡",name:"灵活切换型",desc:"你没有固定的恋爱模式——有时一见钟情，有时日久生情，取决于遇到的人和你当时的状态。这不是没有原则，而是你的情感系统足够灵活，能根据不同的人选择不同的心动路径。",scoreLabel:"心动指数",scoreRange:"30-50",scoreDesc:"灵活恋爱模式"}
+];
+
+const dimNames=["心动速度","安全感需求","理性程度","投入深度","情感节奏"];
+
+let quickAnswers=[],quickCurrent=0,fullAnswers=[],fullCurrent=0;
+
+function startQuiz(){
+  document.getElementById('welcome').style.display='none';
+  document.getElementById('quizPage').classList.add('active');
+  document.getElementById('quizPage').style.display='block';
+  quickCurrent=0;quickAnswers=[];showQuickQuestion();
+}
+
+function showQuickQuestion(){
+  if(quickCurrent>=5){showQuickResult();return}
+  const q=quickQuestions[quickCurrent];
+  document.getElementById('qNum').textContent=quickCurrent+1;
+  document.getElementById('qText').textContent=q.q;
+  document.getElementById('progressFill').style.width=(quickCurrent/5*100)+'%';
+  document.getElementById('progressText').textContent=(quickCurrent+1)+'/5';
+  let html='';
+  q.opts.forEach((opt,i)=>{
+    const sel=quickAnswers[quickCurrent]===i?' selected':'';
+    html+=`<button class="option${sel}" onclick="selectQuick(${i})"><span class="opt-label">${String.fromCharCode(65+i)}</span>${opt}</button>`;
+  });
+  document.getElementById('optionsBox').innerHTML=html;
+  document.getElementById('nextBtn').classList.add('hidden');
+}
+
+function selectQuick(idx){
+  quickAnswers[quickCurrent]=idx;
+  document.querySelectorAll('.option').forEach((el,i)=>el.classList.toggle('selected',i===idx));
+  document.getElementById('nextBtn').classList.remove('hidden');
+}
+function nextQuestion(){quickCurrent++;showQuickQuestion()}
+
+function showQuickResult(){
+  document.getElementById('quizPage').style.display='none';
+  document.getElementById('quizPage').classList.remove('active');
+  document.getElementById('quickResult').classList.add('active');
+  document.getElementById('quickResult').style.display='block';
+  let total=0;
+  quickAnswers.forEach((a,i)=>{total+=quickQuestions[i].scores[a]});
+  let score=Math.round(total/20*100);
+  score=Math.max(0,Math.min(100,score));
+  let ri=score>=70?0:score<=30?1:score>=50?2:3;
+  const r=results[ri];
+  document.getElementById('qrType').textContent=r.type;
+  document.getElementById('qrName').textContent=r.name;
+  document.getElementById('qrDesc').textContent=r.desc;
+  setTimeout(()=>drawRadar('quickRadar',[70,30,60,80,70]),200);
+}
+
+function showFullQuiz(){
+  document.getElementById('quickResult').style.display='none';
+  document.getElementById('quickResult').classList.remove('active');
+  document.getElementById('fullQuizPage').classList.add('active');
+  document.getElementById('fullQuizPage').style.display='block';
+  fullCurrent=0;fullAnswers=[];showFullQuestion();
+}
+
+function showFullQuestion(){
+  if(fullCurrent>=20){showFullResult();return}
+  const q=fullQuestions[fullCurrent];
+  document.getElementById('fullQNum').textContent=fullCurrent+6;
+  document.getElementById('fullQText').textContent=q.q;
+  document.getElementById('fullProgressFill').style.width=((fullCurrent+5)/25*100)+'%';
+  document.getElementById('fullProgressText').textContent=(fullCurrent+6)+'/25';
+  let html='';
+  q.opts.forEach((opt,i)=>{
+    const sel=fullAnswers[fullCurrent]===i?' selected':'';
+    html+=`<button class="option${sel}" onclick="selectFull(${i})"><span class="opt-label">${String.fromCharCode(65+i)}</span>${opt}</button>`;
+  });
+  document.getElementById('fullOptionsBox').innerHTML=html;
+  document.getElementById('fullNextBtn').classList.add('hidden');
+}
+
+function selectFull(idx){
+  fullAnswers[fullCurrent]=idx;
+  document.querySelectorAll('#fullOptionsBox .option').forEach((el,i)=>el.classList.toggle('selected',i===idx));
+  document.getElementById('fullNextBtn').classList.remove('hidden');
+}
+function fullNextQuestion(){fullCurrent++;showFullQuestion()}
+
+function showFullResult(){
+  document.getElementById('fullQuizPage').style.display='none';
+  document.getElementById('fullQuizPage').classList.remove('active');
+  let dimScores=[0,0,0,0,0];
+  fullAnswers.forEach((a,i)=>{dimScores[Math.floor(i/4)]+=fullQuestions[i].scores[a]});
+  let dimNorm=dimScores.map(s=>Math.round(s/16*100));
+  let totalScore=dimScores.reduce((a,b)=>a+b,0);
+  let finalScore=Math.round(totalScore/80*100);
+  finalScore=Math.max(0,Math.min(100,finalScore));
+  let ri=finalScore>=70?0:finalScore<=30?1:finalScore>=50?2:3;
+  const r=results[ri];
+
+  let pathText;
+  if(ri===0)pathText="⚡ 一见钟情型 → 跟着心跳走：你天生直觉敏锐，心动就是最好的信号。大胆去爱但记得——一见钟情是火种，需要时间维护才能成为持久的爱火。";
+  else if(ri===1)pathText="💕 日久生情型 → 慢慢靠近也是一种勇敢：你不需要一见钟情的激情，时间会让你的爱更稳固。给自己多一点机会去靠近——有时候心动就藏在一个不经意的瞬间。";
+  else if(ri===2)pathText="🔥 心动+沉淀型 → 先燃后固：你的恋爱节奏是最健康的——心动点燃感情，时间让爱稳固。保持这个节奏：心动不犹豫，深入了解不急躁，深化不松懈。";
+  else pathText="🧡 灵活切换型 → 让感情自然生长：你没有固定模式反而是一种优势——遇到心动的人就勇敢靠近，遇到需要时间的人就慢慢培养。关键是：别为心动犹豫，也别为慢热焦虑。";
+
+  const actions=[
+    ["第1-30天：恋爱模式盘点","回顾过去3次心动经历，分析你是心动快还是心动慢，找出你的恋爱节奏规律"],
+    ["第1-30天：模式优化","根据你的类型做一件事——一见钟情型试着了解一个人再投入、日久生情型试着对有好感的人主动靠近、混合型优化心动→确认节奏、灵活型给每段感情自然生长的空间"],
+    ["第31-60天：节奏管理","建立你的「心动节奏清单」——什么让你心动、心动后多久确认、确认后多久深入了解、了解后多久深爱"],
+    ["第61-90天：恋爱宣言","复盘变化，写出「我的恋爱节奏宣言」——知道自己怎么心动，才能让爱更持久"]
+  ];
+
+  let html=`
+    <div class="result-type">${r.type}</div>
+    <div class="result-name">${r.name}</div>
+    <div class="score">${r.scoreLabel}：${finalScore}分 · ${r.scoreDesc}</div>
+    <div class="result-desc">${r.desc}</div>
+    <div class="chart-box">
+      <h4>📊 五维雷达图分析</h4>
+      <div class="radar-container"><canvas id="fullRadar" width="280" height="280"></canvas></div>
+    </div>
+    <div class="path-box">
+      <h4>🛤️ 你的恋爱模式路径</h4>
+      <p style="font-size:14px;color:#880E4F;line-height:1.8">${pathText}</p>
+    </div>
+    <div class="action-plan">
+      <h4>📋 90天恋爱模式优化计划</h4>
+      ${actions.map((a,i)=>`
+        <div class="action-item">
+          <div class="action-num">${i+1}</div>
+          <div class="action-text"><strong>${a[0]}</strong><br>${a[1]}</div>
+        </div>`).join('')}
+    </div>
+    <p style="font-size:13px;color:#D81B60;margin-top:16px">💡 一见钟情和日久生情都很好——找到让你心动的方式才是关键<br>不因模式而焦虑，让爱按自己的节奏生长</p>
+  `;
+
+  document.getElementById('fullResult').innerHTML=html;
+  document.getElementById('fullResult').classList.add('active');
+  document.getElementById('fullResult').style.display='block';
+  setTimeout(()=>drawRadar('fullRadar',dimNorm),300);
+}
+
+function drawRadar(cid,data){
+  const c=document.getElementById(cid);
+  if(!c)return;
+  const ctx=c.getContext('2d'),cx=c.width/2,cy=c.height/2,r=100,sides=5;
+  ctx.clearRect(0,0,c.width,c.height);
+  for(let lv=1;lv<=5;lv++){
+    ctx.beginPath();
+    for(let i=0;i<sides;i++){
+      const a=(Math.PI*2/sides)*i-Math.PI/2;
+      const rr=(r/5)*lv;
+      const x=cx+rr*Math.cos(a),y=cy+rr*Math.sin(a);
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.closePath();ctx.strokeStyle='#E0E0E0';ctx.lineWidth=1;ctx.stroke();
+  }
+  for(let i=0;i<sides;i++){
+    const a=(Math.PI*2/sides)*i-Math.PI/2;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));
+    ctx.strokeStyle='#E0E0E0';ctx.stroke();
+  }
+  ctx.beginPath();
+  for(let i=0;i<sides;i++){
+    const a=(Math.PI*2/sides)*i-Math.PI/2;
+    const rr=(data[i]/100)*r;
+    const x=cx+rr*Math.cos(a),y=cy+rr*Math.sin(a);
+    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  }
+  ctx.closePath();ctx.fillStyle='rgba(248,187,208,0.3)';ctx.fill();ctx.strokeStyle='#F8BBD0';ctx.lineWidth=2;ctx.stroke();
+  for(let i=0;i<sides;i++){
+    const a=(Math.PI*2/sides)*i-Math.PI/2;
+    const rr=(data[i]/100)*r;
+    ctx.beginPath();ctx.arc(cx+rr*Math.cos(a),cy+rr*Math.sin(a),5,0,Math.PI*2);ctx.fillStyle='#F48FB1';ctx.fill();
+  }
+  ctx.fillStyle='#880E4F';ctx.font='12px -apple-system,sans-serif';ctx.textAlign='center';
+  for(let i=0;i<sides;i++){
+    const a=(Math.PI*2/sides)*i-Math.PI/2;
+    ctx.fillText(dimNames[i],cx+(r+25)*Math.cos(a),cy+(r+25)*Math.sin(a)+4);
+  }
+}
+</script>
+</body>
+</html>
