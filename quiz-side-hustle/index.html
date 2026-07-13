@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>你适合做什么副业？- 20题完整版副业天赋测试</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #FFF8F0;
+      min-height: 100vh;
+      color: #5D4037;
+    }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .welcome {
+      text-align: center;
+      padding-top: 50px;
+    }
+    .welcome .emoji-top {
+      font-size: 64px;
+      margin-bottom: 16px;
+    }
+    .welcome h1 {
+      font-size: 30px;
+      color: #E65100;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+    .welcome .subtitle {
+      font-size: 15px;
+      color: #F57C00;
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+    .welcome .dims {
+      text-align: left;
+      margin-bottom: 36px;
+      background: white;
+      border-radius: 20px;
+      padding: 20px 24px;
+      box-shadow: 0 4px 20px rgba(255, 152, 0, 0.12);
+    }
+    .welcome .dim-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 9px 0;
+      font-size: 15px;
+      color: #E65100;
+    }
+    .welcome .dim-item .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #FFB74D;
+      flex-shrink: 0;
+    }
+    .btn {
+      display: inline-block;
+      padding: 16px 60px;
+      background: linear-gradient(135deg, #FFB74D, #FF8A65);
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      border: none;
+      border-radius: 40px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 6px 24px rgba(255, 152, 0, 0.35);
+      transition: all 0.3s;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(255, 152, 0, 0.45);
+    }
+    .btn:active {
+      transform: translateY(0);
+    }
+    .btn-small {
+      padding: 12px 40px;
+      font-size: 16px;
+    }
+    .quiz-page {
+      display: none;
+    }
+    .quiz-page.active {
+      display: block;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #F5E6D3;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #FFB74D, #FF8A65);
+      border-radius: 4px;
+      transition: width 0.4s ease;
+    }
+    .progress-text {
+      text-align: center;
+      font-size: 14px;
+      color: #F57C00;
+      margin-bottom: 28px;
+    }
+    .question {
+      margin-bottom: 26px;
+    }
+    .question .q-num {
+      display: inline-block;
+      width: 36px;
+      height: 36px;
+      line-height: 36px;
+      text-align: center;
+      background: #FFB74D;
+      color: white;
+      border-radius: 50%;
+      font-weight: bold;
+      font-size: 16px;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+    .question h3 {
+      display: inline;
+      font-size: 20px;
+      color: #E65100;
+      line-height: 1.5;
+    }
+    .options {
+      margin-top: 18px;
+    }
+    .option {
+      display: block;
+      width: 100%;
+      padding: 18px 20px;
+      margin-bottom: 12px;
+      background: white;
+      border: 2px solid #FFE0B2;
+      border-radius: 16px;
+      font-size: 16px;
+      color: #5D4037;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .option:hover {
+      border-color: #FFB74D;
+      background: #FFF8F0;
+    }
+    .option.selected {
+      border-color: #FFB74D;
+      background: #FFF3E0;
+      box-shadow: 0 2px 12px rgba(255, 152, 0, 0.15);
+    }
+    .option .opt-label {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      line-height: 28px;
+      text-align: center;
+      background: #FFB74D;
+      color: white;
+      border-radius: 50%;
+      font-weight: bold;
+      font-size: 14px;
+      margin-right: 12px;
+    }
+    .quick-result {
+      display: none;
+      text-align: center;
+      padding-top: 30px;
+    }
+    .quick-result.active {
+      display: block;
+    }
+    .quick-result .result-type {
+      font-size: 52px;
+      margin-bottom: 8px;
+    }
+    .quick-result .result-name {
+      font-size: 28px;
+      font-weight: bold;
+      color: #E65100;
+      margin-bottom: 10px;
+    }
+    .quick-result .result-desc {
+      font-size: 15px;
+      color: #F57C00;
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+    .quick-result .result-chart {
+      margin: 16px auto;
+      max-width: 280px;
+    }
+    .quick-result .upgrade-box {
+      background: white;
+      border-radius: 20px;
+      padding: 28px 20px;
+      margin-top: 28px;
+      box-shadow: 0 4px 20px rgba(255, 152, 0, 0.12);
+    }
+    .quick-result .upgrade-box h4 {
+      font-size: 20px;
+      color: #E65100;
+      margin-bottom: 12px;
+    }
+    .quick-result .upgrade-box p {
+      font-size: 14px;
+      color: #F57C00;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .full-result {
+      display: none;
+      text-align: center;
+      padding-top: 24px;
+    }
+    .full-result.active {
+      display: block;
+    }
+    .full-result .result-type {
+      font-size: 60px;
+      margin-bottom: 8px;
+    }
+    .full-result .result-name {
+      font-size: 32px;
+      font-weight: bold;
+      color: #E65100;
+      margin-bottom: 8px;
+    }
+    .full-result .score {
+      display: inline-block;
+      padding: 8px 24px;
+      background: #FFF3E0;
+      border-radius: 20px;
+      font-size: 16px;
+      color: #E65100;
+      margin-bottom: 20px;
+    }
+    .full-result .result-desc {
+      font-size: 15px;
+      color: #5D4037;
+      line-height: 1.8;
+      text-align: left;
+      margin-bottom: 20px;
+      padding: 20px;
+      background: white;
+      border-radius: 16px;
+    }
+    .full-result .chart-box {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      margin: 20px 0;
+      box-shadow: 0 4px 20px rgba(255, 152, 0, 0.10);
+    }
+    .full-result .chart-box h4 {
+      font-size: 18px;
+      color: #E65100;
+      margin-bottom: 14px;
+    }
+    .full-result .radar-container {
+      width: 280px;
+      height: 280px;
+      margin: 0 auto;
+    }
+    .full-result .action-plan {
+      text-align: left;
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .full-result .action-plan h4 {
+      font-size: 18px;
+      color: #E65100;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .full-result .action-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 12px 0;
+      border-bottom: 1px solid #FFF3E0;
+    }
+    .full-result .action-item:last-child {
+      border-bottom: none;
+    }
+    .full-result .action-num {
+      width: 28px;
+      height: 28px;
+      line-height: 28px;
+      text-align: center;
+      background: #FFB74D;
+      color: white;
+      border-radius: 50%;
+      font-weight: bold;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .full-result .action-text {
+      font-size: 14px;
+      color: #5D4037;
+      line-height: 1.6;
+    }
+    .full-result .path-box {
+      text-align: left;
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .full-result .path-box h4 {
+      font-size: 18px;
+      color: #E65100;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="app">
+
+    <div class="welcome" id="welcome">
+      <div class="emoji-top">💸</div>
+      <h1>你适合做什么副业？</h1>
+      <p class="subtitle">20题深度扫描你的副业天赋基因</p>
+      <div class="dims">
+        <div class="dim-item"><span class="dot"></span> 技能储备 —— 你有什么可以变现的本事？</div>
+        <div class="dim-item"><span class="dot"></span> 时间精力 —— 你能为副业投入多少？</div>
+        <div class="dim-item"><span class="dot"></span> 风险承受力 —— 你能接受前期没收入吗？</div>
+        <div class="dim-item"><span class="dot"></span> 执行力 —— 你是想法多还是行动快？</div>
+        <div class="dim-item"><span class="dot"></span> 兴趣方向 —— 你做什么事最容易进入心流？</div>
+      </div>
+      <button class="btn" onclick="startQuiz()">开始测试</button>
+    </div>
+
+    <div class="quiz-page" id="quizPage">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-text" id="progressText">1/5</div>
+      <div class="question"><span class="q-num" id="qNum">1</span><h3 id="qText"></h3></div>
+      <div class="options" id="optionsBox"></div>
+      <button class="btn btn-small hidden" id="nextBtn" onclick="nextQuestion()">下一题</button>
+    </div>
+
+    <div class="quick-result" id="quickResult">
+      <div class="result-type" id="qrType"></div>
+      <div class="result-name" id="qrName"></div>
+      <div class="result-desc" id="qrDesc"></div>
+      <div class="result-chart"><canvas id="quickRadar" width="260" height="260"></canvas></div>
+      <div class="upgrade-box">
+        <h4>🎯 以上只是5题快速版</h4>
+        <p>完成全部20题，你将获得：<br>
+        ✅ 精确的副业天赋指数评分<br>
+        ✅ 五维雷达图深度分析<br>
+        ✅ 你的副业方向路径<br>
+        ✅ 90天副业启动计划</p>
+        <button class="btn" onclick="showFullQuiz()">解锁完整20题测试</button>
+      </div>
+    </div>
+
+    <div class="quiz-page" id="fullQuizPage">
+      <div class="progress-bar"><div class="progress-fill" id="fullProgressFill"></div></div>
+      <div class="progress-text" id="fullProgressText">6/25</div>
+      <div class="question"><span class="q-num" id="fullQNum">6</span><h3 id="fullQText"></h3></div>
+      <div class="options" id="fullOptionsBox"></div>
+      <button class="btn btn-small hidden" id="fullNextBtn" onclick="fullNextQuestion()">下一题</button>
+    </div>
+
+    <div class="full-result" id="fullResult"></div>
+
+  </div>
+
+  <script>
+    // ===== 快速版5题 =====
+    const quickQuestions = [
+      { q: "你下班后的时间通常用来：", opts: ["刷手机躺平", "偶尔学点新东西", "经常琢磨搞钱的路子", "已经在做副业或项目了"], scores: [1, 2, 3, 4] },
+      { q: "你觉得自己有什么可以变现的技能？", opts: ["好像没有", "有一点但不够专业", "有几项还可以", "很多，但不知道选哪个"], scores: [1, 2, 3, 4] },
+      { q: "如果副业前3个月没收入，你会：", opts: ["直接放弃", "有点焦虑但再坚持一下", "接受，我知道这是正常的", "无所谓，我看的是长期"], scores: [1, 2, 3, 4] },
+      { q: "你有一个副业想法，会：", opts: ["想想就算了", "和朋友聊聊但不动", "开始查资料做调研", "立刻行动先做出最小版本"], scores: [1, 2, 3, 4] },
+      { q: "你做以下哪件事最容易忘记时间？", opts: ["追剧/刷视频", "看书/学习", "创作/写东西", "研究某个感兴趣的问题"], scores: [1, 2, 3, 4] }
+    ];
+
+    // ===== 完整版20题 =====
+    const fullQuestions = [
+      // 维度1: 技能储备 (1-4)
+      { q: "你觉得自己在哪个领域比较有优势？", opts: ["好像没有特别擅长的", "有一两项还不错的技能", "有多个技能但都不算顶尖", "我很清楚自己的核心优势"], scores: [1, 2, 3, 4] },
+      { q: "你过去几年在哪些事情上投入了最多时间？", opts: ["娱乐和休息", "工作和基本生活", "学习和技能提升", "尝试和折腾各种新事物"], scores: [1, 2, 3, 4] },
+      { q: "朋友遇到问题，最常找你帮忙解决哪类事？", opts: ["不太会找我帮忙", "情感/生活类建议", "专业/技能类问题", "创意/策划类事情"], scores: [1, 2, 3, 4] },
+      { q: "你目前掌握的技能中，哪些是可以直接变现的？", opts: ["几乎没有", "有一两个但不确定怎么变现", "有几项，有变现的渠道", "很多，但需要筛选"], scores: [1, 2, 3, 4] },
+      // 维度2: 时间精力 (5-8)
+      { q: "你每天下班后能自由支配的时间有多少？", opts: ["几乎没有（<1小时）", "1-2小时", "2-3小时", "3小时以上"], scores: [1, 2, 3, 4] },
+      { q: "你对「牺牲休息时间做副业」的态度是：", opts: ["完全不能接受", "偶尔可以，但不能长期", "可以接受，只要能赚钱", "没问题，我精力比较旺盛"], scores: [1, 2, 3, 4] },
+      { q: "你的时间管理能力怎么样？", opts: ["比较差，经常拖延", "一般，能完成基本任务", "还不错，能高效利用时间", "很强，能同时推进多件事"], scores: [1, 2, 3, 4] },
+      { q: "你觉得自己的精力水平：", opts: ["经常觉得累", "一般，偶尔精力不足", "还不错，能支撑多任务", "很旺盛，闲不下来"], scores: [1, 2, 3, 4] },
+      // 维度3: 风险承受力 (9-12)
+      { q: "如果副业前6个月没赚到钱，你会：", opts: ["第一个月就放弃了", "撑到3个月左右", "坚持6个月再评估", "无所谓，我准备好长期投入了"], scores: [1, 2, 3, 4] },
+      { q: "你愿意为副业投入多少启动资金？", opts: ["0元，只想做免费的", "500元以内", "1000-5000元", "5000元以上，愿意投资自己"], scores: [1, 2, 3, 4] },
+      { q: "你如何面对副业中的失败？", opts: ["很难接受，会怀疑自己", "会难过但能慢慢恢复", "觉得正常，会从中学习", "失败是必经之路，继续前进"], scores: [1, 2, 3, 4] },
+      { q: "你对「不确定性」的容忍度：", opts: ["很低，喜欢确定性", "一般，适当的不确定性可以", "较高，能接受变数", "很高，不确定性意味着机会"], scores: [1, 2, 3, 4] },
+      // 维度4: 执行力 (13-16)
+      { q: "你有一个好想法后，通常：", opts: ["想想就过了", "会和别人聊但不动手", "会做一些前期准备", "立刻开始行动尝试"], scores: [1, 2, 3, 4] },
+      { q: "你过去有没有成功完成过任何项目/目标？", opts: ["很少，经常半途而废", "有一些，但需要外部督促", "有，能独立完成大部分目标", "有很多，我是行动派"], scores: [1, 2, 3, 4] },
+      { q: "遇到困难时，你通常：", opts: ["容易放弃", "会拖一段时间再解决", "会想办法克服", "会主动找资源解决问题"], scores: [1, 2, 3, 4] },
+      { q: "你觉得自己：", opts: ["想法很多但执行力弱", "想法和执行力都一般", "执行力比想法强", "想法和执行都很强"], scores: [1, 2, 3, 4] },
+      // 维度5: 兴趣方向 (17-20)
+      { q: "你做以下哪件事时最容易忘记时间？", opts: ["刷视频/看剧", "阅读/学习", "创作/写东西/做手工", "研究某个问题或解决难题"], scores: [1, 2, 3, 4] },
+      { q: "别人说你做什么事的时候最有热情？", opts: ["好像没有特别的事", "和人聊天交流的时候", "做自己擅长的事情时", "解决一个复杂问题时"], scores: [1, 2, 3, 4] },
+      { q: "你更喜欢哪种类型的工作内容？", opts: ["重复性高、确定性强的", "与人打交道、沟通交流的", "需要创意和审美、产出作品的", "需要分析、解决复杂问题的"], scores: [1, 2, 3, 4] },
+      { q: "如果给你一年时间做一件自己喜欢的事，你会选：", opts: ["去旅行、放松", "学习一门新技能", "做一个自己的产品/项目", "研究一个自己感兴趣的领域"], scores: [1, 2, 3, 4] }
+    ];
+
+    // ===== 4种结果类型 =====
+    const results = [{
+      type: "🛋️",
+      name: "「安逸派」—— 副业不是你的刚需",
+      desc: "你目前的精力更多放在主业和生活平衡上，副业对你来说不是必须的。你适合在保证主业稳定和生活舒适的前提下，偶尔尝试一些低门槛的副业。没必要强迫自己，先把当前的事做好，副业可以等合适的时机。",
+      scoreLabel: "副业天赋指数",
+      scoreRange: "20-35",
+      scoreDesc: "暂缓启动副业"
+    }, {
+      type: "🌱",
+      name: "「潜力派」—— 你缺的只是启动勇气",
+      desc: "你有一定的技能和想法，但不确定自己能不能做好。你需要的不是更多准备，而是迈出第一步。从低门槛的副业开始，先完成再完美，你会慢慢找到感觉。你的潜力比你以为的大。",
+      scoreLabel: "副业天赋指数",
+      scoreRange: "36-50",
+      scoreDesc: "适合从轻副业开始"
+    }, {
+      type: "🚀",
+      name: "「行动派」—— 你天生适合搞副业",
+      desc: "你精力充沛、有技能、敢尝试，副业对你来说是发挥才能的好渠道。你已经具备了副业的基本条件，只需要选一个方向深耕下去。你很可能能做出超过主业的收入。",
+      scoreLabel: "副业天赋指数",
+      scoreRange: "51-65",
+      scoreDesc: "副业体质，赶紧行动"
+    }, {
+      type: "💎",
+      name: "「副业王者」—— 你甚至可以考虑创业",
+      desc: "你有很强的执行力和多维度能力，副业对你来说只是起点。你可能是那个把副业做成主业甚至创业的人。你缺乏的不是能力，而是一个足够大的目标。给自己画一个大饼，然后去实现它。",
+      scoreLabel: "副业天赋指数",
+      scoreRange: "66-80",
+      scoreDesc: "副业王者，准备起飞"
+    }];
+
+    // ===== 雷达图维度名称 =====
+    const dimNames = ["技能储备", "时间精力", "风险承受力", "执行力", "兴趣方向"];
+
+    let quickAnswers = [],
+      quickCurrent = 0,
+      fullAnswers = [],
+      fullCurrent = 0;
+
+    function startQuiz() {
+      document.getElementById('welcome').style.display = 'none';
+      document.getElementById('quizPage').classList.add('active');
+      document.getElementById('quizPage').style.display = 'block';
+      quickCurrent = 0;
+      quickAnswers = [];
+      showQuickQuestion();
+    }
+
+    function showQuickQuestion() {
+      if (quickCurrent >= 5) { showQuickResult(); return; }
+      const q = quickQuestions[quickCurrent];
+      document.getElementById('qNum').textContent = quickCurrent + 1;
+      document.getElementById('qText').textContent = q.q;
+      document.getElementById('progressFill').style.width = ((quickCurrent / 5) * 100) + '%';
+      document.getElementById('progressText').textContent = (quickCurrent + 1) + '/5';
+      let html = '';
+      q.opts.forEach((opt, i) => {
+        const sel = (quickAnswers[quickCurrent] === i) ? ' selected' : '';
+        html += `<button class="option${sel}" onclick="selectQuick(${i})"><span class="opt-label">${String.fromCharCode(65 + i)}</span>${opt}</button>`;
+      });
+      document.getElementById('optionsBox').innerHTML = html;
+      document.getElementById('nextBtn').classList.add('hidden');
+    }
+
+    function selectQuick(idx) {
+      quickAnswers[quickCurrent] = idx;
+      document.querySelectorAll('#optionsBox .option').forEach((el, i) => el.classList.toggle('selected', i === idx));
+      document.getElementById('nextBtn').classList.remove('hidden');
+    }
+
+    function nextQuestion() { quickCurrent++;
+      showQuickQuestion(); }
+
+    function showQuickResult() {
+      document.getElementById('quizPage').style.display = 'none';
+      document.getElementById('quizPage').classList.remove('active');
+      document.getElementById('quickResult').classList.add('active');
+      document.getElementById('quickResult').style.display = 'block';
+      let total = 0;
+      quickAnswers.forEach((a, i) => { total += quickQuestions[i].scores[a]; });
+      let score = Math.round((total / 20) * 100);
+      score = Math.max(0, Math.min(100, score));
+      let ri = (score <= 35) ? 0 : (score <= 50) ? 1 : (score <= 65) ? 2 : 3;
+      const r = results[ri];
+      document.getElementById('qrType').textContent = r.type;
+      document.getElementById('qrName').textContent = r.name;
+      document.getElementById('qrDesc').textContent = r.desc;
+      setTimeout(() => drawRadar('quickRadar', [65, 55, 70, 60, 50]), 200);
+    }
+
+    function showFullQuiz() {
+      document.getElementById('quickResult').style.display = 'none';
+      document.getElementById('quickResult').classList.remove('active');
+      document.getElementById('fullQuizPage').classList.add('active');
+      document.getElementById('fullQuizPage').style.display = 'block';
+      fullCurrent = 0;
+      fullAnswers = [];
+      showFullQuestion();
+    }
+
+    function showFullQuestion() {
+      if (fullCurrent >= 20) { showFullResult(); return; }
+      const q = fullQuestions[fullCurrent];
+      document.getElementById('fullQNum').textContent = fullCurrent + 6;
+      document.getElementById('fullQText').textContent = q.q;
+      document.getElementById('fullProgressFill').style.width = ((fullCurrent + 5) / 25 * 100) + '%';
+      document.getElementById('fullProgressText').textContent = (fullCurrent + 6) + '/25';
+      let html = '';
+      q.opts.forEach((opt, i) => {
+        const sel = (fullAnswers[fullCurrent] === i) ? ' selected' : '';
+        html += `<button class="option${sel}" onclick="selectFull(${i})"><span class="opt-label">${String.fromCharCode(65 + i)}</span>${opt}</button>`;
+      });
+      document.getElementById('fullOptionsBox').innerHTML = html;
+      document.getElementById('fullNextBtn').classList.add('hidden');
+    }
+
+    function selectFull(idx) {
+      fullAnswers[fullCurrent] = idx;
+      document.querySelectorAll('#fullOptionsBox .option').forEach((el, i) => el.classList.toggle('selected', i === idx));
+      document.getElementById('fullNextBtn').classList.remove('hidden');
+    }
+
+    function fullNextQuestion() { fullCurrent++;
+      showFullQuestion(); }
+
+    function showFullResult() {
+      document.getElementById('fullQuizPage').style.display = 'none';
+      document.getElementById('fullQuizPage').classList.remove('active');
+
+      let dimScores = [0, 0, 0, 0, 0];
+      fullAnswers.forEach((a, i) => {
+        dimScores[Math.floor(i / 4)] += fullQuestions[i].scores[a];
+      });
+      let dimNorm = dimScores.map(s => Math.round((s / 16) * 100));
+      let totalScore = dimScores.reduce((a, b) => a + b, 0);
+      let finalScore = Math.round((totalScore / 80) * 100);
+      finalScore = Math.max(0, Math.min(100, finalScore));
+
+      let ri = (finalScore <= 35) ? 0 : (finalScore <= 50) ? 1 : (finalScore <= 65) ? 2 : 3;
+      const r = results[ri];
+
+      let pathText;
+      if (ri === 0) pathText = "🛋️ 安逸派 → 先过好当下：副业不是必需品，不必因为别人都在搞钱就焦虑。先把主业做好、生活过舒服，副业等你想清楚了再开始也不迟。";
+      else if (ri === 1) pathText = "🌱 潜力派 → 从轻副业开始：选择一个门槛低、你感兴趣的方向试水。不用追求完美，先完成再优化。你缺的不是能力，是第一个行动。";
+      else if (ri === 2) pathText = "🚀 行动派 → 选一个赛道深耕：你已经具备了副业的基本条件。选一个你感兴趣且有市场需求的领域，专注投入3个月，你会看到明显的结果。";
+      else pathText = "💎 副业王者 → 你甚至可以创业：你的能力完全可以支撑更大的目标。不要满足于小副业，给自己画一个足够大的饼——你可能是那个把副业做成事业的人。";
+
+      const actions = [
+        ["第1-30天：自我扫描", "写下你所有能变现的技能和兴趣，列出10个可能的副业方向，从中选出3个你最感兴趣的。"],
+        ["第1-30天：市场验证", "针对选出的3个方向，各找10个对标案例（小红书/B站/抖音），研究他们怎么做、怎么赚钱。"],
+        ["第31-60天：最小行动", "选定1个方向，用最小成本启动——先做一个小作品/发一篇内容/服务一个客户，验证可行性。"],
+        ["第61-90天：持续迭代", "根据反馈优化你的副业产品/服务，建立稳定的获客渠道，形成初步的副业闭环。"]
+      ];
+
+      let html = `
+            <div class="result-type">${r.type}</div>
+            <div class="result-name">${r.name}</div>
+            <div class="score">${r.scoreLabel}：${finalScore}分 · ${r.scoreDesc}</div>
+            <div class="result-desc">${r.desc}</div>
+            <div class="chart-box">
+              <h4>📊 五维雷达图分析</h4>
+              <div class="radar-container"><canvas id="fullRadar" width="280" height="280"></canvas></div>
+            </div>
+            <div class="path-box">
+              <h4>🛤️ 你的副业启动路径</h4>
+              <p style="font-size:14px;color:#5D4037;line-height:1.8">${pathText}</p>
+            </div>
+            <div class="action-plan">
+              <h4>📋 90天副业启动计划</h4>
+              ${actions.map((a, i) => `
+                <div class="action-item">
+                  <div class="action-num">${i + 1}</div>
+                  <div class="action-text"><strong>${a[0]}</strong><br>${a[1]}</div>
+                </div>
+              `).join('')}
+            </div>
+            <p style="font-size:13px;color:#F57C00;margin-top:16px">💡 副业不是复制别人的路径，而是找到适合你的那一条<br>先行动起来，在行动中调整方向</p>
+          `;
+
+      document.getElementById('fullResult').innerHTML = html;
+      document.getElementById('fullResult').classList.add('active');
+      document.getElementById('fullResult').style.display = 'block';
+      setTimeout(() => drawRadar('fullRadar', dimNorm), 300);
+    }
+
+    function drawRadar(cid, data) {
+      const c = document.getElementById(cid);
+      if (!c) return;
+      const ctx = c.getContext('2d');
+      const cx = c.width / 2,
+        cy = c.height / 2,
+        r = 100,
+        sides = 5;
+      ctx.clearRect(0, 0, c.width, c.height);
+
+      for (let lv = 1; lv <= 5; lv++) {
+        ctx.beginPath();
+        for (let i = 0; i < sides; i++) {
+          const a = (Math.PI * 2 / sides) * i - Math.PI / 2;
+          const rr = (r / 5) * lv;
+          const x = cx + rr * Math.cos(a),
+            y = cy + rr * Math.sin(a);
+          i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.strokeStyle = '#FFE0B2';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+      for (let i = 0; i < sides; i++) {
+        const a = (Math.PI * 2 / sides) * i - Math.PI / 2;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(cx + r * Math.cos(a), cy + r * Math.sin(a));
+        ctx.strokeStyle = '#FFE0B2';
+        ctx.stroke();
+      }
+      ctx.beginPath();
+      for (let i = 0; i < sides; i++) {
+        const a = (Math.PI * 2 / sides) * i - Math.PI / 2;
+        const rr = (data[i] / 100) * r;
+        const x = cx + rr * Math.cos(a),
+          y = cy + rr * Math.sin(a);
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(255,183,77,0.3)';
+      ctx.fill();
+      ctx.strokeStyle = '#FFB74D';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      for (let i = 0; i < sides; i++) {
+        const a = (Math.PI * 2 / sides) * i - Math.PI / 2;
+        const rr = (data[i] / 100) * r;
+        ctx.beginPath();
+        ctx.arc(cx + rr * Math.cos(a), cy + rr * Math.sin(a), 5, 0, Math.PI * 2);
+        ctx.fillStyle = '#FF8A65';
+        ctx.fill();
+      }
+      ctx.fillStyle = '#5D4037';
+      ctx.font = '12px -apple-system,sans-serif';
+      ctx.textAlign = 'center';
+      for (let i = 0; i < sides; i++) {
+        const a = (Math.PI * 2 / sides) * i - Math.PI / 2;
+        ctx.fillText(dimNames[i], cx + (r + 25) * Math.cos(a), cy + (r + 25) * Math.sin(a) + 4);
+      }
+    }
+  </script>
+</body>
+</html>
