@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>你的生活方式适合哪座城市？ - 20题完整版城市人格测试</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#E8F5E9;min-height:100vh;color:#1B3A2D}
+.container{max-width:500px;margin:0 auto;padding:20px}
+.welcome{text-align:center;padding-top:50px}
+.welcome .emoji-top{font-size:64px;margin-bottom:16px}
+.welcome h1{font-size:30px;color:#2E7D32;margin-bottom:10px;line-height:1.4}
+.welcome .subtitle{font-size:15px;color:#66BB6A;margin-bottom:28px;line-height:1.6}
+.welcome .dims{text-align:left;margin-bottom:36px;background:white;border-radius:20px;padding:20px 24px;box-shadow:0 4px 20px rgba(46,125,50,0.12)}
+.welcome .dim-item{display:flex;align-items:center;gap:12px;padding:9px 0;font-size:15px;color:#2E7D32}
+.welcome .dim-item .dot{width:8px;height:8px;border-radius:50%;background:#81C784;flex-shrink:0}
+.btn{display:inline-block;padding:16px 60px;background:linear-gradient(135deg,#66BB6A,#43A047);color:white;font-size:20px;font-weight:bold;border:none;border-radius:40px;cursor:pointer;text-decoration:none;box-shadow:0 6px 24px rgba(46,125,50,0.35);transition:all 0.3s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(46,125,50,0.45)}
+.btn:active{transform:translateY(0)}
+.btn-small{padding:12px 40px;font-size:16px}
+.quiz-page{display:none}.quiz-page.active{display:block}
+.progress-bar{width:100%;height:8px;background:#C8E6C9;border-radius:4px;margin-bottom:10px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#66BB6A,#43A047);border-radius:4px;transition:width 0.4s ease}
+.progress-text{text-align:center;font-size:14px;color:#66BB6A;margin-bottom:28px}
+.question{margin-bottom:26px}
+.question .q-num{display:inline-block;width:36px;height:36px;line-height:36px;text-align:center;background:#66BB6A;color:white;border-radius:50%;font-weight:bold;font-size:16px;margin-right:10px;vertical-align:middle}
+.question h3{display:inline;font-size:20px;color:#2E7D32;line-height:1.5}
+.options{margin-top:18px}
+.option{display:block;width:100%;padding:18px 20px;margin-bottom:12px;background:white;border:2px solid #A5D6A7;border-radius:16px;font-size:16px;color:#1B3A2D;text-align:left;cursor:pointer;transition:all 0.3s}
+.option:hover{border-color:#66BB6A;background:#E8F5E9}
+.option.selected{border-color:#66BB6A;background:#C8E6C9;box-shadow:0 2px 12px rgba(46,125,50,0.15)}
+.option .opt-label{display:inline-block;width:28px;height:28px;line-height:28px;text-align:center;background:#66BB6A;color:white;border-radius:50%;font-weight:bold;font-size:14px;margin-right:12px}
+.quick-result{display:none;text-align:center;padding-top:30px}
+.quick-result.active{display:block}
+.quick-result .result-type{font-size:52px;margin-bottom:8px}
+.quick-result .result-name{font-size:28px;font-weight:bold;color:#2E7D32;margin-bottom:10px}
+.quick-result .result-desc{font-size:15px;color:#66BB6A;margin-bottom:28px;line-height:1.6}
+.quick-result .result-chart{margin:16px auto;max-width:280px}
+.quick-result .upgrade-box{background:white;border-radius:20px;padding:28px 20px;margin-top:28px;box-shadow:0 4px 20px rgba(46,125,50,0.12)}
+.quick-result .upgrade-box h4{font-size:20px;color:#2E7D32;margin-bottom:12px}
+.quick-result .upgrade-box p{font-size:14px;color:#66BB6A;margin-bottom:20px;line-height:1.6}
+.full-result{display:none;text-align:center;padding-top:24px}
+.full-result.active{display:block}
+.full-result .result-type{font-size:60px;margin-bottom:8px}
+.full-result .result-name{font-size:32px;font-weight:bold;color:#2E7D32;margin-bottom:8px}
+.full-result .score{display:inline-block;padding:8px 24px;background:#C8E6C9;border-radius:20px;font-size:16px;color:#2E7D32;margin-bottom:20px}
+.full-result .result-desc{font-size:15px;color:#1B3A2D;line-height:1.8;text-align:left;margin-bottom:20px;padding:20px;background:white;border-radius:16px}
+.full-result .chart-box{background:white;border-radius:20px;padding:20px;margin:20px 0;box-shadow:0 4px 20px rgba(46,125,50,0.10)}
+.full-result .chart-box h4{font-size:18px;color:#2E7D32;margin-bottom:14px}
+.full-result .radar-container{width:280px;height:280px;margin:0 auto}
+.full-result .action-plan{text-align:left;background:white;border-radius:16px;padding:20px;margin:20px 0}
+.full-result .action-plan h4{font-size:18px;color:#2E7D32;margin-bottom:16px;text-align:center}
+.full-result .action-item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #C8E6C9}
+.full-result .action-item:last-child{border-bottom:none}
+.full-result .action-num{width:28px;height:28px;line-height:28px;text-align:center;background:#66BB6A;color:white;border-radius:50%;font-weight:bold;font-size:14px;flex-shrink:0}
+.full-result .action-text{font-size:14px;color:#1B3A2D;line-height:1.6}
+.full-result .path-box{text-align:left;background:white;border-radius:16px;padding:20px;margin:20px 0}
+.full-result .path-box h4{font-size:18px;color:#2E7D32;margin-bottom:14px;text-align:center}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="container" id="app">
+
+<div class="welcome" id="welcome">
+  <div class="emoji-top">🏙️</div>
+  <h1>你的生活方式适合哪座城市？</h1>
+  <p class="subtitle">20题深度扫描你的城市人格密码</p>
+  <div class="dims">
+    <div class="dim-item"><span class="dot"></span> 生活节奏 —— 你追求快还是慢？</div>
+    <div class="dim-item"><span class="dot"></span> 社交需求 —— 你喜欢热闹还是独处？</div>
+    <div class="dim-item"><span class="dot"></span> 价值取向 —— 你看重什么？</div>
+    <div class="dim-item"><span class="dot"></span> 生活方式 —— 你习惯怎么生活？</div>
+    <div class="dim-item"><span class="dot"></span> 自然偏好 —— 你向往什么样的环境？</div>
+  </div>
+  <button class="btn" onclick="startQuiz()">开始测试</button>
+</div>
+
+<div class="quiz-page" id="quizPage">
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-text" id="progressText">1/5</div>
+  <div class="question"><span class="q-num" id="qNum">1</span><h3 id="qText"></h3></div>
+  <div class="options" id="optionsBox"></div>
+  <button class="btn btn-small hidden" id="nextBtn" onclick="nextQuestion()">下一题</button>
+</div>
+
+<div class="quick-result" id="quickResult">
+  <div class="result-type" id="qrType"></div>
+  <div class="result-name" id="qrName"></div>
+  <div class="result-desc" id="qrDesc"></div>
+  <div class="result-chart"><canvas id="quickRadar" width="260" height="260"></canvas></div>
+  <div class="upgrade-box">
+    <h4>🎯 以上只是5题快速版</h4>
+    <p>完成全部20题，你将获得：<br>
+    ✅ 你的专属城市人格标签<br>
+    ✅ 五维雷达图深度分析<br>
+    ✅ 最适合你的城市推荐<br>
+    ✅ 生活风格行动建议</p>
+    <button class="btn" onclick="showFullQuiz()">解锁完整20题测试</button>
+  </div>
+</div>
+
+<div class="quiz-page" id="fullQuizPage">
+  <div class="progress-bar"><div class="progress-fill" id="fullProgressFill"></div></div>
+  <div class="progress-text" id="fullProgressText">6/25</div>
+  <div class="question"><span class="q-num" id="fullQNum">6</span><h3 id="fullQText"></h3></div>
+  <div class="options" id="fullOptionsBox"></div>
+  <button class="btn btn-small hidden" id="fullNextBtn" onclick="fullNextQuestion()">下一题</button>
+</div>
+
+<div class="full-result" id="fullResult"></div>
+
+</div>
+
+<script>
+// ===== 快速版5题 =====
+const quickQuestions = [
+  {q:"你理想中的生活节奏是：", opts:["快而有序，每天充实","快慢结合，有张有弛","慢而悠闲，不想被时间追着跑","自由流动，没有固定节奏"], scores:[1,2,3,4]},
+  {q:"你在一个城市里最看重什么？", opts:["社交机会和新鲜事物","可以随时约出来的朋友","属于自己的安静角落","有一群志同道合的同类"], scores:[1,2,3,4]},
+  {q:"你赚钱的主要目的是：", opts:["更好的生活方式和品质","有更多的选择权","让家人过得更好","支撑自己想去的地方"], scores:[1,2,3,4]},
+  {q:"你更喜欢哪种居住环境？", opts:["高楼林立、交通便利的市中心","有山有水、绿树成荫的郊区","老城区、有烟火气的小街巷","山海边、远离人群的独处空间"], scores:[1,2,3,4]},
+  {q:"如果你可以重新选择城市，更看重：", opts:["职业机会和发展空间","生活品质和自然环境","离家的远近和归属感","这个城市的气质是否契合"], scores:[1,2,3,4]}
+];
+
+// ===== 完整版20题 =====
+const fullQuestions = [
+  // 维度1: 生活节奏 (1-4)
+  {q:"你理想中的生活节奏是：", opts:["快而有序，每天都很充实","快慢结合，有张有弛","慢而悠闲，不想被时间追着跑","自由流动，没有固定节奏"], scores:[1,2,3,4]},
+  {q:"你周末通常怎么过？", opts:["去咖啡馆、逛展、见朋友","去公园、爬山、呼吸新鲜空气","在家做饭、喝茶、躺平","随心所欲，想到什么做什么"], scores:[1,2,3,4]},
+  {q:"你更喜欢哪种通勤方式？", opts:["地铁+共享单车，高效快捷","公交+步行，可以看看街景","走路或骑车，不想挤公共交通","在家办公，没有通勤这件事"], scores:[1,2,3,4]},
+  {q:"你对「排队」这件事的态度是：", opts:["可以接受，效率社会就这样","不太喜欢，但偶尔可以","很讨厌，排队的店再火也不去","无所谓，看心情"], scores:[1,2,3,4]},
+  // 维度2: 社交需求 (5-8)
+  {q:"你更喜欢哪种社交状态？", opts:["有很多朋友，每周都有局","有几个知心好友，定期见面","少而深，只想和少数人保持联系","随缘社交，不刻意维持"], scores:[1,2,3,4]},
+  {q:"你在一个城市里最看重什么？", opts:["有足够的社交机会和新鲜事物","有可以随时约出来的朋友","有属于自己的安静角落","有一群志同道合的同类"], scores:[1,2,3,4]},
+  {q:"你更倾向于：", opts:["和陌生人也能聊得来","只和熟悉的人深度交流","尽量避免不必要的社交","只和同类人交往"], scores:[1,2,3,4]},
+  {q:"你理想中的邻里关系是：", opts:["热热闹闹的，经常串门","友好但保持距离","互不打扰最好","有共同兴趣爱好的小圈子"], scores:[1,2,3,4]},
+  // 维度3: 价值取向 (9-12)
+  {q:"你在生活中最看重什么？", opts:["事业发展和个人成长","生活品质和身心平衡","家庭和亲密关系","自由和自我实现"], scores:[1,2,3,4]},
+  {q:"你赚钱的主要目的是：", opts:["为了更好的生活方式和品质","为了有更多的选择权","为了让家人过得更好","为了支撑自己想去的地方"], scores:[1,2,3,4]},
+  {q:"你更羡慕哪种人？", opts:["在大城市有高薪体面工作的人","在一线城市努力扎根的人","在二三线城市安稳生活的人","在海边小城开店晒太阳的人"], scores:[1,2,3,4]},
+  {q:"你理想的生活状态是：", opts:["有奋斗的目标，每天都有动力","工作生活平衡，有品质有温度","知足常乐，享受当下的每一刻","不被定义，想去哪就去哪"], scores:[1,2,3,4]},
+  // 维度4: 生活方式 (13-16)
+  {q:"你更喜欢哪种居住环境？", opts:["高楼林立、交通便利的市中心","有山有水、绿树成荫的郊区","老城区、有烟火气的小街巷","山海边、远离人群的独处空间"], scores:[1,2,3,4]},
+  {q:"你更喜欢哪种气候？", opts:["四季分明，有冬天的冷和夏天的热","温润舒适，不太冷也不太热","温暖阳光，冬天不冷","无所谓，气候不会影响我的选择"], scores:[1,2,3,4]},
+  {q:"你对「吃」这件事的态度是：", opts:["吃什么不重要，方便就行","很重要，喜欢探索美食","很重要，更喜欢家常菜","随缘，不刻意"], scores:[1,2,3,4]},
+  {q:"你更倾向于哪种消费习惯？", opts:["愿意为品质和体验买单","理性消费，注重性价比","节俭为主，不花不必要的钱","随性消费，开心就好"], scores:[1,2,3,4]},
+  // 维度5: 自然偏好 (17-20)
+  {q:"你更喜欢哪种自然景观？", opts:["黄浦江边的夜景","西湖边的山水","山间的竹林和溪流","洱海边的田野和天空"], scores:[1,2,3,4]},
+  {q:"你需要大自然吗？", opts:["不需要，城市里的公园就够了","需要，周末偶尔去山里走走","很需要，最好每天都能看到绿植","非常需要，大自然是我生活的一部分"], scores:[1,2,3,4]},
+  {q:"你更喜欢哪种城市氛围？", opts:["摩登时尚，国际化","文艺清新，有创意","烟火气浓，有生活感","松弛自由，不被定义"], scores:[1,2,3,4]},
+  {q:"如果你可以重新选择一个城市生活，你更看重：", opts:["职业机会和发展空间","生活品质和自然环境","离家的远近和归属感","这个城市的气质是否和自己契合"], scores:[1,2,3,4]}
+];
+
+// ===== 6种城市人格 =====
+const results = [
+  {type:"🏙️", name:"上海 · 精致都市人", desc:"你追求品味、效率和前沿的生活方式。你喜欢有秩序、有质感的生活，享受城市的便利和多样性。对你来说，城市是舞台，你是主角——你愿意为更好的生活支付更高的成本。", label:"精致都市人", emoji:"🏙️"},
+  {type:"🌊", name:"杭州 · 新一线玩家", desc:"你既要事业也要生活，喜欢有山有水有活力的城市氛围。你追求的是一种平衡——有发展空间，也有生活的呼吸感。你不愿意牺牲任何一边，而新一线城市正好满足了你。", label:"新一线玩家", emoji:"🌊"},
+  {type:"🍜", name:"成都 · 安逸生活家", desc:"你享受慢生活，追求美食、烟火气和人情味。你觉得生活不是用来拼的，是用来过的。你更喜欢那种「巴适」的生活状态——不紧不慢，但充满滋味。", label:"安逸生活家", emoji:"🍜"},
+  {type:"🌿", name:"大理 · 自由灵魂", desc:"你追求内心自由，愿意为理想生活放弃高薪和“体面”。你相信生活有另一种可能——不需要被城市定义，不需要被规则束缚。你的城市不是地图上的坐标，而是你心安的地方。", label:"自由灵魂", emoji:"🌿"},
+  {type:"🏠", name:"家乡 · 安稳守护者", desc:"你眷恋熟悉的一切，家庭和归属感是你最重要的支柱。你不需要远方的新鲜感，你只需要熟悉的人、熟悉的街道、熟悉的味道。你的幸福来自于“我属于这里”。", label:"安稳守护者", emoji:"🏠"},
+  {type:"🌍", name:"数字游民 · 世界公民", desc:"你不需要固定在一个城市，哪里都能成为你的“家”。你的办公桌可以是咖啡馆、海边、山顶或任何有网络的地方。你追求的不是“属于哪里”，而是“随时可以去哪里”。", label:"世界公民", emoji:"🌍"}
+];
+
+// ===== 雷达图维度名称 =====
+const dimNames = ["生活节奏","社交需求","价值取向","生活方式","自然偏好"];
+
+let quickAnswers=[], quickCurrent=0, fullAnswers=[], fullCurrent=0;
+
+function startQuiz(){
+  document.getElementById('welcome').style.display='none';
+  document.getElementById('quizPage').classList.add('active');
+  document.getElementById('quizPage').style.display='block';
+  quickCurrent=0; quickAnswers=[]; showQuickQuestion();
+}
+
+function showQuickQuestion(){
+  if(quickCurrent >= 5){ showQuickResult(); return; }
+  const q = quickQuestions[quickCurrent];
+  document.getElementById('qNum').textContent = quickCurrent + 1;
+  document.getElementById('qText').textContent = q.q;
+  document.getElementById('progressFill').style.width = ((quickCurrent / 5) * 100) + '%';
+  document.getElementById('progressText').textContent = (quickCurrent + 1) + '/5';
+  let html = '';
+  q.opts.forEach((opt, i) => {
+    const sel = (quickAnswers[quickCurrent] === i) ? ' selected' : '';
+    html += `<button class="option${sel}" onclick="selectQuick(${i})"><span class="opt-label">${String.fromCharCode(65+i)}</span>${opt}</button>`;
+  });
+  document.getElementById('optionsBox').innerHTML = html;
+  document.getElementById('nextBtn').classList.add('hidden');
+}
+
+function selectQuick(idx){
+  quickAnswers[quickCurrent] = idx;
+  document.querySelectorAll('#optionsBox .option').forEach((el, i) => el.classList.toggle('selected', i === idx));
+  document.getElementById('nextBtn').classList.remove('hidden');
+}
+function nextQuestion(){ quickCurrent++; showQuickQuestion(); }
+
+function showQuickResult(){
+  document.getElementById('quizPage').style.display = 'none';
+  document.getElementById('quizPage').classList.remove('active');
+  document.getElementById('quickResult').classList.add('active');
+  document.getElementById('quickResult').style.display = 'block';
+  let total = 0;
+  quickAnswers.forEach((a, i) => { total += quickQuestions[i].scores[a]; });
+  let score = Math.round((total / 20) * 100);
+  score = Math.max(0, Math.min(100, score));
+  let ri = score <= 30 ? 0 : score <= 45 ? 1 : score <= 60 ? 2 : score <= 75 ? 3 : 4;
+  const r = results[ri % results.length];
+  document.getElementById('qrType').textContent = r.type;
+  document.getElementById('qrName').textContent = r.name;
+  document.getElementById('qrDesc').textContent = r.desc;
+  setTimeout(() => drawRadar('quickRadar', [65,55,70,60,50]), 200);
+}
+
+function showFullQuiz(){
+  document.getElementById('quickResult').style.display = 'none';
+  document.getElementById('quickResult').classList.remove('active');
+  document.getElementById('fullQuizPage').classList.add('active');
+  document.getElementById('fullQuizPage').style.display = 'block';
+  fullCurrent = 0; fullAnswers = []; showFullQuestion();
+}
+
+function showFullQuestion(){
+  if(fullCurrent >= 20){ showFullResult(); return; }
+  const q = fullQuestions[fullCurrent];
+  document.getElementById('fullQNum').textContent = fullCurrent + 6;
+  document.getElementById('fullQText').textContent = q.q;
+  document.getElementById('fullProgressFill').style.width = ((fullCurrent + 5) / 25 * 100) + '%';
+  document.getElementById('fullProgressText').textContent = (fullCurrent + 6) + '/25';
+  let html = '';
+  q.opts.forEach((opt, i) => {
+    const sel = (fullAnswers[fullCurrent] === i) ? ' selected' : '';
+    html += `<button class="option${sel}" onclick="selectFull(${i})"><span class="opt-label">${String.fromCharCode(65+i)}</span>${opt}</button>`;
+  });
+  document.getElementById('fullOptionsBox').innerHTML = html;
+  document.getElementById('fullNextBtn').classList.add('hidden');
+}
+
+function selectFull(idx){
+  fullAnswers[fullCurrent] = idx;
+  document.querySelectorAll('#fullOptionsBox .option').forEach((el, i) => el.classList.toggle('selected', i === idx));
+  document.getElementById('fullNextBtn').classList.remove('hidden');
+}
+function fullNextQuestion(){ fullCurrent++; showFullQuestion(); }
+
+function showFullResult(){
+  document.getElementById('fullQuizPage').style.display = 'none';
+  document.getElementById('fullQuizPage').classList.remove('active');
+
+  let dimScores = [0,0,0,0,0];
+  fullAnswers.forEach((a, i) => {
+    dimScores[Math.floor(i / 4)] += fullQuestions[i].scores[a];
+  });
+  let dimNorm = dimScores.map(s => Math.round((s / 16) * 100));
+  
+  // 统计A/B/C/D选项数量判定城市
+  let counts = [0,0,0,0];
+  fullAnswers.forEach(idx => counts[idx]++);
+  let maxCount = Math.max(...counts);
+  let topIndex = counts.indexOf(maxCount);
+  
+  // 映射到6种城市
+  let ri;
+  if(topIndex === 0) ri = 0; // 上海
+  else if(topIndex === 1) ri = 1; // 杭州
+  else if(topIndex === 2) ri = 2; // 成都
+  else {
+    // D选项多，细分
+    let d3 = dimScores[2], d4 = dimScores[3], d5 = dimScores[4];
+    if(d5 >= 12 && d3 >= 10) ri = 3; // 大理
+    else if(d4 >= 12 && d3 >= 8) ri = 4; // 家乡
+    else ri = 5; // 数字游民
+  }
+
+  const r = results[ri];
+  const finalScore = Math.round(dimScores.reduce((a,b) => a+b, 0) / 80 * 100);
+
+  let pathText;
+  if(ri === 0) pathText = "🏙️ 精致都市人 → 你适合在高效、多元的大城市打拼。对你来说，城市不只是居住的地方，更是你实现自我的舞台。不要害怕竞争和压力——那是你成长的燃料。";
+  else if(ri === 1) pathText = "🌊 新一线玩家 → 你适合在平衡型城市生活。你既要事业也要生活，不愿意牺牲任何一边。新一线城市是你的最佳选择——有机会，也有风景。";
+  else if(ri === 2) pathText = "🍜 安逸生活家 → 你适合在烟火气浓的城市生活。你不追求极致效率和高压竞争，你追求的是生活本身的滋味。选一个让你觉得「巴适」的城市，哪怕它没那么繁华。";
+  else if(ri === 3) pathText = "🌿 自由灵魂 → 你适合在能让你心安的地方生活。你可能不在乎城市有多大、机会有多少——你在乎的是这片土地能否承载你想要的活法。大理、海边、山里，都可能成为你的归宿。";
+  else if(ri === 4) pathText = "🏠 安稳守护者 → 你适合在让你有归属感的地方生活。对你来说，城市不是用来闯的，是用来安放的。家乡或者离家乡不远的地方，能给你最大的安全感。";
+  else pathText = "🌍 世界公民 → 你适合流动式生活。你不需要固定在一座城市，你的能力让你可以在任何地方立足。保持你的灵活性，你的生活方式本身就是一种自由。" + (dimScores[4] >= 10 ? " 你特别适合气候温暖、节奏舒适的地方。" : "");
+
+  const actions = [
+    ["第1-30天：城市扫描", "写下你最向往的3个城市，列出它们在工作机会、生活成本、气候环境、社交圈层上的优缺点。"],
+    ["第1-30天：短期体验", "如果有条件，选择一个你心仪的城市去短住一周（不是旅游，是生活），感受真实的日常。"],
+    ["第31-60天：匹配度评估", "根据你的测试结果，评估你当前生活的城市在多大程度上匹配你的生活方式需求。"],
+    ["第61-90天：行动决策", "基于前两个月的思考，做出决定——是留下来优化生活，还是启动计划搬去更适合你的城市。"]
+  ];
+
+  let html = `
+    <div class="result-type">${r.type}</div>
+    <div class="result-name">${r.name}</div>
+    <div class="score">${r.label} · 匹配度 ${finalScore}%</div>
+    <div class="result-desc">${r.desc}</div>
+    <div class="chart-box">
+      <h4>📊 五维雷达图分析</h4>
+      <div class="radar-container"><canvas id="fullRadar" width="280" height="280"></canvas></div>
+    </div>
+    <div class="path-box">
+      <h4>🛤️ 你的城市生活路径</h4>
+      <p style="font-size:14px;color:#1B3A2D;line-height:1.8">${pathText}</p>
+    </div>
+    <div class="action-plan">
+      <h4>📋 90天城市生活优化计划</h4>
+      ${actions.map((a, i) => `
+        <div class="action-item">
+          <div class="action-num">${i+1}</div>
+          <div class="action-text"><strong>${a[0]}</strong><br>${a[1]}</div>
+        </div>
+      `).join('')}
+    </div>
+    <p style="font-size:13px;color:#66BB6A;margin-top:16px">💡 城市不是目的地，而是你生活方式的容器<br>找到适合你的城市，比找到一份好工作更重要</p>
+  `;
+
+  document.getElementById('fullResult').innerHTML = html;
+  document.getElementById('fullResult').classList.add('active');
+  document.getElementById('fullResult').style.display = 'block';
+  setTimeout(() => drawRadar('fullRadar', dimNorm), 300);
+}
+
+function drawRadar(cid, data){
+  const c = document.getElementById(cid);
+  if(!c) return;
+  const ctx = c.getContext('2d');
+  const cx = c.width/2, cy = c.height/2, r = 100, sides = 5;
+  ctx.clearRect(0, 0, c.width, c.height);
+  
+  for(let lv=1; lv<=5; lv++){
+    ctx.beginPath();
+    for(let i=0; i<sides; i++){
+      const a = (Math.PI*2/sides)*i - Math.PI/2;
+      const rr = (r/5)*lv;
+      const x = cx + rr*Math.cos(a), y = cy + rr*Math.sin(a);
+      i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = '#A5D6A7';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+  for(let i=0; i<sides; i++){
+    const a = (Math.PI*2/sides)*i - Math.PI/2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + r*Math.cos(a), cy + r*Math.sin(a));
+    ctx.strokeStyle = '#A5D6A7';
+    ctx.stroke();
+  }
+  ctx.beginPath();
+  for(let i=0; i<sides; i++){
+    const a = (Math.PI*2/sides)*i - Math.PI/2;
+    const rr = (data[i]/100)*r;
+    const x = cx + rr*Math.cos(a), y = cy + rr*Math.sin(a);
+    i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+  }
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(102,187,106,0.3)';
+  ctx.fill();
+  ctx.strokeStyle = '#66BB6A';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  for(let i=0; i<sides; i++){
+    const a = (Math.PI*2/sides)*i - Math.PI/2;
+    const rr = (data[i]/100)*r;
+    ctx.beginPath();
+    ctx.arc(cx + rr*Math.cos(a), cy + rr*Math.sin(a), 5, 0, Math.PI*2);
+    ctx.fillStyle = '#43A047';
+    ctx.fill();
+  }
+  ctx.fillStyle = '#1B3A2D';
+  ctx.font = '12px -apple-system,sans-serif';
+  ctx.textAlign = 'center';
+  for(let i=0; i<sides; i++){
+    const a = (Math.PI*2/sides)*i - Math.PI/2;
+    ctx.fillText(dimNames[i], cx + (r+25)*Math.cos(a), cy + (r+25)*Math.sin(a) + 4);
+  }
+}
+</script>
+</body>
+</html>
