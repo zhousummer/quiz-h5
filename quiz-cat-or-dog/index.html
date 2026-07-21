@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>你在感情里是猫系还是狗系恋人？ - 20题完整版恋爱人格测试</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#FFF3E0;min-height:100vh;color:#4E342E}
+.container{max-width:500px;margin:0 auto;padding:20px}
+.welcome{text-align:center;padding-top:50px}
+.welcome .emoji-top{font-size:64px;margin-bottom:16px}
+.welcome h1{font-size:30px;color:#BF360C;margin-bottom:10px;line-height:1.4}
+.welcome .subtitle{font-size:15px;color:#E65100;margin-bottom:28px;line-height:1.6}
+.welcome .dims{text-align:left;margin-bottom:36px;background:white;border-radius:20px;padding:20px 24px;box-shadow:0 4px 20px rgba(191,54,12,0.10)}
+.welcome .dim-item{display:flex;align-items:center;gap:12px;padding:9px 0;font-size:15px;color:#BF360C}
+.welcome .dim-item .dot{width:8px;height:8px;border-radius:50%;background:#FFAB91;flex-shrink:0}
+.btn{display:inline-block;padding:16px 60px;background:linear-gradient(135deg,#FF8A65,#BF360C);color:white;font-size:20px;font-weight:bold;border:none;border-radius:40px;cursor:pointer;text-decoration:none;box-shadow:0 6px 24px rgba(191,54,12,0.35);transition:all 0.3s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(191,54,12,0.45)}
+.btn:active{transform:translateY(0)}
+.btn-small{padding:12px 40px;font-size:16px}
+.quiz-page{display:none}.quiz-page.active{display:block}
+.progress-bar{width:100%;height:8px;background:#FFE0B2;border-radius:4px;margin-bottom:10px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#FF8A65,#BF360C);border-radius:4px;transition:width 0.4s ease}
+.progress-text{text-align:center;font-size:14px;color:#E65100;margin-bottom:28px}
+.question{margin-bottom:26px}
+.question .q-num{display:inline-block;width:36px;height:36px;line-height:36px;text-align:center;background:#FF8A65;color:white;border-radius:50%;font-weight:bold;font-size:16px;margin-right:10px;vertical-align:middle}
+.question h3{display:inline;font-size:20px;color:#BF360C;line-height:1.5}
+.options{margin-top:18px}
+.option{display:block;width:100%;padding:18px 20px;margin-bottom:12px;background:white;border:2px solid #FFCC80;border-radius:16px;font-size:16px;color:#4E342E;text-align:left;cursor:pointer;transition:all 0.3s}
+.option:hover{border-color:#FF8A65;background:#FFF3E0}
+.option.selected{border-color:#FF8A65;background:#FFE0B2;box-shadow:0 2px 12px rgba(191,54,12,0.15)}
+.option .opt-label{display:inline-block;width:28px;height:28px;line-height:28px;text-align:center;background:#FF8A65;color:white;border-radius:50%;font-weight:bold;font-size:14px;margin-right:12px}
+.quick-result{display:none;text-align:center;padding-top:30px}
+.quick-result.active{display:block}
+.quick-result .result-type{font-size:52px;margin-bottom:8px}
+.quick-result .result-name{font-size:28px;font-weight:bold;color:#BF360C;margin-bottom:10px}
+.quick-result .result-desc{font-size:15px;color:#E65100;margin-bottom:28px;line-height:1.6}
+.quick-result .result-chart{margin:16px auto;max-width:280px}
+.quick-result .upgrade-box{background:white;border-radius:20px;padding:28px 20px;margin-top:28px;box-shadow:0 4px 20px rgba(191,54,12,0.10)}
+.quick-result .upgrade-box h4{font-size:20px;color:#BF360C;margin-bottom:12px}
+.quick-result .upgrade-box p{font-size:14px;color:#E65100;margin-bottom:20px;line-height:1.6}
+.full-result{display:none;text-align:center;padding-top:24px}
+.full-result.active{display:block}
+.full-result .result-type{font-size:60px;margin-bottom:8px}
+.full-result .result-name{font-size:32px;font-weight:bold;color:#BF360C;margin-bottom:8px}
+.full-result .score{display:inline-block;padding:8px 24px;background:#FFE0B2;border-radius:20px;font-size:16px;color:#BF360C;margin-bottom:20px}
+.full-result .result-desc{font-size:15px;color:#4E342E;line-height:1.8;text-align:left;margin-bottom:20px;padding:20px;background:white;border-radius:16px}
+.full-result .chart-box{background:white;border-radius:20px;padding:20px;margin:20px 0;box-shadow:0 4px 20px rgba(191,54,12,0.10)}
+.full-result .chart-box h4{font-size:18px;color:#BF360C;margin-bottom:14px}
+.full-result .radar-container{width:280px;height:280px;margin:0 auto}
+.full-result .action-plan{text-align:left;background:white;border-radius:16px;padding:20px;margin:20px 0}
+.full-result .action-plan h4{font-size:18px;color:#BF360C;margin-bottom:16px;text-align:center}
+.full-result .action-item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #FFE0B2}
+.full-result .action-item:last-child{border-bottom:none}
+.full-result .action-num{width:28px;height:28px;line-height:28px;text-align:center;background:#FF8A65;color:white;border-radius:50%;font-weight:bold;font-size:14px;flex-shrink:0}
+.full-result .action-text{font-size:14px;color:#4E342E;line-height:1.6}
+.full-result .path-box{text-align:left;background:white;border-radius:16px;padding:20px;margin:20px 0}
+.full-result .path-box h4{font-size:18px;color:#BF360C;margin-bottom:14px;text-align:center}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="container" id="app">
+
+<div class="welcome" id="welcome">
+  <div class="emoji-top">🐱</div>
+  <h1>你在感情里是猫系还是狗系恋人？</h1>
+  <p class="subtitle">20题深度扫描你的恋爱人格密码</p>
+  <div class="dims">
+    <div class="dim-item"><span class="dot"></span> 主动程度 —— 你先出手还是等对方？</div>
+    <div class="dim-item"><span class="dot"></span> 相处模式 —— 黏人还是独立？</div>
+    <div class="dim-item"><span class="dot"></span> 表达方式 —— 直球还是含蓄？</div>
+    <div class="dim-item"><span class="dot"></span> 情感反应 —— 吃醋生气怎么表现？</div>
+    <div class="dim-item"><span class="dot"></span> 安全感来源 —— 来自自己还是对方？</div>
+  </div>
+  <button class="btn" onclick="startQuiz()">开始测试</button>
+</div>
+
+<div class="quiz-page" id="quizPage">
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-text" id="progressText">1/5</div>
+  <div class="question"><span class="q-num" id="qNum">1</span><h3 id="qText"></h3></div>
+  <div class="options" id="optionsBox"></div>
+  <button class="btn btn-small hidden" id="nextBtn" onclick="nextQuestion()">下一题</button>
+</div>
+
+<div class="quick-result" id="quickResult">
+  <div class="result-type" id="qrType"></div>
+  <div class="result-name" id="qrName"></div>
+  <div class="result-desc" id="qrDesc"></div>
+  <div class="result-chart"><canvas id="quickRadar" width="260" height="260"></canvas></div>
+  <div class="upgrade-box">
+    <h4>🎯 以上只是5题快速版</h4>
+    <p>完成全部20题，你将获得：<br>
+    ✅ 精确的恋爱人格标签<br>
+    ✅ 五维雷达图深度分析<br>
+    ✅ 你的恋爱模式解析<br>
+    ✅ 专属恋爱行动建议</p>
+    <button class="btn" onclick="showFullQuiz()">解锁完整20题测试</button>
+  </div>
+</div>
+
+<div class="quiz-page" id="fullQuizPage">
+  <div class="progress-bar"><div class="progress-fill" id="fullProgressFill"></div></div>
+  <div class="progress-text" id="fullProgressText">6/25</div>
+  <div class="question"><span class="q-num" id="fullQNum">6</span><h3 id="fullQText"></h3></div>
+  <div class="options" id="fullOptionsBox"></div>
+  <button class="btn btn-small hidden" id="fullNextBtn" onclick="fullNextQuestion()">下一题</button>
+</div>
+
+<div class="full-result" id="fullResult"></div>
+
+</div>
+
+<script>
+// ===== 快速版5题 =====
+const quickQuestions = [
+  {q:"遇到心动的人，你通常会：", opts:["偷偷关注，等对方来发现你","主动靠近，想办法让对方注意到你"], scores:[1,2]},
+  {q:"恋爱中你更想要：", opts:["有自己的空间和独处时间","尽量多和对方待在一起"], scores:[1,2]},
+  {q:"你更常怎么表达爱意？", opts:["行动表达，默默关心和付出","言语表达，经常说甜言蜜语"], scores:[1,2]},
+  {q:"吃醋的时候，你通常会：", opts:["表面不动声色，内心默默在意","直接说出来，让对方知道你吃醋了"], scores:[1,2]},
+  {q:"你的安全感主要来自：", opts:["自己的独立能力和个人价值","对方的回应、陪伴和确认"], scores:[1,2]}
+];
+
+// ===== 完整版20题 =====
+const fullQuestions = [
+  // 维度1: 主动程度 (1-4)
+  {q:"遇到心动的人，你通常会：", opts:["偷偷关注，等对方来发现你","主动靠近，想办法让对方注意到你"], scores:[1,2]},
+  {q:"在暧昧期，你更倾向于：", opts:["欲擒故纵，保持一点距离感","直球出击，让对方知道你的心意"], scores:[1,2]},
+  {q:"你更喜欢哪种恋爱节奏？", opts:["慢慢来，不着急确定关系","感觉到了就冲，不想拖太久"], scores:[1,2]},
+  {q:"对方没有主动联系你的时候，你会：", opts:["也不主动，看谁先忍不住","主动发消息，忍不住想念"], scores:[1,2]},
+  // 维度2: 相处模式 (5-8)
+  {q:"恋爱中你更想要：", opts:["有自己的空间和独处时间","尽量多和对方待在一起"], scores:[1,2]},
+  {q:"你更喜欢哪种约会方式？", opts:["各自做各自的事，偶尔抬头看看对方","粘在一起，做什么都要两个人一起"], scores:[1,2]},
+  {q:"你在一段关系中的状态更像：", opts:["独立生活，有你更好但不依赖你","需要你，做什么都习惯有你在"], scores:[1,2]},
+  {q:"你需要多少个人空间？", opts:["很多，我需要属于自己的时间和圈子","不需要太多，我愿意和你分享一切"], scores:[1,2]},
+  // 维度3: 表达方式 (9-12)
+  {q:"你更常怎么表达爱意？", opts:["行动表达，默默关心和付出","言语表达，经常说「我爱你」和甜言蜜语"], scores:[1,2]},
+  {q:"你更喜欢哪种示爱方式？", opts:["细水长流的陪伴和默契","高调热烈的表白和浪漫"], scores:[1,2]},
+  {q:"你在感情中更倾向于：", opts:["含蓄内敛，不太说肉麻的话","直白热情，喜欢就把爱说出来"], scores:[1,2]},
+  {q:"对方情绪低落时，你通常会：", opts:["安静陪在身边，等对方主动开口","主动询问，想办法让对方开心起来"], scores:[1,2]},
+  // 维度4: 情感反应 (13-16)
+  {q:"吃醋的时候，你通常会：", opts:["表面不动声色，内心默默在意","直接说出来，让对方知道你吃醋了"], scores:[1,2]},
+  {q:"生气的时候，你更倾向于：", opts:["冷战，不说话，等对方来哄","吵架，把情绪发泄出来"], scores:[1,2]},
+  {q:"你更看重对方的哪种表现？", opts:["默默记得你说过的话，给你惊喜","直接告诉你「我很想你」「我很爱你」"], scores:[1,2]},
+  {q:"如果你们吵架了，你通常：", opts:["需要自己消化一会儿再沟通","想尽快沟通，不想带着情绪过夜"], scores:[1,2]},
+  // 维度5: 安全感来源 (17-20)
+  {q:"你的安全感主要来自：", opts:["自己的独立能力和个人价值","对方的回应、陪伴和确认"], scores:[1,2]},
+  {q:"你觉得「被爱」的感觉是：", opts:["被需要、被依赖","被坚定选择、被公开认可"], scores:[1,2]},
+  {q:"你更期待哪种关系状态？", opts:["彼此独立又亲密，像两只各自独立的猫偶尔相互依偎","彼此依赖又热烈，像两只永远黏在一起的狗"], scores:[1,2]},
+  {q:"你内心更渴望哪种爱情？", opts:["心有灵犀的默契，不需要太多言语","热情坦诚的奔赴，每天都有爱的表达"], scores:[1,2]}
+];
+
+// ===== 4种结果类型 =====
+const results = [
+  {type:"🐱", name:"纯猫系恋人", desc:"你在感情里是典型的「猫系恋人」——独立、被动、含蓄。你喜欢一个人会默默关注，但不太主动出击。你享受独处，需要自己的空间，不太喜欢过度黏腻的关系。你表达爱意的方式是行动而不是言语——你会记住对方随口说的话，会在对方需要时默默出现。你的爱像猫的陪伴，安静但温暖。", label:"高冷猫咪", emoji:"🐱"},
+  {type:"🐶", name:"纯狗系恋人", desc:"你在感情里是典型的「狗系恋人」——热情、直球、黏人。你喜欢一个人就藏不住，会主动靠近、热烈表达。你享受和对方在一起的每一分钟，恨不得全世界都知道你恋爱了。你表达爱意的方式是直白的言语和行动——你会天天说「我爱你」，会想方设法让对方开心。你的爱像狗的陪伴，热烈而忠诚。", label:"热情修狗", emoji:"🐶"},
+  {type:"🐱🐶", name:"猫系外表 · 狗系内心", desc:"你看起来是个独立、高冷的猫系恋人，但只有亲近的人才知道——你其实有一颗狗系的心。你表面不动声色，内心其实很黏人；你嘴上说着「无所谓」，心里其实很在意。你不是不喜欢表达，你只是需要时间确认对方是否值得你露出柔软的肚皮。一旦你认定了一个人，你的狗系属性就会慢慢浮现。", label:"傲娇猫狗", emoji:"🐱🐶"},
+  {type:"🐶🐱", name:"狗系外表 · 猫系内心", desc:"你看起来是个热情主动的狗系恋人，但只有你自己知道——你内心其实住着一只猫。你主动、直球、热情，但当你真的进入一段关系后，你会发现你其实需要很多个人空间。你表面黏人，内心独立；你看起来热热闹闹，其实很享受独处的时刻。你的狗系外表是你的社交面具，猫系内心才是你的真实底色。", label:"外热内冷", emoji:"🐶🐱"}
+];
+
+// ===== 雷达图维度名称 =====
+const dimNames = ["主动程度","相处模式","表达方式","情感反应","安全感来源"];
+
+let quickAnswers=[], quickCurrent=0, fullAnswers=[], fullCurrent=0;
+
+function startQuiz(){
+  document.getElementById('welcome').style.display='none';
+  document.getElementById('quizPage').classList.add('active');
+  document.getElementById('quizPage').style.display='block';
+  quickCurrent=0; quickAnswers=[]; showQuickQuestion();
+}
+
+function showQuickQuestion(){
+  if(quickCurrent >= 5){ showQuickResult(); return; }
+  const q = quickQuestions[quickCurrent];
+  document.getElementById('qNum').textContent = quickCurrent + 1;
+  document.getElementById('qText').textContent = q.q;
+  document.getElementById('progressFill').style.width = ((quickCurrent / 5) * 100) + '%';
+  document.getElementById('progressText').textContent = (quickCurrent + 1) + '/5';
+  let html = '';
+  q.opts.forEach((opt, i) => {
+    const sel = (quickAnswers[quickCurrent] === i) ? ' selected' : '';
+    html += `<button class="option${sel}" onclick="selectQuick(${i})"><span class="opt-label">${String.fromCharCode(65+i)}</span>${opt}</button>`;
+  });
+  document.getElementById('optionsBox').innerHTML = html;
+  document.getElementById('nextBtn').classList.add('hidden');
+}
+
+function selectQuick(idx){
+  quickAnswers[quickCurrent] = idx;
+  document.querySelectorAll('#optionsBox .option').forEach((el, i) => el.classList.toggle('selected', i === idx));
+  document.getElementById('nextBtn').classList.remove('hidden');
+}
+function nextQuestion(){ quickCurrent++; showQuickQuestion(); }
+
+function showQuickResult(){
+  document.getElementById('quizPage').style.display = 'none';
+  document.getElementById('quizPage').classList.remove('active');
+  document.getElementById('quickResult').classList.add('active');
+  document.getElementById('quickResult').style.display = 'block';
+  let total = 0;
+  quickAnswers.forEach((a, i) => { total += quickQuestions[i].scores[a]; });
+  let score = Math.round((total / 10) * 100);
+  score = Math.max(0, Math.min(100, score));
+  let ri = score <= 30 ? 0 : score <= 50 ? 1 : score <= 70 ? 2 : 3;
+  const r = results[ri % results.length];
+  document.getElementById('qrType').textContent = r.type;
+  document.getElementById('qrName').textContent = r.name;
+  document.getElementById('qrDesc').textContent = r.desc;
+  setTimeout(() => drawRadar('quickRadar', [65,55,70,60,50]), 200);
+}
+
+function showFullQuiz(){
+  document.getElementById('quickResult').style.display = 'none';
+  document.getElementById('quickResult').classList.remove('active');
+  document.getElementById('fullQuizPage').classList.add('active');
+  document.getElementById('fullQuizPage').style.display = 'block';
+  fullCurrent = 0; fullAnswers = []; showFullQuestion();
+}
+
+function showFullQuestion(){
+  if(fullCurrent >= 20){ showFullResult(); return; }
+  const q = fullQuestions[fullCurrent];
+  document.getElementById('fullQNum').textContent = fullCurrent + 6;
+  document.getElementById('fullQText').textContent = q.q;
+  document.getElementById('fullProgressFill').style.width = ((fullCurrent + 5) / 25 * 100) + '%';
+  document.getElementById('fullProgressText').textContent = (fullCurrent + 6) + '/25';
+  let html = '';
+  q.opts.forEach((opt, i) => {
+    const sel = (fullAnswers[fullCurrent] === i) ? ' selected' : '';
+    html += `<button class="option${sel}" onclick="selectFull(${i})"><span class="opt-label">${String.fromCharCode(65+i)}</span>${opt}</button>`;
+  });
+  document.getElementById('fullOptionsBox').innerHTML = html;
+  document.getElementById('fullNextBtn').classList.add('hidden');
+}
+
+function selectFull(idx){
+  fullAnswers[fullCurrent] = idx;
+  document.querySelectorAll('#fullOptionsBox .option').forEach((el, i) => el.classList.toggle('selected', i === idx));
+  document.getElementById('fullNextBtn').classList.remove('hidden');
+}
+function fullNextQuestion(){ fullCurrent++; showFullQuestion(); }
+
+function showFullResult(){
+  document.getElementById('fullQuizPage').style.display = 'none';
+  document.getElementById('fullQuizPage').classList.remove('active');
+
+  let dimScores = [0,0,0,0,0];
+  fullAnswers.forEach((a, i) => {
+    dimScores[Math.floor(i / 4)] += fullQuestions[i].scores[a];
+  });
+  let dimNorm = dimScores.map(s => Math.round((s / 8) * 100));
+  
+  // 统计A/B选项数量
+  let catCount = 0, dogCount = 0;
+  fullAnswers.forEach(a => {
+    if(a === 0) catCount++;
+    else dogCount++;
+  });
+  
+  // 判定4种类型
+  let ri;
+  if(catCount >= 15) ri = 0; // 纯猫系
+  else if(dogCount >= 15) ri = 1; // 纯狗系
+  else {
+    // 混合型判断：看维度3（表达方式）和维度5（安全感来源）
+    let exprScores = dimScores[2]; // 维度3: 表达方式
+    let safeScores = dimScores[4]; // 维度5: 安全感来源
+    // 猫系外表狗系内心：表达方式偏猫系（含蓄），安全感偏狗系（来自对方）
+    if(exprScores <= 5 && safeScores >= 6) ri = 2;
+    // 狗系外表猫系内心：表达方式偏狗系（直球），安全感偏猫系（来自自己）
+    else if(exprScores >= 6 && safeScores <= 5) ri = 3;
+    else {
+      // 默认按总倾向
+      ri = (catCount >= dogCount) ? 0 : 1;
+    }
+  }
+
+  const r = results[ri];
+  const finalScore = Math.round(catCount / 20 * 100);
+  const dogScore = Math.round(dogCount / 20 * 100);
+
+  let pathText;
+  if(ri === 0) pathText = "🐱 纯猫系恋人 → 你的独立和含蓄是你的魅力。不急着改变自己，但偶尔可以试着主动一次——让对方知道你需要TA，也是一种亲密。";
+  else if(ri === 1) pathText = "🐶 纯狗系恋人 → 你的热情和直球是你的光芒。继续大方地去爱，但也要记得——不是所有人都能接住你的热烈，适当给对方留一点喘息的空间。";
+  else if(ri === 2) pathText = "🐱🐶 猫系外表·狗系内心 → 你是一个「需要被点燃」的人。遇到对的人，你的热情就会被激发。试着在关系中多露一点点真实的自己——那些藏在傲娇背后的温柔，值得被看见。";
+  else pathText = "🐶🐱 狗系外表·猫系内心 → 你是一个「看起来很热闹但内核很独立」的人。你不需要改变自己——保持你的热情和独立，找一个能理解你「外热内冷」的人。";
+
+  const actions = [
+    ["第1-30天：自我觉察", "记录你在恋爱中（或想象恋爱时）最舒服和最不舒服的时刻，找到你的猫系/狗系开关。"],
+    ["第1-30天：试着调整", "如果你偏猫系，试着主动一次；如果你偏狗系，试着后退一次——感受不同模式的自己。"],
+    ["第31-60天：关系沟通", "和伴侣（或未来伴侣）分享你的测试结果，让对方了解你的恋爱风格和需求。"],
+    ["第61-90天：找到平衡", "猫系和狗系没有好坏之分——找到让你自己和对方都舒服的相处模式，就是最好的爱。"]
+  ];
+
+  let html = `
+    <div class="result-type">${r.type}</div>
+    <div class="result-name">${r.name}</div>
+    <div class="score">🐱 猫系 ${finalScore}% · 🐶 狗系 ${dogScore}%</div>
+    <div class="result-desc">${r.desc}</div>
+    <div class="chart-box">
+      <h4>📊 五维雷达图分析</h4>
+      <div class="radar-container"><canvas id="fullRadar" width="280" height="280"></canvas></div>
+    </div>
+    <div class="path-box">
+      <h4>🛤️ 你的恋爱风格路径</h4>
+      <p style="font-size:14px;color:#4E342E;line-height:1.8">${pathText}</p>
+    </div>
+    <div class="action-plan">
+      <h4>📋 90天恋爱风格优化计划</h4>
+      ${actions.map((a, i) => `
+        <div class="action-item">
+          <div class="action-num">${i+1}</div>
+          <div class="action-text"><strong>${a[0]}</strong><br>${a[1]}</div>
+        </div>
+      `).join('')}
+    </div>
+    <p style="font-size:13px;color:#E65100;margin-top:16px">💡 猫系和狗系没有好坏之分，只有适合不适合<br>找到让你最舒服的恋爱方式，就是最好的爱情</p>
+  `;
+
+  document.getElementById('fullResult').innerHTML = html;
+  document.getElementById('fullResult').classList.add('active');
+  document.getElementById('fullResult').style.display = 'block';
+  setTimeout(() => drawRadar('fullRadar', dimNorm), 300);
+}
+
+function drawRadar(cid, data){
+  const c = document.getElementById(cid);
+  if(!c) return;
+  const ctx = c.getContext('2d');
+  const cx = c.width/2, cy = c.height/2, r = 100, sides = 5;
+  ctx.clearRect(0, 0, c.width, c.height);
+  
+  for(let lv=1; lv<=5; lv++){
+    ctx.beginPath();
+    for(let i=0; i<sides; i++){
+      const a = (Math.PI*2/sides)*i - Math.PI/2;
+      const rr = (r/5)*lv;
+      const x = cx + rr*Math.cos(a), y = cy + rr*Math.sin(a);
+      i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = '#FFCC80';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+  for(let i=0; i<sides; i++){
+    const a = (Math.PI*2/sides)*i - Math.PI/2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + r*Math.cos(a), cy + r*Math.sin(a));
+    ctx.strokeStyle = '#FFCC80';
+    ctx.stroke();
+  }
+  ctx.beginPath();
+  for(let i=0; i<sides; i++){
+    const a = (Math.PI*2/sides)*i - Math.PI/2;
+    const rr = (data[i]/100)*r;
+    const x = cx + rr*Math.cos(a), y = cy + rr*Math.sin(a);
+    i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+  }
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(255,138,101,0.3)';
+  ctx.fill();
+  ctx.strokeStyle = '#FF8A65';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  for(let i=0; i<sides; i++){
+    const a = (Math.PI*2/sides)*i - Math.PI/2;
+    const rr = (data[i]/100)*r;
+    ctx.beginPath();
+    ctx.arc(cx + rr*Math.cos(a), cy + rr*Math.sin(a), 5, 0, Math.PI*2);
+    ctx.fillStyle = '#BF360C';
+    ctx.fill();
+  }
+  ctx.fillStyle = '#4E342E';
+  ctx.font = '12px -apple-system,sans-serif';
+  ctx.textAlign = 'center';
+  for(let i=0; i<sides; i++){
+    const a = (Math.PI*2/sides)*i - Math.PI/2;
+    ctx.fillText(dimNames[i], cx + (r+25)*Math.cos(a), cy + (r+25)*Math.sin(a) + 4);
+  }
+}
+</script>
+</body>
+</html>
