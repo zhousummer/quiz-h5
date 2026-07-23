@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>你适合什么样的穿搭风格？ - 20题完整版风格测试</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#FAF6F1;min-height:100vh;color:#3C2E2A}
+.container{max-width:500px;margin:0 auto;padding:20px}
+.welcome{text-align:center;padding-top:50px}
+.welcome .emoji-top{font-size:64px;margin-bottom:16px}
+.welcome h1{font-size:30px;color:#6D4C41;margin-bottom:10px;line-height:1.4}
+.welcome .subtitle{font-size:15px;color:#8D6E63;margin-bottom:28px;line-height:1.6}
+.welcome .dims{text-align:left;margin-bottom:36px;background:white;border-radius:20px;padding:20px 24px;box-shadow:0 4px 20px rgba(109,76,65,0.10)}
+.welcome .dim-item{display:flex;align-items:center;gap:12px;padding:9px 0;font-size:15px;color:#6D4C41}
+.welcome .dim-item .dot{width:8px;height:8px;border-radius:50%;background:#BCAAA4;flex-shrink:0}
+.btn{display:inline-block;padding:16px 60px;background:linear-gradient(135deg,#A1887F,#6D4C41);color:white;font-size:20px;font-weight:bold;border:none;border-radius:40px;cursor:pointer;text-decoration:none;box-shadow:0 6px 24px rgba(109,76,65,0.30);transition:all 0.3s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(109,76,65,0.40)}
+.btn:active{transform:translateY(0)}
+.btn-small{padding:12px 40px;font-size:16px}
+.quiz-page{display:none}.quiz-page.active{display:block}
+.progress-bar{width:100%;height:8px;background:#D7CCC8;border-radius:4px;margin-bottom:10px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#A1887F,#6D4C41);border-radius:4px;transition:width 0.4s ease}
+.progress-text{text-align:center;font-size:14px;color:#8D6E63;margin-bottom:28px}
+.question{margin-bottom:26px}
+.question .q-num{display:inline-block;width:36px;height:36px;line-height:36px;text-align:center;background:#A1887F;color:white;border-radius:50%;font-weight:bold;font-size:16px;margin-right:10px;vertical-align:middle}
+.question h3{display:inline;font-size:20px;color:#6D4C41;line-height:1.5}
+.options{margin-top:18px}
+.option{display:block;width:100%;padding:18px 20px;margin-bottom:12px;background:white;border:2px solid #D7CCC8;border-radius:16px;font-size:16px;color:#3C2E2A;text-align:left;cursor:pointer;transition:all 0.3s}
+.option:hover{border-color:#A1887F;background:#FAF6F1}
+.option.selected{border-color:#A1887F;background:#EFEBE9;box-shadow:0 2px 12px rgba(109,76,65,0.12)}
+.option .opt-label{display:inline-block;width:28px;height:28px;line-height:28px;text-align:center;background:#A1887F;color:white;border-radius:50%;font-weight:bold;font-size:14px;margin-right:12px}
+.quick-result{display:none;text-align:center;padding-top:30px}
+.quick-result.active{display:block}
+.quick-result .result-type{font-size:52px;margin-bottom:8px}
+.quick-result .result-name{font-size:28px;font-weight:bold;color:#6D4C41;margin-bottom:10px}
+.quick-result .result-desc{font-size:15px;color:#8D6E63;margin-bottom:28px;line-height:1.6}
+.quick-result .result-chart{margin:16px auto;max-width:280px}
+.quick-result .upgrade-box{background:white;border-radius:20px;padding:28px 20px;margin-top:28px;box-shadow:0 4px 20px rgba(109,76,65,0.08)}
+.quick-result .upgrade-box h4{font-size:20px;color:#6D4C41;margin-bottom:12px}
+.quick-result .upgrade-box p{font-size:14px;color:#8D6E63;margin-bottom:20px;line-height:1.6}
+.full-result{display:none;text-align:center;padding-top:24px}
+.full-result.active{display:block}
+.full-result .result-type{font-size:60px;margin-bottom:8px}
+.full-result .result-name{font-size:32px;font-weight:bold;color:#6D4C41;margin-bottom:8px}
+.full-result .score{display:inline-block;padding:8px 24px;background:#EFEBE9;border-radius:20px;font-size:16px;color:#6D4C41;margin-bottom:20px}
+.full-result .result-desc{font-size:15px;color:#3C2E2A;line-height:1.8;text-align:left;margin-bottom:20px;padding:20px;background:white;border-radius:16px}
+.full-result .chart-box{background:white;border-radius:20px;padding:20px;margin:20px 0;box-shadow:0 4px 20px rgba(109,76,65,0.08)}
+.full-result .chart-box h4{font-size:18px;color:#6D4C41;margin-bottom:14px}
+.full-result .radar-container{width:280px;height:280px;margin:0 auto}
+.full-result .action-plan{text-align:left;background:white;border-radius:16px;padding:20px;margin:20px 0}
+.full-result .action-plan h4{font-size:18px;color:#6D4C41;margin-bottom:16px;text-align:center}
+.full-result .action-item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #EFEBE9}
+.full-result .action-item:last-child{border-bottom:none}
+.full-result .action-num{width:28px;height:28px;line-height:28px;text-align:center;background:#A1887F;color:white;border-radius:50%;font-weight:bold;font-size:14px;flex-shrink:0}
+.full-result .action-text{font-size:14px;color:#3C2E2A;line-height:1.6}
+.full-result .path-box{text-align:left;background:white;border-radius:16px;padding:20px;margin:20px 0}
+.full-result .path-box h4{font-size:18px;color:#6D4C41;margin-bottom:14px;text-align:center}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="container" id="app">
+
+<div class="welcome" id="welcome">
+  <div class="emoji-top">👗</div>
+  <h1>你适合什么样的穿搭风格？</h1>
+  <p class="subtitle">20题深度扫描你的风格基因</p>
+  <div class="dims">
+    <div class="dim-item"><span class="dot"></span> 审美偏好 —— 你的眼睛喜欢什么？</div>
+    <div class="dim-item"><span class="dot"></span> 日常场景 —— 你常出现在哪里？</div>
+    <div class="dim-item"><span class="dot"></span> 性格特质 —— 你的内在气质是什么？</div>
+    <div class="dim-item"><span class="dot"></span> 身体舒适度 —— 你穿什么最自在？</div>
+    <div class="dim-item"><span class="dot"></span> 风格态度 —— 你想传递什么信息？</div>
+  </div>
+  <button class="btn" onclick="startQuiz()">开始测试</button>
+</div>
+
+<div class="quiz-page" id="quizPage">
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-text" id="progressText">1/5</div>
+  <div class="question"><span class="q-num" id="qNum">1</span><h3 id="qText"></h3></div>
+  <div class="options" id="optionsBox"></div>
+  <button class="btn btn-small hidden" id="nextBtn" onclick="nextQuestion()">下一题</button>
+</div>
+
+<div class="quick-result" id="quickResult">
+  <div class="result-type" id="qrType"></div>
+  <div class="result-name" id="qrName"></div>
+  <div class="result-desc" id="qrDesc"></div>
+  <div class="result-chart"><canvas id="quickRadar" width="260" height="260"></canvas></div>
+  <div class="upgrade-box">
+    <h4>🎯 以上只是5题快速版</h4>
+    <p>完成全部20题，你将获得：<br>
+    ✅ 精确的风格标签<br>
+    ✅ 五维雷达图深度分析<br>
+    ✅ 专属穿搭建议<br>
+    ✅ 风格进化指南</p>
+    <button class="btn" onclick="showFullQuiz()">解锁完整20题测试</button>
+  </div>
+</div>
+
+<div class="quiz-page" id="fullQuizPage">
+  <div class="progress-bar"><div class="progress-fill" id="fullProgressFill"></div></div>
+  <div class="progress-text" id="fullProgressText">6/25</div>
+  <div class="question"><span class="q-num" id="fullQNum">6</span><h3 id="fullQText"></h3></div>
+  <div class="options" id="fullOptionsBox"></div>
+  <button class="btn btn-small hidden" id="fullNextBtn" onclick="fullNextQuestion()">下一题</button>
+</div>
+
+<div class="full-result" id="fullResult"></div>
+
+</div>
+
+<script>
+// ===== 快速版5题 =====
+const quickQuestions = [
+  {q:"以下哪种配色最吸引你？", opts:["黑白灰、大地色系，低调有质感","奶油色、柔和的粉彩色","黑白对比强烈，加一点亮色点缀","复古色系：墨绿、酒红、姜黄"], scores:[1,2,3,4]},
+  {q:"你更喜欢哪种面料质感？", opts:["挺括有型的西装料、硬挺牛仔","柔软飘逸的丝绸、雪纺","酷感十足的皮革、亮面","天然的棉麻、粗花呢"], scores:[1,2,3,4]},
+  {q:"身边朋友最常形容你的词是：", opts:["冷静、理性、有品味","温柔、浪漫、有亲和力","活泼、大胆、有态度","安静、知性、有深度"], scores:[1,2,3,4]},
+  {q:"你更倾向于哪种长度？", opts:["利落的短款或及踝长款","优雅的及膝或过膝长度","短款或超短款，有活力感","适中的中长款，有层次"], scores:[1,2,3,4]},
+  {q:"你更希望自己的风格是：", opts:["不费力就好看的高级感","浪漫、慵懒、有女人味","酷、自由、不设限","有文化底蕴、耐人寻味"], scores:[1,2,3,4]}
+];
+
+// ===== 完整版20题 =====
+const fullQuestions = [
+  // 维度1: 审美偏好 (1-4)
+  {q:"以下哪种配色最吸引你？", opts:["黑白灰、大地色系，低调有质感","奶油色、莫兰迪色、柔和的粉彩色","黑白对比强烈，偶尔加一点荧光色点缀","复古色系，比如墨绿、酒红、姜黄、藏蓝"], scores:[1,2,3,4]},
+  {q:"你更喜欢哪种面料质感？", opts:["挺括有型的西装料、硬挺的牛仔布","柔软飘逸的丝绸、雪纺、蕾丝","酷感十足的皮革、亮面、科技面料","天然的棉麻、粗花呢、有肌理感的面料"], scores:[1,2,3,4]},
+  {q:"以下哪种印花或图案最让你心动？", opts:["纯色或极简的几何线条","小碎花、波点、法式花纹","涂鸦、街头艺术、大胆的字母Logo","复古格纹、千鸟格、水墨感图案"], scores:[1,2,3,4]},
+  {q:"你更倾向于哪种整体廓形？", opts:["利落的直线条、H型轮廓，简约干练","收腰的X型轮廓，展现女性曲线","宽松的O型轮廓，街头感和舒适感兼具","层次感丰富的穿搭，有叠穿的细节"], scores:[1,2,3,4]},
+  // 维度2: 日常场景 (5-8)
+  {q:"你工作日最常出现的场景是？", opts:["办公室、写字楼，需要专业得体的形象","有创意氛围的工作室、咖啡馆、画廊","城市街头、和朋友逛街喝咖啡的休闲场合","教室、图书馆、书店，有文化气息的场所"], scores:[1,2,3,4]},
+  {q:"周末你最喜欢去哪里？", opts:["美术馆、展览、有设计感的精品店","阳光下的露天咖啡馆、花市、复古市集","潮牌店、滑板公园、livehouse","书店、茶室、有文化底蕴的老街"], scores:[1,2,3,4]},
+  {q:"你参加朋友聚会时，更倾向于：", opts:["简约但有质感的穿搭，得体不出错","优雅温柔，带一点精致的小心机","有态度、有个性，成为全场焦点","舒适自然，但细节里藏着品味"], scores:[1,2,3,4]},
+  {q:"你理想中的旅行目的地是：", opts:["东京、首尔、上海——摩登都市","巴黎、南法——浪漫的欧洲小镇","纽约、柏林——充满活力的街头文化","京都、杭州——有历史底蕴的东方古城"], scores:[1,2,3,4]},
+  // 维度3: 性格特质 (9-12)
+  {q:"身边朋友最常用来形容你的词是：", opts:["冷静、理性、有品味","温柔、浪漫、有亲和力","活泼、大胆、有态度","安静、知性、有深度"], scores:[1,2,3,4]},
+  {q:"你更倾向于哪种生活态度？", opts:["注重品质和细节，追求「少而精」","享受生活中的小确幸，追求美感","热爱自由和冒险，不想被定义","喜欢思考和精神世界，追求深度"], scores:[1,2,3,4]},
+  {q:"你给别人留下的第一印象通常是：", opts:["高冷、有距离感、有气场","温柔、亲切、让人想靠近","酷、有个性、不好惹","安静、有书卷气、有内涵"], scores:[1,2,3,4]},
+  {q:"你更欣赏哪种气质的女性/男性？", opts:["像Celine秀场上的模特——清冷、高级","像法国电影里的女主角——慵懒、迷人","像街头潮流icon——酷、自由、不羁","像民国时期的文人——清雅、有风骨"], scores:[1,2,3,4]},
+  // 维度4: 身体特征与舒适度 (13-16)
+  {q:"你更在意穿搭的哪个方面？", opts:["整体轮廓和线条是否利落","是否显气质、是否温柔","是否够酷、有没有态度","是否舒适、是否有细节"], scores:[1,2,3,4]},
+  {q:"你更倾向于哪种长度？", opts:["利落的短款或及踝长款","优雅的及膝或过膝长度","短款或超短款，有活力感","适中的中长款，有层次"], scores:[1,2,3,4]},
+  {q:"你更喜欢哪种鞋履风格？", opts:["简约的乐福鞋、尖头靴、小白鞋","芭蕾平底鞋、玛丽珍、细跟凉鞋","厚底靴、老爹鞋、运动鞋","复古牛津鞋、布洛克鞋、德比鞋"], scores:[1,2,3,4]},
+  {q:"你最喜欢的配饰类型是：", opts:["简约的金属饰品、极简手表","珍珠项链、丝巾、精致的小饰品","链条项链、戒指、有个性的配饰","复古胸针、皮质表带、有故事的配饰"], scores:[1,2,3,4]},
+  // 维度5: 风格态度 (17-20)
+  {q:"你对「潮流」的态度是：", opts:["不太追随潮流，只穿适合自己的经典款","会参考潮流，但只选择适合自己气质的那部分","喜欢潮流，会主动尝试新风格","不太关心潮流，有自己的审美体系"], scores:[1,2,3,4]},
+  {q:"你希望穿搭传递出的信息是：", opts:["「我是一个有品味的人」","「我是一个温柔有魅力的人」","「我是一个有态度的人」","「我是一个有深度的人」"], scores:[1,2,3,4]},
+  {q:"你更希望自己的风格是：", opts:["不费力就好看的高级感","浪漫、慵懒、有女人味","酷、自由、不设限","有文化底蕴、耐人寻味"], scores:[1,2,3,4]},
+  {q:"你内心最向往的风格状态是：", opts:["「我的穿搭就是我的名片」","「我在穿搭里做自己」","「我的穿搭是我的态度」","「我的穿搭是我内心的表达」"], scores:[1,2,3,4]}
+];
+
+// ===== 6种风格结果 =====
+const results = [
+  {type:"🖤", name:"极简高级感", desc:"你追求「少而精」的生活美学。你的风格不需要过多的装饰，靠面料的质感和剪裁的利落说话。你穿黑白灰、大地色的时候，比穿任何颜色都好看。你的美是克制、冷静、有距离感的——但那种距离感，恰恰是别人向往的高级感。", label:"清冷高级", emoji:"🖤", keyItems:"质感衬衫、阔腿裤、西装外套、小白鞋、乐福鞋", brands:"Jil Sander、The Row、COS"},
+  {type:"🌸", name:"法式浪漫风", desc:"你是那种「随便穿穿就很好看」的人——但你的「随便」里藏着精心。你适合碎花、茶歇裙、珍珠项链和慵懒的卷发。你的气质是温柔、松弛、有女人味的，像法国电影里在阳光下喝咖啡的女主角。你不需要用力，就已经很美。", label:"慵懒迷人", emoji:"🌸", keyItems:"茶歇裙、碎花半裙、丝巾、芭蕾平底鞋", brands:"Rouje、Sézane、Reformation"},
+  {type:"🔥", name:"甜酷街头风", desc:"你是那种「甜中带辣」的风格玩家。你既有少女感，又有态度——短上衣配工装裤，厚底靴配链条包。你不喜欢被定义，喜欢打破常规。你的穿搭就是你态度的宣言：我不好惹，但我很有趣。", label:"又甜又酷", emoji:"🔥", keyItems:"短上衣、工装裤、厚底鞋、链条配饰", brands:"Marine Serre、A-COLD-WALL*、Palm Angels"},
+  {type:"🌿", name:"文艺知识分子风", desc:"你有书卷气，有属于自己的审美体系。你穿衬衫、马甲、牛津鞋的时候，比任何人都自在。你的风格是复古的、有深度的、耐人寻味的——像一间堆满书的旧书店，每一件单品都有故事。", label:"知性复古", emoji:"🌿", keyItems:"衬衫、马甲、百褶裙、牛津鞋、眼镜", brands:"MHL、Margaret Howell、Story mfg."},
+  {type:"🏄", name:"美式复古风", desc:"你阳光、活力、充满少年感。你穿卫衣、棒球帽、牛仔裤的时候最自在。你的风格是舒适的、不费力的、带着一点校园感的。你看起来像美剧里那种「运动型」主角——干净、阳光、让人想靠近。", label:"阳光少年", emoji:"🏄", keyItems:"卫衣、棒球帽、牛仔裤、运动鞋", brands:"Aimé Leon Dore、Ralph Lauren、New Balance"},
+  {type:"🕊️", name:"新中式东方风", desc:"你的审美里有一种东方的静气。你喜欢盘扣、刺绣、丝缎、茶色。你穿新中式的时候，有一种「遗世独立」的清冷感——不追潮流，不赶时髦，但站在那里就是风景。你的穿搭是文化的表达，也是自我的沉淀。", label:"雅致清冷", emoji:"🕊️", keyItems:"盘扣外套、丝缎半裙、刺绣配饰、茶色系单品", brands:"UMA WANG、SHANGHAI TANG、ZUCZUG"}
+];
+
+// ===== 雷达图维度名称 =====
+const dimNames = ["审美偏好","日常场景","性格特质","身体舒适度","风格态度"];
+
+let quickAnswers=[], quickCurrent=0, fullAnswers=[], fullCurrent=0;
+
+function startQuiz(){
+  document.getElementById('welcome').style.display='none';
+  document.getElementById('quizPage').classList.add('active');
+  document.getElementById('quizPage').style.display='block';
+  quickCurrent=0; quickAnswers=[]; showQuickQuestion();
+}
+
+function showQuickQuestion(){
+  if(quickCurrent >= 5){ showQuickResult(); return; }
+  const q = quickQuestions[quickCurrent];
+  document.getElementById('qNum').textContent = quickCurrent + 1;
+  document.getElementById('qText').textContent = q.q;
+  document.getElementById('progressFill').style.width = ((quickCurrent / 5) * 100) + '%';
+  document.getElementById('progressText').textContent = (quickCurrent + 1) + '/5';
+  let html = '';
+  q.opts.forEach((opt, i) => {
+    const sel = (quickAnswers[quickCurrent] === i) ? ' selected' : '';
+    html += `<button class="option${sel}" onclick="selectQuick(${i})"><span class="opt-label">${String.fromCharCode(65+i)}</span>${opt}</button>`;
+  });
+  document.getElementById('optionsBox').innerHTML = html;
+  document.getElementById('nextBtn').classList.add('hidden');
+}
+
+function selectQuick(idx){
+  quickAnswers[quickCurrent] = idx;
+  document.querySelectorAll('#optionsBox .option').forEach((el, i) => el.classList.toggle('selected', i === idx));
+  document.getElementById('nextBtn').classList.remove('hidden');
+}
+function nextQuestion(){ quickCurrent++; showQuickQuestion(); }
+
+function showQuickResult(){
+  document.getElementById('quizPage').style.display = 'none';
+  document.getElementById('quizPage').classList.remove('active');
+  document.getElementById('quickResult').classList.add('active');
+  document.getElementById('quickResult').style.display = 'block';
+  let total = 0;
+  quickAnswers.forEach((a, i) => { total += quickQuestions[i].scores[a]; });
+  let score = Math.round((total / 20) * 100);
+  score = Math.max(0, Math.min(100, score));
+  let ri = score <= 30 ? 0 : score <= 50 ? 1 : score <= 70 ? 2 : 3;
+  const r = results[ri % results.length];
+  document.getElementById('qrType').textContent = r.type;
+  document.getElementById('qrName').textContent = r.name;
+  document.getElementById('qrDesc').textContent = r.desc;
+  setTimeout(() => drawRadar('quickRadar', [65,55,70,60,50]), 200);
+}
+
+function showFullQuiz(){
+  document.getElementById('quickResult').style.display = 'none';
+  document.getElementById('quickResult').classList.remove('active');
+  document.getElementById('fullQuizPage').classList.add('active');
+  document.getElementById('fullQuizPage').style.display = 'block';
+  fullCurrent = 0; fullAnswers = []; showFullQuestion();
+}
+
+function showFullQuestion(){
+  if(fullCurrent >= 20){ showFullResult(); return; }
+  const q = fullQuestions[fullCurrent];
+  document.getElementById('fullQNum').textContent = fullCurrent + 6;
+  document.getElementById('fullQText').textContent = q.q;
+  document.getElementById('fullProgressFill').style.width = ((fullCurrent + 5) / 25 * 100) + '%';
+  document.getElementById('fullProgressText').textContent = (fullCurrent + 6) + '/25';
+  let html = '';
+  q.opts.forEach((opt, i) => {
+    const sel = (fullAnswers[fullCurrent] === i) ? ' selected' : '';
+    html += `<button class="option${sel}" onclick="selectFull(${i})"><span class="opt-label">${String.fromCharCode(65+i)}</span>${opt}</button>`;
+  });
+  document.getElementById('fullOptionsBox').innerHTML = html;
+  document.getElementById('fullNextBtn').classList.add('hidden');
+}
+
+function selectFull(idx){
+  fullAnswers[fullCurrent] = idx;
+  document.querySelectorAll('#fullOptionsBox .option').forEach((el, i) => el.classList.toggle('selected', i === idx));
+  document.getElementById('fullNextBtn').classList.remove('hidden');
+}
+function fullNextQuestion(){ fullCurrent++; showFullQuestion(); }
+
+function showFullResult(){
+  document.getElementById('fullQuizPage').style.display = 'none';
+  document.getElementById('fullQuizPage').classList.remove('active');
+
+  let dimScores = [0,0,0,0,0];
+  fullAnswers.forEach((a, i) => {
+    dimScores[Math.floor(i / 4)] += fullQuestions[i].scores[a];
+  });
+  let dimNorm = dimScores.map(s => Math.round((s / 16) * 100));
+  
+  // 统计各选项数量判定风格
+  let counts = [0,0,0,0];
+  fullAnswers.forEach(idx => counts[idx]++);
+  let maxCount = Math.max(...counts);
+  let topIndex = counts.indexOf(maxCount);
+  
+  // 映射到6种风格
+  let ri;
+  if(topIndex === 0) ri = 0; // 极简高级感
+  else if(topIndex === 1) ri = 1; // 法式浪漫风
+  else if(topIndex === 2) ri = 2; // 甜酷街头风
+  else {
+    // 选项D多，进一步细分
+    let d3 = dimScores[2], d5 = dimScores[4];
+    if(d3 >= 10 && d5 >= 8) ri = 3; // 文艺知识分子风
+    else if(d3 >= 8 && d5 >= 6) ri = 4; // 美式复古风
+    else ri = 5; // 新中式东方风
+  }
+
+  const r = results[ri];
+  const finalScore = Math.round(counts[topIndex] / 20 * 100);
+
+  let pathText = "✨ 找到你的风格，就是找到你自己。\n\n";
+  if(ri === 0) pathText += "🖤 极简高级感 → 你的穿搭不需要太复杂。选择质感好的基础款，用配饰做减法而不是加法。记住：少即是多。";
+  else if(ri === 1) pathText += "🌸 法式浪漫风 → 你的穿搭可以多一点「不费力的精致」。碎花、丝巾、珍珠——这些单品会让你更松弛地美。";
+  else if(ri === 2) pathText += "🔥 甜酷街头风 → 你的穿搭可以更大胆一些。混搭不同风格的单品，用配饰表达你的态度。你穿得越酷，你越快乐。";
+  else if(ri === 3) pathText += "🌿 文艺知识分子风 → 你的穿搭需要多一点「书卷气」。衬衫、马甲、有质感的天然面料——这些单品会让你更像你自己。";
+  else if(ri === 4) pathText += "🏄 美式复古风 → 你的穿搭可以更舒适、更阳光。卫衣、棒球帽、复古运动鞋——让你在舒适里散发少年感。";
+  else pathText += "🕊️ 新中式东方风 → 你的穿搭可以多一点东方韵味。盘扣、丝缎、茶色系——让你在传统和现代之间找到自己的表达。";
+
+  const actions = [
+    ["第1-30天：风格扫描", "整理你现有的衣橱，找出你最喜欢穿的5件单品——它们属于哪种风格？"],
+    ["第1-30天：灵感收集", "在小红书/Pinterest上收集你心动的穿搭图片，建立你的风格灵感板。"],
+    ["第31-60天：单品投资", "根据你的风格结果，投资1-2件该风格的核心单品（衬衫/裤子/外套/鞋子）。"],
+    ["第61-90天：风格定型", "用你的新单品搭配出3套完整的造型，并穿出去——感受「找到风格」的快乐。"]
+  ];
+
+  let html = `
+    <div class="result-type">${r.type}</div>
+    <div class="result-name">${r.name}</div>
+    <div class="score">风格匹配度 · ${finalScore}%</div>
+    <div class="result-desc">${r.desc}</div>
+    <div class="chart-box">
+      <h4>📊 五维雷达图分析</h4>
+      <div class="radar-container"><canvas id="fullRadar" width="280" height="280"></canvas></div>
+    </div>
+    <div class="path-box">
+      <h4>🛤️ 你的风格进化路径</h4>
+      <p style="font-size:14px;color:#3C2E2A;line-height:1.8;white-space:pre-wrap">${pathText}</p>
+    </div>
+    <div class="action-plan">
+      <h4>📋 90天风格进化计划</h4>
+      ${actions.map((a, i) => `
+        <div class="action-item">
+          <div class="action-num">${i+1}</div>
+          <div class="action-text"><strong>${a[0]}</strong><br>${a[1]}</div>
+        </div>
+      `).join('')}
+    </div>
+    <p style="font-size:13px;color:#8D6E63;margin-top:16px">💡 风格不是穿出来的，是活出来的<br>找到让你最舒服的表达方式，就是最好的风格</p>
+  `;
+
+  document.getElementById('fullResult').innerHTML = html;
+  document.getElementById('fullResult').classList.add('active');
+  document.getElementById('fullResult').style.display = 'block';
+  setTimeout(() => drawRadar('fullRadar', dimNorm), 300);
+}
+
+function drawRadar(cid, data){
+  const c = document.getElementById(cid);
+  if(!c) return;
+  const ctx = c.getContext('2d');
+  const cx = c.width/2, cy = c.height/2, r = 100, sides = 5;
+  ctx.clearRect(0, 0, c.width, c.height);
+  
+  for(let lv=1; lv<=5; lv++){
+    ctx.beginPath();
+    for(let i=0; i<sides; i++){
+      const a = (Math.PI*2/sides)*i - Math.PI/2;
+      const rr = (r/5)*lv;
+      const x = cx + rr*Math.cos(a), y = cy + rr*Math.sin(a);
+      i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = '#D7CCC8';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+  for(let i=0; i<sides; i++){
+    const a = (Math.PI*2/sides)*i - Math.PI/2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + r*Math.cos(a), cy + r*Math.sin(a));
+    ctx.strokeStyle = '#D7CCC8';
+    ctx.stroke();
+  }
+  ctx.beginPath();
+  for(let i=0; i<sides; i++){
+    const a = (Math.PI*2/sides)*i - Math.PI/2;
+    const rr = (data[i]/100)*r;
+    const x = cx + rr*Math.cos(a), y = cy + rr*Math.sin(a);
+    i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+  }
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(161,136,127,0.25)';
+  ctx.fill();
+  ctx.strokeStyle = '#A1887F';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  for(let i=0; i<sides; i++){
+    const a = (Math.PI*2/sides)*i - Math.PI/2;
+    const rr = (data[i]/100)*r;
+    ctx.beginPath();
+    ctx.arc(cx + rr*Math.cos(a), cy + rr*Math.sin(a), 5, 0, Math.PI*2);
+    ctx.fillStyle = '#6D4C41';
+    ctx.fill();
+  }
+  ctx.fillStyle = '#3C2E2A';
+  ctx.font = '12px -apple-system,sans-serif';
+  ctx.textAlign = 'center';
+  for(let i=0; i<sides; i++){
+    const a = (Math.PI*2/sides)*i - Math.PI/2;
+    ctx.fillText(dimNames[i], cx + (r+25)*Math.cos(a), cy + (r+25)*Math.sin(a) + 4);
+  }
+}
+</script>
+</body>
+</html>
