@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>你的气质更像哪款经典香水？ - 20题完整版香调测试</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#F5F0EB;min-height:100vh;color:#3C2E2A}
+.container{max-width:500px;margin:0 auto;padding:20px}
+.welcome{text-align:center;padding-top:50px}
+.welcome .emoji-top{font-size:64px;margin-bottom:16px}
+.welcome h1{font-size:30px;color:#5D4037;margin-bottom:10px;line-height:1.4}
+.welcome .subtitle{font-size:15px;color:#8D6E63;margin-bottom:28px;line-height:1.6}
+.welcome .dims{text-align:left;margin-bottom:36px;background:white;border-radius:20px;padding:20px 24px;box-shadow:0 4px 20px rgba(93,64,55,0.10)}
+.welcome .dim-item{display:flex;align-items:center;gap:12px;padding:9px 0;font-size:15px;color:#5D4037}
+.welcome .dim-item .dot{width:8px;height:8px;border-radius:50%;background:#BCAAA4;flex-shrink:0}
+.btn{display:inline-block;padding:16px 60px;background:linear-gradient(135deg,#A1887F,#6D4C41);color:white;font-size:20px;font-weight:bold;border:none;border-radius:40px;cursor:pointer;text-decoration:none;box-shadow:0 6px 24px rgba(109,76,65,0.30);transition:all 0.3s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(109,76,65,0.40)}
+.btn:active{transform:translateY(0)}
+.btn-small{padding:12px 40px;font-size:16px}
+.quiz-page{display:none}.quiz-page.active{display:block}
+.progress-bar{width:100%;height:8px;background:#D7CCC8;border-radius:4px;margin-bottom:10px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#A1887F,#6D4C41);border-radius:4px;transition:width 0.4s ease}
+.progress-text{text-align:center;font-size:14px;color:#8D6E63;margin-bottom:28px}
+.question{margin-bottom:26px}
+.question .q-num{display:inline-block;width:36px;height:36px;line-height:36px;text-align:center;background:#A1887F;color:white;border-radius:50%;font-weight:bold;font-size:16px;margin-right:10px;vertical-align:middle}
+.question h3{display:inline;font-size:20px;color:#5D4037;line-height:1.5}
+.options{margin-top:18px}
+.option{display:block;width:100%;padding:18px 20px;margin-bottom:12px;background:white;border:2px solid #D7CCC8;border-radius:16px;font-size:16px;color:#3C2E2A;text-align:left;cursor:pointer;transition:all 0.3s}
+.option:hover{border-color:#A1887F;background:#F5F0EB}
+.option.selected{border-color:#A1887F;background:#EFEBE9;box-shadow:0 2px 12px rgba(109,76,65,0.12)}
+.option .opt-label{display:inline-block;width:28px;height:28px;line-height:28px;text-align:center;background:#A1887F;color:white;border-radius:50%;font-weight:bold;font-size:14px;margin-right:12px}
+.quick-result{display:none;text-align:center;padding-top:30px}
+.quick-result.active{display:block}
+.quick-result .result-type{font-size:52px;margin-bottom:8px}
+.quick-result .result-name{font-size:28px;font-weight:bold;color:#5D4037;margin-bottom:10px}
+.quick-result .result-desc{font-size:15px;color:#8D6E63;margin-bottom:28px;line-height:1.6}
+.quick-result .result-chart{margin:16px auto;max-width:280px}
+.quick-result .upgrade-box{background:white;border-radius:20px;padding:28px 20px;margin-top:28px;box-shadow:0 4px 20px rgba(93,64,55,0.08)}
+.quick-result .upgrade-box h4{font-size:20px;color:#5D4037;margin-bottom:12px}
+.quick-result .upgrade-box p{font-size:14px;color:#8D6E63;margin-bottom:20px;line-height:1.6}
+.full-result{display:none;text-align:center;padding-top:24px}
+.full-result.active{display:block}
+.full-result .result-type{font-size:60px;margin-bottom:8px}
+.full-result .result-name{font-size:32px;font-weight:bold;color:#5D4037;margin-bottom:8px}
+.full-result .score{display:inline-block;padding:8px 24px;background:#EFEBE9;border-radius:20px;font-size:16px;color:#5D4037;margin-bottom:20px}
+.full-result .result-desc{font-size:15px;color:#3C2E2A;line-height:1.8;text-align:left;margin-bottom:20px;padding:20px;background:white;border-radius:16px}
+.full-result .chart-box{background:white;border-radius:20px;padding:20px;margin:20px 0;box-shadow:0 4px 20px rgba(93,64,55,0.08)}
+.full-result .chart-box h4{font-size:18px;color:#5D4037;margin-bottom:14px}
+.full-result .radar-container{width:280px;height:280px;margin:0 auto}
+.full-result .action-plan{text-align:left;background:white;border-radius:16px;padding:20px;margin:20px 0}
+.full-result .action-plan h4{font-size:18px;color:#5D4037;margin-bottom:16px;text-align:center}
+.full-result .action-item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #EFEBE9}
+.full-result .action-item:last-child{border-bottom:none}
+.full-result .action-num{width:28px;height:28px;line-height:28px;text-align:center;background:#A1887F;color:white;border-radius:50%;font-weight:bold;font-size:14px;flex-shrink:0}
+.full-result .action-text{font-size:14px;color:#3C2E2A;line-height:1.6}
+.full-result .path-box{text-align:left;background:white;border-radius:16px;padding:20px;margin:20px 0}
+.full-result .path-box h4{font-size:18px;color:#5D4037;margin-bottom:14px;text-align:center}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="container" id="app">
+
+<div class="welcome" id="welcome">
+  <div class="emoji-top">🌿</div>
+  <h1>你的气质更像哪款经典香水？</h1>
+  <p class="subtitle">20题深度扫描你的香调基因</p>
+  <div class="dims">
+    <div class="dim-item"><span class="dot"></span> 审美偏好 —— 你的眼睛喜欢什么？</div>
+    <div class="dim-item"><span class="dot"></span> 生活节奏 —— 你追求快还是慢？</div>
+    <div class="dim-item"><span class="dot"></span> 性格底色 —— 你的内在气质是什么？</div>
+    <div class="dim-item"><span class="dot"></span> 情感表达 —— 你怎么爱人？</div>
+    <div class="dim-item"><span class="dot"></span> 内在渴望 —— 你真正想要什么？</div>
+  </div>
+  <button class="btn" onclick="startQuiz()">开始测试</button>
+</div>
+
+<div class="quiz-page" id="quizPage">
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-text" id="progressText">1/5</div>
+  <div class="question"><span class="q-num" id="qNum">1</span><h3 id="qText"></h3></div>
+  <div class="options" id="optionsBox"></div>
+  <button class="btn btn-small hidden" id="nextBtn" onclick="nextQuestion()">下一题</button>
+</div>
+
+<div class="quick-result" id="quickResult">
+  <div class="result-type" id="qrType"></div>
+  <div class="result-name" id="qrName"></div>
+  <div class="result-desc" id="qrDesc"></div>
+  <div class="result-chart"><canvas id="quickRadar" width="260" height="260"></canvas></div>
+  <div class="upgrade-box">
+    <h4>🎯 以上只是5题快速版</h4>
+    <p>完成全部20题，你将获得：<br>
+    ✅ 你的专属本命香标签<br>
+    ✅ 五维雷达图深度分析<br>
+    ✅ 香调风格解读<br>
+    ✅ 气质氛围感关键词</p>
+    <button class="btn" onclick="showFullQuiz()">解锁完整20题测试</button>
+  </div>
+</div>
+
+<div class="quiz-page" id="fullQuizPage">
+  <div class="progress-bar"><div class="progress-fill" id="fullProgressFill"></div></div>
+  <div class="progress-text" id="fullProgressText">6/25</div>
+  <div class="question"><span class="q-num" id="fullQNum">6</span><h3 id="fullQText"></h3></div>
+  <div class="options" id="fullOptionsBox"></div>
+  <button class="btn btn-small hidden" id="fullNextBtn" onclick="fullNextQuestion()">下一题</button>
+</div>
+
+<div class="full-result" id="fullResult"></div>
+
+</div>
+
+<script>
+// ===== 快速版5题 =====
+const quickQuestions = [
+  {q:"你更喜欢哪种氛围？", opts:["安静、清冷、有距离感","温暖、浪漫、有故事感","明亮、阳光、有活力","深邃、沉稳、有质感"], scores:[1,2,3,4]},
+  {q:"你更倾向哪种生活状态？", opts:["慢下来，感受每一个当下","忙碌但不失优雅","充满变化和新鲜感","稳定、有序、有规划"], scores:[1,2,3,4]},
+  {q:"你的朋友最常用哪个词形容你？", opts:["安静、清冷","温柔、浪漫","阳光、开朗","沉稳、可靠"], scores:[1,2,3,4]},
+  {q:"你更喜欢哪种香气氛围？", opts:["茶香、木质调","花香、果香","柑橘、清新调","檀木、琥珀调"], scores:[1,2,3,4]},
+  {q:"你内心最渴望的是？", opts:["不被定义的自由","被人理解和爱","活力和热情","内心的平静和深度"], scores:[1,2,3,4]}
+];
+
+// ===== 完整版20题 =====
+const fullQuestions = [
+  // 维度1: 审美偏好 (1-4)
+  {q:"你更喜欢哪种色彩氛围？", opts:["黑白灰、大地色系，清冷克制","奶油色、莫兰迪色，温柔浪漫","明亮色、暖色调，活力阳光","深色系、复古色系，沉稳深邃"], scores:[1,2,3,4]},
+  {q:"你更喜欢哪种自然场景？", opts:["清晨薄雾里的茶山","午后阳光下的玫瑰园","地中海边的柠檬树","深山里的百年古寺"], scores:[1,2,3,4]},
+  {q:"你更喜欢哪种面料触感？", opts:["挺括的亚麻、有质感的棉","柔软的丝绸、蕾丝","舒适的针织、卫衣","厚重的粗花呢、羊毛"], scores:[1,2,3,4]},
+  {q:"你更喜欢哪种空间氛围？", opts:["极简、留白、有呼吸感","温暖、柔软、有生活感","开放、明亮、有活力","沉稳、安静、有书卷气"], scores:[1,2,3,4]},
+  // 维度2: 生活节奏 (5-8)
+  {q:"你更倾向哪种生活状态？", opts:["慢下来，感受每一个当下","忙而不乱，保持优雅","充满变化和新鲜感","稳定有序，按规划推进"], scores:[1,2,3,4]},
+  {q:"你更喜欢哪种度过周末的方式？", opts:["一个人喝茶读书","和朋友逛街喝咖啡","去户外运动晒太阳","在家安静地休息"], scores:[1,2,3,4]},
+  {q:"你对「效率」的态度是：", opts:["不着急，我按自己的节奏来","重要，但不想被效率绑架","效率很重要，我喜欢高效","稳定推进比效率更重要"], scores:[1,2,3,4]},
+  {q:"你更喜欢哪种城市氛围？", opts:["京都、杭州——静气","巴黎、南法——浪漫","洛杉矶、悉尼——阳光","伦敦、柏林——质感"], scores:[1,2,3,4]},
+  // 维度3: 性格底色 (9-12)
+  {q:"你的朋友最常用哪个词形容你？", opts:["安静、清冷、有距离感","温柔、浪漫、有故事感","阳光、开朗、有感染力","沉稳、可靠、有深度"], scores:[1,2,3,4]},
+  {q:"你给人的第一印象通常是：", opts:["不太好接近，但相处后发现很温柔","很亲切，让人想靠近","很阳光，和他/她在一起很开心","很稳，让人觉得踏实"], scores:[1,2,3,4]},
+  {q:"你更欣赏哪种气质？", opts:["清冷克制的高级感","慵懒迷人的松弛感","活力四射的少年感","沉稳深邃的知性感"], scores:[1,2,3,4]},
+  {q:"你更倾向于哪种人生哲学？", opts:["“我属于自己”","“我属于爱”","“我属于世界”","“我属于时间”"], scores:[1,2,3,4]},
+  // 维度4: 情感表达 (13-16)
+  {q:"你表达爱意的方式更接近：", opts:["默默陪伴，用行动守护","温柔表达，用细节打动","热情直接，用笑容感染","沉稳承诺，用时间证明"], scores:[1,2,3,4]},
+  {q:"你更期待什么样的爱情？", opts:["心有灵犀的默契","浪漫温柔的陪伴","活力四射的探险","深沉持久的守护"], scores:[1,2,3,4]},
+  {q:"你在感情中更像：", opts:["独立高冷的猫","温柔依赖的恋人","热情自由的灵魂","沉稳守护的港湾"], scores:[1,2,3,4]},
+  {q:"你更渴望哪种亲密关系？", opts:["被理解，不需要解释","被宠爱，不需要坚强","被陪伴，不需要孤单","被信任，不需要证明"], scores:[1,2,3,4]},
+  // 维度5: 内在渴望 (17-20)
+  {q:"你内心最渴望的状态是：", opts:["不被定义的自由","被爱包围的温暖","充满活力的激情","内心平静的深度"], scores:[1,2,3,4]},
+  {q:"你更想成为哪种人？", opts:["一个不随波逐流的人","一个温暖有力量的人","一个永远热爱生活的人","一个历尽沧桑依然温柔的人"], scores:[1,2,3,4]},
+  {q:"你更害怕什么？", opts:["失去自我","不被爱","失去活力","失去方向"], scores:[1,2,3,4]},
+  {q:"你希望自己的人生更像：", opts:["一幅留白的水墨画","一首浪漫的诗","一部热烈的电影","一本耐读的书"], scores:[1,2,3,4]}
+];
+
+// ===== 6种香水气质 =====
+const results = [
+  {type:"🌿", name:"白茶清欢 · 清冷疏离感", desc:"像清晨薄雾里的茶山，安静、克制、不争不抢。你的气质是「有距离感的温柔」，不需要讨好任何人，也不在意别人的眼光。你有一种淡淡的存在感——不喧哗，但让人难以忽视。穿在你身上的香气，是白茶的清冽和木质的沉稳。你不是冷，你只是把温暖留给值得的人。", label:"清冷疏离", emoji:"🌿", keywords:"克制、优雅、不讨好"},
+  {type:"🌹", name:"玫瑰之约 · 浪漫温柔感", desc:"像午后花园里盛开的玫瑰，优雅、迷人、有故事感。你的气质是「有温度的浪漫」，让人想靠近、想了解、想守护。你有一种天生的吸引力——不是刻意为之，而是你站在那里就让人移不开眼。穿在你身上的香气，是玫瑰的馥郁和果香的甜美。你相信爱，也值得被爱。", label:"浪漫温柔", emoji:"🌹", keywords:"优雅、迷人、有故事"},
+  {type:"🍊", name:"柑橘阳光 · 活力少年感", desc:"像地中海阳光下的一杯柠檬水，干净、明亮、有感染力。你的气质是「让人心情变好的存在」，走到哪里都带着光。你有一种天然的亲和力——和你在一起的时候，世界好像没那么复杂了。穿在你身上的香气，是柑橘的清新和海洋的爽朗。你永远年轻，永远热泪盈眶。", label:"活力少年", emoji:"🍊", keywords:"阳光、干净、有感染力"},
+  {type:"🪵", name:"檀木沉静 · 知性沉稳感", desc:"像一座百年图书馆里的旧木书架，安静、有深度、耐人寻味。你的气质是「越相处越着迷」的类型，不张扬但让人难忘。你有一种让人安心的力量——你不急着表达，但每句话都有分量。穿在你身上的香气，是檀木的醇厚和琥珀的温暖。你不需要被所有人喜欢，你只需要被懂的人珍惜。", label:"知性沉稳", emoji:"🪵", keywords:"深度、沉稳、耐人寻味"},
+  {type:"🌾", name:"鸢尾清雅 · 文艺清冷感", opts:["像晨露中的鸢尾花，清冷、有诗意、不随波逐流。你的气质是「有自己审美体系」的文艺灵魂，不追随潮流，只追随自己的心。你有一种独特的辨识度——你穿的不是衣服，是态度；你散发的不只是香气，是故事。穿在你身上的香气，是鸢尾的粉感和木质的地气。你不是不合群，你只是还没找到同类。", label:"文艺清冷", emoji:"🌾", keywords:"诗意、清冷、有审美"},
+  {type:"🕯️", name:"乌木秘语 · 神秘高级感", desc:"像暗夜里的焚香，深邃、复杂、有辨识度。你的气质是「让人忍不住想读懂」的谜，你不需要解释自己，但你的存在本身就是一种邀请。你有一种让人无法忽视的气场——你不争不抢，但你就是中心。穿在你身上的香气，是乌木的深邃和烟熏的神秘。你不是神秘，你只是经历过一些让人变深刻的事。", label:"神秘高级", emoji:"🕯️", keywords:"深邃、复杂、有气场"}
+];
+
+// ===== 雷达图维度名称 =====
+const dimNames = ["审美偏好","生活节奏","性格底色","情感表达","内在渴望"];
+
+let quickAnswers=[], quickCurrent=0, fullAnswers=[], fullCurrent=0;
+
+function startQuiz(){
+  document.getElementById('welcome').style.display='none';
+  document.getElementById('quizPage').classList.add('active');
+  document.getElementById('quizPage').style.display='block';
+  quickCurrent=0; quickAnswers=[]; showQuickQuestion();
+}
+
+function showQuickQuestion(){
+  if(quickCurrent >= 5){ showQuickResult(); return; }
+  const q = quickQuestions[quickCurrent];
+  document.getElementById('qNum').textContent = quickCurrent + 1;
+  document.getElementById('qText').textContent = q.q;
+  document.getElementById('progressFill').style.width = ((quickCurrent / 5) * 100) + '%';
+  document.getElementById('progressText').textContent = (quickCurrent + 1) + '/5';
+  let html = '';
+  q.opts.forEach((opt, i) => {
+    const sel = (quickAnswers[quickCurrent] === i) ? ' selected' : '';
+    html += `<button class="option${sel}" onclick="selectQuick(${i})"><span class="opt-label">${String.fromCharCode(65+i)}</span>${opt}</button>`;
+  });
+  document.getElementById('optionsBox').innerHTML = html;
+  document.getElementById('nextBtn').classList.add('hidden');
+}
+
+function selectQuick(idx){
+  quickAnswers[quickCurrent] = idx;
+  document.querySelectorAll('#optionsBox .option').forEach((el, i) => el.classList.toggle('selected', i === idx));
+  document.getElementById('nextBtn').classList.remove('hidden');
+}
+function nextQuestion(){ quickCurrent++; showQuickQuestion(); }
+
+function showQuickResult(){
+  document.getElementById('quizPage').style.display = 'none';
+  document.getElementById('quizPage').classList.remove('active');
+  document.getElementById('quickResult').classList.add('active');
+  document.getElementById('quickResult').style.display = 'block';
+  let total = 0;
+  quickAnswers.forEach((a, i) => { total += quickQuestions[i].scores[a]; });
+  let score = Math.round((total / 20) * 100);
+  score = Math.max(0, Math.min(100, score));
+  let ri = score <= 30 ? 0 : score <= 50 ? 1 : score <= 70 ? 2 : 3;
+  const r = results[ri % results.length];
+  document.getElementById('qrType').textContent = r.type;
+  document.getElementById('qrName').textContent = r.name;
+  document.getElementById('qrDesc').textContent = r.desc;
+  setTimeout(() => drawRadar('quickRadar', [65,55,70,60,50]), 200);
+}
+
+function showFullQuiz(){
+  document.getElementById('quickResult').style.display = 'none';
+  document.getElementById('quickResult').classList.remove('active');
+  document.getElementById('fullQuizPage').classList.add('active');
+  document.getElementById('fullQuizPage').style.display = 'block';
+  fullCurrent = 0; fullAnswers = []; showFullQuestion();
+}
+
+function showFullQuestion(){
+  if(fullCurrent >= 20){ showFullResult(); return; }
+  const q = fullQuestions[fullCurrent];
+  document.getElementById('fullQNum').textContent = fullCurrent + 6;
+  document.getElementById('fullQText').textContent = q.q;
+  document.getElementById('fullProgressFill').style.width = ((fullCurrent + 5) / 25 * 100) + '%';
+  document.getElementById('fullProgressText').textContent = (fullCurrent + 6) + '/25';
+  let html = '';
+  q.opts.forEach((opt, i) => {
+    const sel = (fullAnswers[fullCurrent] === i) ? ' selected' : '';
+    html += `<button class="option${sel}" onclick="selectFull(${i})"><span class="opt-label">${String.fromCharCode(65+i)}</span>${opt}</button>`;
+  });
+  document.getElementById('fullOptionsBox').innerHTML = html;
+  document.getElementById('fullNextBtn').classList.add('hidden');
+}
+
+function selectFull(idx){
+  fullAnswers[fullCurrent] = idx;
+  document.querySelectorAll('#fullOptionsBox .option').forEach((el, i) => el.classList.toggle('selected', i === idx));
+  document.getElementById('fullNextBtn').classList.remove('hidden');
+}
+function fullNextQuestion(){ fullCurrent++; showFullQuestion(); }
+
+function showFullResult(){
+  document.getElementById('fullQuizPage').style.display = 'none';
+  document.getElementById('fullQuizPage').classList.remove('active');
+
+  let dimScores = [0,0,0,0,0];
+  fullAnswers.forEach((a, i) => {
+    dimScores[Math.floor(i / 4)] += fullQuestions[i].scores[a];
+  });
+  let dimNorm = dimScores.map(s => Math.round((s / 16) * 100));
+  
+  let counts = [0,0,0,0];
+  fullAnswers.forEach(idx => counts[idx]++);
+  let maxCount = Math.max(...counts);
+  let topIndex = counts.indexOf(maxCount);
+  
+  // 映射到6种香水气质
+  let ri;
+  if(topIndex === 0) ri = 0; // 白茶清欢
+  else if(topIndex === 1) ri = 1; // 玫瑰之约
+  else if(topIndex === 2) ri = 2; // 柑橘阳光
+  else {
+    let d3 = dimScores[2], d5 = dimScores[4];
+    if(d3 >= 10 && d5 >= 10) ri = 3; // 檀木沉静
+    else if(d3 >= 8 && d5 >= 8) ri = 4; // 鸢尾清雅
+    else ri = 5; // 乌木秘语
+  }
+
+  const r = results[ri];
+  const finalScore = Math.round(counts[topIndex] / 20 * 100);
+
+  let pathText = "✨ 找到你的本命香，就像找到你的第二层皮肤。\n\n";
+  if(ri === 0) pathText += "🌿 白茶清欢 → 你的气场是「安静的征服」。不需要用力，不需要解释，你站在那里就已经赢了。继续做那个清冷但有温度的人。";
+  else if(ri === 1) pathText += "🌹 玫瑰之约 → 你的气场是「温柔的吸引」。你不需要讨好谁，你的存在本身就是一种邀请。继续做那个浪漫但有力量的人。";
+  else if(ri === 2) pathText += "🍊 柑橘阳光 → 你的气场是「快乐的传染」。你让身边的人也变得明亮起来。继续做那个眼里有光、心里有热的人。";
+  else if(ri === 3) pathText += "🪵 檀木沉静 → 你的气场是「深度的滋养」。你的存在让人安心，你的沉默让人思考。继续做那个越相处越让人着迷的人。";
+  else if(ri === 4) pathText += "🌾 鸢尾清雅 → 你的气场是「审美的表达」。你不需要追随潮流，你就是潮流本身。继续做那个有自己审美体系的人。";
+  else pathText += "🕯️ 乌木秘语 → 你的气场是「神秘的邀请」。你不解释自己，但你永远让人想靠近。继续做那个让人忍不住想读懂的人。";
+
+  const actions = [
+    ["第1-30天：氛围觉察", "注意你最喜欢的空间、颜色、气味和音乐——找到让你最放松、最自在的氛围感。"],
+    ["第1-30天：寻找你的香", "去香水店试闻和你测试结果对应的香调，找到最能代表你的那一瓶。"],
+    ["第31-60天：氛围营造", "把那种香水的气味延伸到你的生活空间——香薰、蜡烛、或者同调的身体乳。"],
+    ["第61-90天：风格定型", "让那种氛围感成为你的日常——你的气味、你的穿搭、你的生活，变成一个完整的表达。"]
+  ];
+
+  let html = `
+    <div class="result-type">${r.type}</div>
+    <div class="result-name">${r.name}</div>
+    <div class="score">气质匹配度 · ${finalScore}% · ${r.label}</div>
+    <div class="result-desc">${r.desc}</div>
+    <div class="chart-box">
+      <h4>📊 五维雷达图分析</h4>
+      <div class="radar-container"><canvas id="fullRadar" width="280" height="280"></canvas></div>
+    </div>
+    <div class="path-box">
+      <h4>🛤️ 你的氛围感进化路径</h4>
+      <p style="font-size:14px;color:#3C2E2A;line-height:1.8;white-space:pre-wrap">${pathText}</p>
+    </div>
+    <div class="action-plan">
+      <h4>📋 90天氛围感打造计划</h4>
+      ${actions.map((a, i) => `
+        <div class="action-item">
+          <div class="action-num">${i+1}</div>
+          <div class="action-text"><strong>${a[0]}</strong><br>${a[1]}</div>
+        </div>
+      `).join('')}
+    </div>
+    <p style="font-size:13px;color:#8D6E63;margin-top:16px">💡 香水是穿在身上的情绪<br>找到属于你的那一款，就是找到最舒服的表达</p>
+  `;
+
+  document.getElementById('fullResult').innerHTML = html;
+  document.getElementById('fullResult').classList.add('active');
+  document.getElementById('fullResult').style.display = 'block';
+  setTimeout(() => drawRadar('fullRadar', dimNorm), 300);
+}
+
+function drawRadar(cid, data){
+  const c = document.getElementById(cid);
+  if(!c) return;
+  const ctx = c.getContext('2d');
+  const cx = c.width/2, cy = c.height/2, r = 100, sides = 5;
+  ctx.clearRect(0, 0, c.width, c.height);
+  
+  for(let lv=1; lv<=5; lv++){
+    ctx.beginPath();
+    for(let i=0; i<sides; i++){
+      const a = (Math.PI*2/sides)*i - Math.PI/2;
+      const rr = (r/5)*lv;
+      const x = cx + rr*Math.cos(a), y = cy + rr*Math.sin(a);
+      i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = '#D7CCC8';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+  for(let i=0; i<sides; i++){
+    const a = (Math.PI*2/sides)*i - Math.PI/2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + r*Math.cos(a), cy + r*Math.sin(a));
+    ctx.strokeStyle = '#D7CCC8';
+    ctx.stroke();
+  }
+  ctx.beginPath();
+  for(let i=0; i<sides; i++){
+    const a = (Math.PI*2/sides)*i - Math.PI/2;
+    const rr = (data[i]/100)*r;
+    const x = cx + rr*Math.cos(a), y = cy + rr*Math.sin(a);
+    i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+  }
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(161,136,127,0.25)';
+  ctx.fill();
+  ctx.strokeStyle = '#A1887F';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  for(let i=0; i<sides; i++){
+    const a = (Math.PI*2/sides)*i - Math.PI/2;
+    const rr = (data[i]/100)*r;
+    ctx.beginPath();
+    ctx.arc(cx + rr*Math.cos(a), cy + rr*Math.sin(a), 5, 0, Math.PI*2);
+    ctx.fillStyle = '#6D4C41';
+    ctx.fill();
+  }
+  ctx.fillStyle = '#3C2E2A';
+  ctx.font = '12px -apple-system,sans-serif';
+  ctx.textAlign = 'center';
+  for(let i=0; i<sides; i++){
+    const a = (Math.PI*2/sides)*i - Math.PI/2;
+    ctx.fillText(dimNames[i], cx + (r+25)*Math.cos(a), cy + (r+25)*Math.sin(a) + 4);
+  }
+}
+</script>
+</body>
+</html>
