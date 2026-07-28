@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>你的社会化程度有多高？ - 20题完整版测试</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #F5F0EB;
+            min-height: 100vh;
+            color: #3C2E2A;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .welcome {
+            text-align: center;
+            padding-top: 50px;
+        }
+        .welcome .emoji-top {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+        .welcome h1 {
+            font-size: 30px;
+            color: #5D4037;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .welcome .subtitle {
+            font-size: 15px;
+            color: #8D6E63;
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+        .welcome .dims {
+            text-align: left;
+            margin-bottom: 36px;
+            background: white;
+            border-radius: 20px;
+            padding: 20px 24px;
+            box-shadow: 0 4px 20px rgba(93, 64, 55, 0.10);
+        }
+        .welcome .dim-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 9px 0;
+            font-size: 15px;
+            color: #5D4037;
+        }
+        .welcome .dim-item .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #BCAAA4;
+            flex-shrink: 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 16px 60px;
+            background: linear-gradient(135deg, #A1887F, #6D4C41);
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 6px 24px rgba(109, 76, 65, 0.30);
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(109, 76, 65, 0.40);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .btn-small {
+            padding: 12px 40px;
+            font-size: 16px;
+        }
+        .quiz-page {
+            display: none;
+        }
+        .quiz-page.active {
+            display: block;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #D7CCC8;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #A1887F, #6D4C41);
+            border-radius: 4px;
+            transition: width 0.4s ease;
+        }
+        .progress-text {
+            text-align: center;
+            font-size: 14px;
+            color: #8D6E63;
+            margin-bottom: 28px;
+        }
+        .question {
+            margin-bottom: 26px;
+        }
+        .question .q-num {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            line-height: 36px;
+            text-align: center;
+            background: #A1887F;
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 16px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .question h3 {
+            display: inline;
+            font-size: 20px;
+            color: #5D4037;
+            line-height: 1.5;
+        }
+        .options {
+            margin-top: 18px;
+        }
+        .option {
+            display: block;
+            width: 100%;
+            padding: 18px 20px;
+            margin-bottom: 12px;
+            background: white;
+            border: 2px solid #D7CCC8;
+            border-radius: 16px;
+            font-size: 16px;
+            color: #3C2E2A;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .option:hover {
+            border-color: #A1887F;
+            background: #F5F0EB;
+        }
+        .option.selected {
+            border-color: #A1887F;
+            background: #EFEBE9;
+            box-shadow: 0 2px 12px rgba(109, 76, 65, 0.12);
+        }
+        .option .opt-label {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            text-align: center;
+            background: #A1887F;
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 14px;
+            margin-right: 12px;
+        }
+        .quick-result {
+            display: none;
+            text-align: center;
+            padding-top: 30px;
+        }
+        .quick-result.active {
+            display: block;
+        }
+        .quick-result .result-type {
+            font-size: 52px;
+            margin-bottom: 8px;
+        }
+        .quick-result .result-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: #5D4037;
+            margin-bottom: 10px;
+        }
+        .quick-result .result-desc {
+            font-size: 15px;
+            color: #8D6E63;
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+        .quick-result .result-chart {
+            margin: 16px auto;
+            max-width: 280px;
+        }
+        .quick-result .upgrade-box {
+            background: white;
+            border-radius: 20px;
+            padding: 28px 20px;
+            margin-top: 28px;
+            box-shadow: 0 4px 20px rgba(93, 64, 55, 0.08);
+        }
+        .quick-result .upgrade-box h4 {
+            font-size: 20px;
+            color: #5D4037;
+            margin-bottom: 12px;
+        }
+        .quick-result .upgrade-box p {
+            font-size: 14px;
+            color: #8D6E63;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .full-result {
+            display: none;
+            text-align: center;
+            padding-top: 24px;
+        }
+        .full-result.active {
+            display: block;
+        }
+        .full-result .result-type {
+            font-size: 60px;
+            margin-bottom: 8px;
+        }
+        .full-result .result-name {
+            font-size: 32px;
+            font-weight: bold;
+            color: #5D4037;
+            margin-bottom: 8px;
+        }
+        .full-result .score {
+            display: inline-block;
+            padding: 8px 24px;
+            background: #EFEBE9;
+            border-radius: 20px;
+            font-size: 16px;
+            color: #5D4037;
+            margin-bottom: 20px;
+        }
+        .full-result .result-desc {
+            font-size: 15px;
+            color: #3C2E2A;
+            line-height: 1.8;
+            text-align: left;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 16px;
+        }
+        .full-result .chart-box {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 20px rgba(93, 64, 55, 0.08);
+        }
+        .full-result .chart-box h4 {
+            font-size: 18px;
+            color: #5D4037;
+            margin-bottom: 14px;
+        }
+        .full-result .radar-container {
+            width: 280px;
+            height: 280px;
+            margin: 0 auto;
+        }
+        .full-result .path-box {
+            text-align: left;
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .full-result .path-box h4 {
+            font-size: 18px;
+            color: #5D4037;
+            margin-bottom: 14px;
+            text-align: center;
+        }
+        .full-result .action-plan {
+            text-align: left;
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .full-result .action-plan h4 {
+            font-size: 18px;
+            color: #5D4037;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        .full-result .action-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 12px 0;
+            border-bottom: 1px solid #EFEBE9;
+        }
+        .full-result .action-item:last-child {
+            border-bottom: none;
+        }
+        .full-result .action-num {
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            text-align: center;
+            background: #A1887F;
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .full-result .action-text {
+            font-size: 14px;
+            color: #3C2E2A;
+            line-height: 1.6;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="app">
+
+        <!-- 欢迎页 -->
+        <div class="welcome" id="welcome">
+            <div class="emoji-top">🦊</div>
+            <h1>你的社会化程度有多高？</h1>
+            <p class="subtitle">20题深度扫描你的社交基因</p>
+            <div class="dims">
+                <div class="dim-item"><span class="dot"></span> 社交主动性 —— 你主动还是被动？</div>
+                <div class="dim-item"><span class="dot"></span> 边界感 —— 你会保护自己吗？</div>
+                <div class="dim-item"><span class="dot"></span> 规则适应力 —— 你能灵活应对吗？</div>
+                <div class="dim-item"><span class="dot"></span> 自我表达 —— 你敢做自己吗？</div>
+                <div class="dim-item"><span class="dot"></span> 关系深度 —— 你有深层连接吗？</div>
+            </div>
+            <button class="btn" onclick="startQuiz()">开始测试</button>
+        </div>
+
+        <!-- 快速版5题 -->
+        <div class="quiz-page" id="quizPage">
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+            <div class="progress-text" id="progressText">1/5</div>
+            <div class="question"><span class="q-num" id="qNum">1</span><h3 id="qText"></h3></div>
+            <div class="options" id="optionsBox"></div>
+            <button class="btn btn-small hidden" id="nextBtn" onclick="nextQuestion()">下一题</button>
+        </div>
+
+        <!-- 快速版结果 -->
+        <div class="quick-result" id="quickResult">
+            <div class="result-type" id="qrType"></div>
+            <div class="result-name" id="qrName"></div>
+            <div class="result-desc" id="qrDesc"></div>
+            <div class="result-chart"><canvas id="quickRadar" width="260" height="260"></canvas></div>
+            <div class="upgrade-box">
+                <h4>🎯 以上只是5题快速版</h4>
+                <p>完成全部20题，你将获得：<br>
+                ✅ 精确的社会化程度评分<br>
+                ✅ 五维雷达图深度分析<br>
+                ✅ 你的社交画像解读<br>
+                ✅ 专属成长行动指南</p>
+                <button class="btn" onclick="showFullQuiz()">解锁完整20题测试</button>
+            </div>
+        </div>
+
+        <!-- 完整版20题 -->
+        <div class="quiz-page" id="fullQuizPage">
+            <div class="progress-bar"><div class="progress-fill" id="fullProgressFill"></div></div>
+            <div class="progress-text" id="fullProgressText">1/20</div>
+            <div class="question"><span class="q-num" id="fullQNum">1</span><h3 id="fullQText"></h3></div>
+            <div class="options" id="fullOptionsBox"></div>
+            <button class="btn btn-small hidden" id="fullNextBtn" onclick="fullNextQuestion()">下一题</button>
+        </div>
+
+        <!-- 完整版结果 -->
+        <div class="full-result" id="fullResult"></div>
+
+    </div>
+
+    <script>
+        // =====================================================
+        // 快速版5题
+        // =====================================================
+        const quickQuestions = [
+            { q: "你进入一个全是陌生人的场合，通常会：", opts: ["感到紧张，尽量待在角落", "有点不自在，但会回应搭话", "会主动观察后加入对话", "很自然地走过去打招呼"] },
+            { q: "面对不太熟的人提的不合理请求，你会：", opts: ["心里不愿意但不敢拒绝", "委婉找借口推掉", "直接拒绝，说明不方便", "拒绝的同时给替代方案"] },
+            { q: "你更倾向于哪种社交状态？", opts: ["能不社交就不社交", "只和熟悉的人社交", "在熟悉的圈子里很活跃", "喜欢认识新朋友"] },
+            { q: "你如何对待自己的「个人空间」？", opts: ["几乎没有边界", "有边界但不会主动维护", "比较清晰，能主动表达", "非常清晰，会提前说明"] },
+            { q: "你有几个可以完全坦露自我的朋友？", opts: ["0个", "1-2个，但有所保留", "1-2个，可以完全做自己", "3个以上，有很深的关系"] }
+        ];
+
+        // =====================================================
+        // 完整版20题
+        // =====================================================
+        const fullQuestions = [
+            { q: "你进入一个全是陌生人的场合，通常会：", opts: ["感到紧张，尽量待在角落，等别人来找你", "有点不自在，但如果有人主动搭话会回应", "会主动观察，找到合适的机会加入对话", "很自然地走过去，主动和陌生人打招呼"] },
+            { q: "你更倾向于哪种社交状态？", opts: ["能不社交就不社交", "只和熟悉的人社交", "在熟悉的圈子里很活跃，但不愿意拓展新圈子", "喜欢认识新朋友，社交对我来说是充电"] },
+            { q: "朋友组织聚会时，你的第一反应是：", opts: ["找个理由推掉，不想去", "犹豫一下，如果有人一起去就去", "去，但会提前想好什么时候走", "很期待，主动问要不要帮忙准备"] },
+            { q: "在社交场合中，你的精力消耗情况是：", opts: ["非常消耗，回家需要躺一天才能恢复", "有点消耗，需要独处一段时间充充电", "还好，社交和独处对我来说差不多", "社交反而给我能量，越聊越兴奋"] },
+            { q: "面对一个不太熟的同事/同学提的不合理请求，你会：", opts: ["心里不愿意但不敢拒绝，硬着头皮答应", "委婉地找借口推掉，但会有点愧疚", "直接拒绝，说明自己不方便", "拒绝的同时，给对方一个替代方案"] },
+            { q: "有人在社交中冒犯了你，你的反应是：", opts: ["默默忍受，假装什么都没发生", "心里不爽但不会说出来，事后远离", "当时会表达不满，但不会太激烈", "立刻明确地表达自己的感受和边界"] },
+            { q: "你如何对待自己的「个人空间」？", opts: ["几乎没有边界，别人可以随意进入", "有边界但不会主动维护，别人越界了才难受", "比较清晰，能主动告诉别人我的边界", "非常清晰，会很早让别人知道我的边界在哪里"] },
+            { q: "在亲密关系中，你表达需求的频率是：", opts: ["几乎不表达，希望对方能猜到", "偶尔表达，但说得不直接", "会表达，但会考虑对方的感受", "直接清晰地表达，不拐弯抹角"] },
+            { q: "面对职场/学校里的潜规则，你的态度是：", opts: ["完全不懂，也不想去搞懂", "知道一些，但不愿意去适应", "了解并能应对，但不会主动利用", "很熟悉，能灵活运用规则达到目的"] },
+            { q: "你如何看待「合群」这件事？", opts: ["合群没必要，做自己就好", "有时候需要合群，但内心不太愿意", "合群是一种能力，该合群的时候会合群", "我既能合群，也能保持自己的独特性"] },
+            { q: "在一个新的环境里，你适应得怎么样？", opts: ["很慢，需要很长时间才能找到节奏", "需要有人带我，不然会不知所措", "还好，能自己慢慢摸索适应", "很快，能迅速找到规则并融入"] },
+            { q: "你对「按规则办事」的态度是：", opts: ["规则就是规则，必须遵守", "规则不合理的时候，我会不太舒服", "规则可以灵活处理，看情况", "规则是工具，我能用规则达成自己的目标"] },
+            { q: "在不同的社交圈子里，你通常会：", opts: ["很不一样，每个圈子里的我都是不同的人", "有点不一样，但大体上还是同一个我", "大部分时候是真实的自己", "无论什么场合，我都保持一致的自我"] },
+            { q: "你更倾向于：", opts: ["压抑自己的真实想法，避免冲突", "适度表达，但不会完全敞开", "表达真实想法，但不强求别人接受", "坚持表达真实的自己，哪怕有冲突"] },
+            { q: "你觉得自己「戴面具」的时间多吗？", opts: ["很多，大部分时间都在扮演别人期待的角色", "不少，在陌生的场合会", "偶尔，需要的时候才会", "很少，我比较真实"] },
+            { q: "你在社交媒体上分享的内容和真实的你：", opts: ["差距很大，社交媒体上是一个「人设」", "有一些差距，会筛选分享内容", "比较接近，分享的都是真实的一部分", "完全一致，没有什么不能展示的"] },
+            { q: "你有几个可以完全坦露自我的朋友？", opts: ["0个，没有人完全了解我", "1-2个，但我还是有所保留", "1-2个，我可以在他们面前完全做自己", "3个以上，我有很深的亲密关系"] },
+            { q: "你维持一段友谊的方式主要是：", opts: ["不太主动，靠对方维持", "偶尔主动联系，但不算频繁", "会定期联系，保持温度", "主动维护，即使在不同城市也会经营"] },
+            { q: "当你遇到困难时，你会：", opts: ["一个人扛，不和任何人说", "会说，但只讲一部分", "会主动向信任的人求助", "有稳定的人际支持网络，随时可以依靠"] },
+            { q: "你理想中的人际关系状态是：", opts: ["不需要太多人，有自己就好", "有几个熟悉的人就足够了", "有深度的关系，也有广度的人脉", "既有深度连接，也有广泛的社交网络"] }
+        ];
+
+        // =====================================================
+        // 5种结果类型
+        // =====================================================
+        const results = [{
+            type: "🦊",
+            name: "社交王者",
+            desc: "你高情商、懂分寸、能进能退，是人群中游刃有余的存在。你懂得什么时候该说话，什么时候该倾听；知道如何保护自己，也愿意向值得的人敞开。你不是天生的社交达人，但你用自己的方式掌握了社交的艺术。你的社会化程度很高，但这不仅仅是技巧——更是你对自己和他人的深刻理解。",
+            label: "社交天花板",
+            color: "#A1887F"
+        }, {
+            type: "🌱",
+            name: "高潜力社交者",
+            desc: "你有一定的社交能力，但偶尔会内耗和犹豫。你知道该怎么做，但有时候会自我怀疑——\"我刚才是不是说太多了？\"\"他是不是不想理我？\"你的社会化程度处于上升期，你正在从\"我不擅长社交\"走向\"我可以做好社交\"的路上。你已经走了一半，继续往前走，你会发现自己比想象中更强大。",
+            label: "还在修炼中",
+            color: "#8D6E63"
+        }, {
+            type: "🏠",
+            name: "有边界感的独行者",
+            desc: "你不是不会社交，你是不想——你选择性地社交，质量高于数量。你有自己的小世界，不喜欢被无关的人打扰。你的社会化程度不是低，而是你在\"社会规则\"和\"自我保持\"之间找到了平衡。你知道社交能带来什么，但你更清楚什么对自己更重要。你的孤独不是被动的，是主动选择的。",
+            label: "选择性社交",
+            color: "#6D4C41"
+        }, {
+            type: "🌙",
+            name: "社恐星人",
+            desc: "你在社交中容易消耗能量，更喜欢独处和小圈子。你并不是不喜欢人，而是社交对你来说是一种消耗而不是补给。你的社会化程度不算高，但这不是缺陷——你只是在用自己的方式生活。你不必逼自己变成\"社交达人\"，找到适合自己的社交节奏，比迎合世界的期待更重要。",
+            label: "独处充电型",
+            color: "#5D4037"
+        }, {
+            type: "🔄",
+            name: "转型探索者",
+            desc: "你正在从\"不擅长社交\"走向\"主动社交\"的路上。你可能刚意识到社交的重要性，或者正在尝试走出舒适圈。这段路会有点难，会有些尴尬和不自在——但你在前进。你的社会化程度正在变化中，你正在打破旧模式，建立新关系。给自己一点时间，你正在成为更完整的自己。",
+            label: "正在破圈中",
+            color: "#795548"
+        }];
+
+        // =====================================================
+        // 状态变量
+        // =====================================================
+        let quickAnswers = [];
+        let quickCurrent = 0;
+        let fullAnswers = [];
+        let fullCurrent = 0;
+
+        // =====================================================
+        // 快速版逻辑
+        // =====================================================
+        function startQuiz() {
+            document.getElementById('welcome').style.display = 'none';
+            document.getElementById('quizPage').classList.add('active');
+            quickCurrent = 0;
+            quickAnswers = [];
+            showQuickQuestion();
+        }
+
+        function showQuickQuestion() {
+            if (quickCurrent >= 5) {
+                showQuickResult();
+                return;
+            }
+            const q = quickQuestions[quickCurrent];
+            document.getElementById('qNum').textContent = quickCurrent + 1;
+            document.getElementById('qText').textContent = q.q;
+            document.getElementById('progressFill').style.width = ((quickCurrent / 5) * 100) + '%';
+            document.getElementById('progressText').textContent = (quickCurrent + 1) + '/5';
+
+            let html = '';
+            const labels = ['A', 'B', 'C', 'D'];
+            q.opts.forEach((opt, i) => {
+                const sel = (quickAnswers[quickCurrent] === i) ? ' selected' : '';
+                html += `<button class="option${sel}" onclick="selectQuick(${i})"><span class="opt-label">${labels[i]}</span>${opt}</button>`;
+            });
+            document.getElementById('optionsBox').innerHTML = html;
+            document.getElementById('nextBtn').classList.add('hidden');
+        }
+
+        function selectQuick(idx) {
+            quickAnswers[quickCurrent] = idx;
+            const options = document.querySelectorAll('#optionsBox .option');
+            options.forEach((el, i) => {
+                el.classList.toggle('selected', i === idx);
+            });
+            document.getElementById('nextBtn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            quickCurrent++;
+            showQuickQuestion();
+        }
+
+        function showQuickResult() {
+            document.getElementById('quizPage').classList.remove('active');
+            document.getElementById('quickResult').classList.add('active');
+            let total = 0;
+            quickAnswers.forEach(a => total += (a + 1));
+            let score = Math.min(100, Math.round((total / 20) * 100));
+            let ri = score >= 71 ? 0 : score >= 61 ? 4 : score >= 51 ? 1 : score >= 36 ? 2 : 3;
+            const r = results[ri];
+            document.getElementById('qrType').textContent = r.type;
+            document.getElementById('qrName').textContent = r.name;
+            document.getElementById('qrDesc').textContent = r.desc;
+            setTimeout(() => drawRadar('quickRadar', [65, 55, 70, 60, 50]), 200);
+        }
+
+        // =====================================================
+        // 完整版逻辑
+        // =====================================================
+        function showFullQuiz() {
+            document.getElementById('quickResult').classList.remove('active');
+            document.getElementById('fullQuizPage').classList.add('active');
+            fullCurrent = 0;
+            fullAnswers = [];
+            showFullQuestion();
+        }
+
+        function showFullQuestion() {
+            if (fullCurrent >= 20) {
+                showFullResult();
+                return;
+            }
+            const q = fullQuestions[fullCurrent];
+            document.getElementById('fullQNum').textContent = fullCurrent + 1;
+            document.getElementById('fullQText').textContent = q.q;
+            document.getElementById('fullProgressFill').style.width = ((fullCurrent / 20) * 100) + '%';
+            document.getElementById('fullProgressText').textContent = (fullCurrent + 1) + '/20';
+
+            let html = '';
+            const labels = ['A', 'B', 'C', 'D'];
+            q.opts.forEach((opt, i) => {
+                const sel = (fullAnswers[fullCurrent] === i) ? ' selected' : '';
+                html += `<button class="option${sel}" onclick="selectFull(${i})"><span class="opt-label">${labels[i]}</span>${opt}</button>`;
+            });
+            document.getElementById('fullOptionsBox').innerHTML = html;
+            document.getElementById('fullNextBtn').classList.add('hidden');
+        }
+
+        function selectFull(idx) {
+            fullAnswers[fullCurrent] = idx;
+            const options = document.querySelectorAll('#fullOptionsBox .option');
+            options.forEach((el, i) => {
+                el.classList.toggle('selected', i === idx);
+            });
+            document.getElementById('fullNextBtn').classList.remove('hidden');
+        }
+
+        function fullNextQuestion() {
+            fullCurrent++;
+            showFullQuestion();
+        }
+
+        function showFullResult() {
+            document.getElementById('fullQuizPage').classList.remove('active');
+
+            // 计分
+            let total = 0;
+            fullAnswers.forEach(a => total += (a + 1));
+            let finalScore = Math.min(100, Math.round((total / 80) * 100));
+
+            // 判定类型
+            let ri = finalScore >= 71 ? 0 : finalScore >= 61 ? 4 : finalScore >= 51 ? 1 : finalScore >= 36 ? 2 : 3;
+            const r = results[ri];
+
+            // 五维得分
+            const dimScores = [0, 0, 0, 0, 0];
+            fullAnswers.forEach((a, i) => {
+                const dim = Math.floor(i / 4);
+                if (dim < 5) dimScores[dim] += (a + 1);
+            });
+            const dimNorm = dimScores.map(s => Math.min(100, Math.round((s / 16) * 100)));
+
+            let pathText = "";
+            if (ri === 0) pathText = "🦊 社交王者 → 你的社交能力是一种天赋也是一种修养。继续保持你的高情商和分寸感，同时记得——真正的社会化不只是游刃有余，还包括在需要的时候卸下面具。";
+            else if (ri === 4) pathText = "🔄 转型探索者 → 你在破圈的路上，这段路会有点难。但每一次主动社交、每一次表达自己，都是在重塑你的社会化能力。给自己时间，你正在变成更完整的自己。";
+            else if (ri === 1) pathText = "🌱 高潜力社交者 → 你已经有了不错的基础，现在需要的是减少内耗、增加行动。下一次想主动又犹豫的时候，告诉自己：试一下，最坏的结果也不过如此。";
+            else if (ri === 2) pathText = "🏠 有边界感的独行者 → 你的社会化不是低，而是你有自己的标准。继续保持你的边界感，同时偶尔试着在安全的关系里多敞开一点点——让值得的人靠近你。";
+            else pathText = "🌙 社恐星人 → 你不必逼自己成为社交达人。找到让你舒服的社交节奏——哪怕很小，只要是你主动选择的，那就是适合你的社会化方式。你的世界不需要很大，但要足够真实。";
+
+            const actions = [
+                ["第1-30天：社交觉察", "记录每次社交后你的感受——是消耗还是充电？找出你真正舒服的社交模式。"],
+                ["第1-30天：一次主动", "在安全的环境里主动一次——主动约朋友、主动发言、主动说一个真实的想法。"],
+                ["第31-60天：边界练习", "练习一次拒绝，或者一次真实表达。你会发现，边界不会让人远离，反而会吸引对的人。"],
+                ["第61-90天：关系梳理", "盘点你的人际圈：谁让你充实？谁让你消耗？把精力留给值得的人。"]
+            ];
+
+            let html = `
+                <div class="result-type">${r.type}</div>
+                <div class="result-name">${r.name}</div>
+                <div class="score">社会化指数 · ${finalScore}分 · ${r.label}</div>
+                <div class="result-desc">${r.desc}</div>
+                <div class="chart-box">
+                    <h4>📊 五维雷达图分析</h4>
+                    <div class="radar-container"><canvas id="fullRadar" width="280" height="280"></canvas></div>
+                </div>
+                <div class="path-box">
+                    <h4>🛤️ 你的社交进化路径</h4>
+                    <p style="font-size:14px;color:#3C2E2A;line-height:1.8">${pathText}</p>
+                </div>
+                <div class="action-plan">
+                    <h4>📋 90天社会化成长计划</h4>
+                    ${actions.map((a, i) => `
+                        <div class="action-item">
+                            <div class="action-num">${i+1}</div>
+                            <div class="action-text"><strong>${a[0]}</strong><br>${a[1]}</div>
+                        </div>
+                    `).join('')}
+                </div>
+                <p style="font-size:13px;color:#8D6E63;margin-top:16px">💡 社会化不是变成别人期待的样子<br>而是在人群中，依然能舒服地做自己</p>
+            `;
+
+            const resultDiv = document.getElementById('fullResult');
+            resultDiv.innerHTML = html;
+            resultDiv.classList.add('active');
+            setTimeout(() => drawRadar('fullRadar', dimNorm), 300);
+        }
+
+        // =====================================================
+        // 雷达图绘制
+        // =====================================================
+        function drawRadar(cid, data) {
+            const c = document.getElementById(cid);
+            if (!c) return;
+            const ctx = c.getContext('2d');
+            const cx = c.width / 2,
+                cy = c.height / 2,
+                r = 100,
+                sides = 5;
+            ctx.clearRect(0, 0, c.width, c.height);
+
+            for (let lv = 1; lv <= 5; lv++) {
+                ctx.beginPath();
+                for (let i = 0; i < sides; i++) {
+                    const a = (Math.PI * 2 / sides) * i - Math.PI / 2;
+                    const rr = (r / 5) * lv;
+                    const x = cx + rr * Math.cos(a),
+                        y = cy + rr * Math.sin(a);
+                    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+                }
+                ctx.closePath();
+                ctx.strokeStyle = '#D7CCC8';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            }
+            for (let i = 0; i < sides; i++) {
+                const a = (Math.PI * 2 / sides) * i - Math.PI / 2;
+                ctx.beginPath();
+                ctx.moveTo(cx, cy);
+                ctx.lineTo(cx + r * Math.cos(a), cy + r * Math.sin(a));
+                ctx.strokeStyle = '#D7CCC8';
+                ctx.stroke();
+            }
+            ctx.beginPath();
+            for (let i = 0; i < sides; i++) {
+                const a = (Math.PI * 2 / sides) * i - Math.PI / 2;
+                const rr = (data[i] / 100) * r;
+                const x = cx + rr * Math.cos(a),
+                    y = cy + rr * Math.sin(a);
+                i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+            }
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(161,136,127,0.25)';
+            ctx.fill();
+            ctx.strokeStyle = '#A1887F';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            for (let i = 0; i < sides; i++) {
+                const a = (Math.PI * 2 / sides) * i - Math.PI / 2;
+                const rr = (data[i] / 100) * r;
+                ctx.beginPath();
+                ctx.arc(cx + rr * Math.cos(a), cy + rr * Math.sin(a), 5, 0, Math.PI * 2);
+                ctx.fillStyle = '#6D4C41';
+                ctx.fill();
+            }
+            const dimNames = ["社交主动性", "边界感", "规则适应力", "自我表达", "关系深度"];
+            ctx.fillStyle = '#3C2E2A';
+            ctx.font = '12px -apple-system,sans-serif';
+            ctx.textAlign = 'center';
+            for (let i = 0; i < sides; i++) {
+                const a = (Math.PI * 2 / sides) * i - Math.PI / 2;
+                ctx.fillText(dimNames[i], cx + (r + 25) * Math.cos(a), cy + (r + 25) * Math.sin(a) + 4);
+            }
+        }
+    </script>
+</body>
+</html>
