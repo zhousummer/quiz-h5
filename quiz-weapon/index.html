@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>你的本命兵器会是什么？ - 20题完整版测试</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1A1410;
+            min-height: 100vh;
+            color: #E8DDD0;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .welcome {
+            text-align: center;
+            padding-top: 50px;
+        }
+        .welcome .emoji-top {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+        .welcome h1 {
+            font-size: 30px;
+            color: #E8DDD0;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .welcome .subtitle {
+            font-size: 15px;
+            color: #A89080;
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+        .welcome .dims {
+            text-align: left;
+            margin-bottom: 36px;
+            background: #2A2018;
+            border-radius: 20px;
+            padding: 20px 24px;
+            border: 1px solid #3D3028;
+        }
+        .welcome .dim-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 9px 0;
+            font-size: 15px;
+            color: #C8B8A8;
+        }
+        .welcome .dim-item .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #8A7A6A;
+            flex-shrink: 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 16px 60px;
+            background: linear-gradient(135deg, #8A7A6A, #5A4A3A);
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 6px 24px rgba(90, 74, 58, 0.40);
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(90, 74, 58, 0.50);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .btn-small {
+            padding: 12px 40px;
+            font-size: 16px;
+        }
+        .quiz-page {
+            display: none;
+        }
+        .quiz-page.active {
+            display: block;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #2A2018;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            border: 1px solid #3D3028;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8A7A6A, #C8B8A8);
+            border-radius: 4px;
+            transition: width 0.4s ease;
+        }
+        .progress-text {
+            text-align: center;
+            font-size: 14px;
+            color: #A89080;
+            margin-bottom: 28px;
+        }
+        .question {
+            margin-bottom: 26px;
+        }
+        .question .q-num {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            line-height: 36px;
+            text-align: center;
+            background: #8A7A6A;
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 16px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .question h3 {
+            display: inline;
+            font-size: 20px;
+            color: #E8DDD0;
+            line-height: 1.5;
+        }
+        .options {
+            margin-top: 18px;
+        }
+        .option {
+            display: block;
+            width: 100%;
+            padding: 18px 20px;
+            margin-bottom: 12px;
+            background: #2A2018;
+            border: 2px solid #3D3028;
+            border-radius: 16px;
+            font-size: 16px;
+            color: #E8DDD0;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .option:hover {
+            border-color: #8A7A6A;
+            background: #3D3028;
+        }
+        .option.selected {
+            border-color: #C8B8A8;
+            background: #3D3028;
+            box-shadow: 0 0 20px rgba(200, 184, 168, 0.10);
+        }
+        .option .opt-label {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            text-align: center;
+            background: #8A7A6A;
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 14px;
+            margin-right: 12px;
+        }
+        .quick-result {
+            display: none;
+            text-align: center;
+            padding-top: 30px;
+        }
+        .quick-result.active {
+            display: block;
+        }
+        .quick-result .result-type {
+            font-size: 72px;
+            margin-bottom: 8px;
+        }
+        .quick-result .result-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: #E8DDD0;
+            margin-bottom: 10px;
+        }
+        .quick-result .result-desc {
+            font-size: 15px;
+            color: #A89080;
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+        .quick-result .result-chart {
+            margin: 16px auto;
+            max-width: 280px;
+        }
+        .quick-result .upgrade-box {
+            background: #2A2018;
+            border-radius: 20px;
+            padding: 28px 20px;
+            margin-top: 28px;
+            border: 1px solid #3D3028;
+        }
+        .quick-result .upgrade-box h4 {
+            font-size: 20px;
+            color: #E8DDD0;
+            margin-bottom: 12px;
+        }
+        .quick-result .upgrade-box p {
+            font-size: 14px;
+            color: #A89080;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .full-result {
+            display: none;
+            text-align: center;
+            padding-top: 24px;
+        }
+        .full-result.active {
+            display: block;
+        }
+        .full-result .result-type {
+            font-size: 80px;
+            margin-bottom: 8px;
+        }
+        .full-result .result-name {
+            font-size: 32px;
+            font-weight: bold;
+            color: #E8DDD0;
+            margin-bottom: 8px;
+        }
+        .full-result .score {
+            display: inline-block;
+            padding: 8px 24px;
+            background: #2A2018;
+            border-radius: 20px;
+            font-size: 16px;
+            color: #A89080;
+            margin-bottom: 20px;
+            border: 1px solid #3D3028;
+        }
+        .full-result .result-desc {
+            font-size: 15px;
+            color: #C8B8A8;
+            line-height: 1.8;
+            text-align: left;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #2A2018;
+            border-radius: 16px;
+            border: 1px solid #3D3028;
+        }
+        .full-result .chart-box {
+            background: #2A2018;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #3D3028;
+        }
+        .full-result .chart-box h4 {
+            font-size: 18px;
+            color: #E8DDD0;
+            margin-bottom: 14px;
+        }
+        .full-result .radar-container {
+            width: 280px;
+            height: 280px;
+            margin: 0 auto;
+        }
+        .full-result .path-box {
+            text-align: left;
+            background: #2A2018;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #3D3028;
+        }
+        .full-result .path-box h4 {
+            font-size: 18px;
+            color: #E8DDD0;
+            margin-bottom: 14px;
+            text-align: center;
+        }
+        .full-result .action-plan {
+            text-align: left;
+            background: #2A2018;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #3D3028;
+        }
+        .full-result .action-plan h4 {
+            font-size: 18px;
+            color: #E8DDD0;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        .full-result .action-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 12px 0;
+            border-bottom: 1px solid #3D3028;
+        }
+        .full-result .action-item:last-child {
+            border-bottom: none;
+        }
+        .full-result .action-num {
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            text-align: center;
+            background: #8A7A6A;
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .full-result .action-text {
+            font-size: 14px;
+            color: #C8B8A8;
+            line-height: 1.6;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="app">
+
+        <!-- 欢迎页 -->
+        <div class="welcome" id="welcome">
+            <div class="emoji-top">⚔️</div>
+            <h1>你的本命兵器会是什么？</h1>
+            <p class="subtitle">20题深度扫描你的战斗基因</p>
+            <div class="dims">
+                <div class="dim-item"><span class="dot"></span> 性格底色 —— 你是哪种人？</div>
+                <div class="dim-item"><span class="dot"></span> 处世风格 —— 你如何与世界交手？</div>
+                <div class="dim-item"><span class="dot"></span> 情感表达 —— 你怎么爱人？</div>
+                <div class="dim-item"><span class="dot"></span> 价值追求 —— 你想要什么？</div>
+                <div class="dim-item"><span class="dot"></span> 人生哲学 —— 你怎么活？</div>
+            </div>
+            <button class="btn" onclick="startQuiz()">开始测试</button>
+        </div>
+
+        <!-- 快速版5题 -->
+        <div class="quiz-page" id="quizPage">
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+            <div class="progress-text" id="progressText">1/5</div>
+            <div class="question"><span class="q-num" id="qNum">1</span><h3 id="qText"></h3></div>
+            <div class="options" id="optionsBox"></div>
+            <button class="btn btn-small hidden" id="nextBtn" onclick="nextQuestion()">下一题</button>
+        </div>
+
+        <!-- 快速版结果 -->
+        <div class="quick-result" id="quickResult">
+            <div class="result-type" id="qrType"></div>
+            <div class="result-name" id="qrName"></div>
+            <div class="result-desc" id="qrDesc"></div>
+            <div class="result-chart"><canvas id="quickRadar" width="260" height="260"></canvas></div>
+            <div class="upgrade-box">
+                <h4>🎯 以上只是5题快速版</h4>
+                <p>完成全部20题，你将获得：<br>
+                ✅ 你的专属本命兵器标签<br>
+                ✅ 五维雷达图深度分析<br>
+                ✅ 你的战斗风格解读<br>
+                ✅ 专属武器修炼指南</p>
+                <button class="btn" onclick="showFullQuiz()">解锁完整20题测试</button>
+            </div>
+        </div>
+
+        <!-- 完整版20题 -->
+        <div class="quiz-page" id="fullQuizPage">
+            <div class="progress-bar"><div class="progress-fill" id="fullProgressFill"></div></div>
+            <div class="progress-text" id="fullProgressText">1/20</div>
+            <div class="question"><span class="q-num" id="fullQNum">1</span><h3 id="fullQText"></h3></div>
+            <div class="options" id="fullOptionsBox"></div>
+            <button class="btn btn-small hidden" id="fullNextBtn" onclick="fullNextQuestion()">下一题</button>
+        </div>
+
+        <!-- 完整版结果 -->
+        <div class="full-result" id="fullResult"></div>
+
+    </div>
+
+    <script>
+        // =====================================================
+        // 快速版5题
+        // =====================================================
+        const quickQuestions = [
+            { q: "朋友最常用来形容你的词是：", opts: ["正直、有原则、可靠", "灵活、聪明、有趣", "果断、直接、有魄力", "温柔、包容、让人安心"] },
+            { q: "你更倾向于哪种处事风格？", opts: ["光明磊落，不玩阴的", "灵活应变，不拘一格", "直来直去，不拖泥带水", "以柔克刚，不急不躁"] },
+            { q: "你更擅长什么？", opts: ["坚持自己的原则和立场", "在不同局面中找到最优解", "快速判断并果断行动", "耐心等待，在关键时刻出手"] },
+            { q: "你更想成为什么样的人？", opts: ["有风骨、有底线的人", "有智慧、有趣的人", "有力量、有影响力的人", "有温度、能温暖他人的人"] },
+            { q: "你更信奉哪种人生哲学？", opts: ["「有所为，有所不为」", "「穷则变，变则通」", "「狭路相逢勇者胜」", "「厚德载物，上善若水」"] }
+        ];
+
+        // =====================================================
+        // 完整版20题
+        // =====================================================
+        const fullQuestions = [
+            { q: "朋友最常用来形容你的词是：", opts: ["正直、有原则、可靠", "灵活、聪明、有趣", "果断、直接、有魄力", "温柔、包容、让人安心"] },
+            { q: "你更倾向于哪种处事风格？", opts: ["光明磊落，不玩阴的", "灵活应变，不拘一格", "直来直去，不拖泥带水", "以柔克刚，不急不躁"] },
+            { q: "面对冲突时，你的第一反应是：", opts: ["坚守原则，不退让", "寻找巧妙的解决方法", "正面迎战，快速解决", "先稳住局面，再处理"] },
+            { q: "你更欣赏哪种人？", opts: ["有风骨、有底线的人", "聪明机灵、应变能力强的人", "有魄力、敢作敢当的人", "有温度、能包容他人的人"] },
+            { q: "你更擅长什么？", opts: ["坚持自己的原则和立场", "在不同局面中找到最优解", "快速判断并果断行动", "耐心等待，在关键时刻出手"] },
+            { q: "你更倾向于哪种社交距离？", opts: ["保持恰当的距离，但值得信任", "灵活切换，远近皆可", "直接坦诚，不绕弯子", "让人感到舒适和安全"] },
+            { q: "你面对挑战时的态度是：", opts: ["正面迎接，堂堂正正", "寻找突破口，巧胜", "直接攻破，速战速决", "耐心周旋，等待机会"] },
+            { q: "你更喜欢哪种表达方式？", opts: ["委婉但有力量", "巧妙而不着痕迹", "直接而有力", "温和而有温度"] },
+            { q: "你在感情中更像：", opts: ["忠诚坚定，认定了就不变", "灵活多变，注重感觉", "直接热烈，不藏不掖", "温柔守护，默默付出"] },
+            { q: "你表达爱意的方式是：", opts: ["用行动证明，始终如一", "用智慧和幽默打动对方", "直接热烈，让对方感受到", "温柔陪伴，细水长流"] },
+            { q: "你面对失去的态度是：", opts: ["坦然接受，但不会改变自己的原则", "灵活调整，寻找新的方向", "快速翻篇，不回头", "温柔珍藏，但继续前行"] },
+            { q: "你更看重感情中的什么？", opts: ["忠诚和信任", "新鲜感和默契", "热烈和真实", "温暖和陪伴"] },
+            { q: "你更想成为什么样的人？", opts: ["有风骨、有底线的人", "有智慧、有趣的人", "有力量、有影响力的人", "有温度、能温暖他人的人"] },
+            { q: "你更害怕什么？", opts: ["失去原则和底线", "被束缚、失去自由", "懦弱和犹豫不决", "无法保护重要的人"] },
+            { q: "你内心更渴望：", opts: ["被尊重和信任", "被理解和欣赏", "被认可和敬畏", "被需要和依赖"] },
+            { q: "你希望被别人记住的是什么？", opts: ["你的风骨和坚持", "你的智慧和才华", "你的勇气和魄力", "你的温柔和善良"] },
+            { q: "你更信奉哪种人生哲学？", opts: ["「有所为，有所不为」", "「穷则变，变则通」", "「狭路相逢勇者胜」", "「厚德载物，上善若水」"] },
+            { q: "你面对困难时的态度是：", opts: ["坚守阵地，不退缩", "迂回前进，寻找突破口", "勇往直前，冲破障碍", "耐心周旋，等待转机"] },
+            { q: "你更向往哪种状态？", opts: ["有所坚持，有所不为", "灵活自如，游刃有余", "快意恩仇，不留遗憾", "内心安宁，被人需要"] },
+            { q: "你觉得自己的人生更像：", opts: ["一把剑——有锋芒，有底线", "一支箭——有目标，有方向", "一把刀——有力量，有态度", "一面盾——有温度，有守护"] }
+        ];
+
+        // =====================================================
+        // 6种兵器结果
+        // =====================================================
+        const results = [{
+            type: "⚔️",
+            name: "剑 · 君子之风",
+            desc: "你像一把剑——正直、优雅、有锋芒。你有自己的原则和底线，不轻易妥协。你相信「有所为，有所不为」，在混乱中依然保持清醒。你的力量不在于攻击，而在于你站在那里，就是一种态度。你不需要解释自己，你的存在本身就是一种宣言。",
+            label: "有风骨的君子",
+            keywords: "正直、优雅、有原则"
+        }, {
+            type: "🏹",
+            name: "弓 · 自由之魂",
+            desc: "你像一支弓——灵巧、敏锐、有距离感。你看得远，想得深，不喜欢被束缚。你擅长在远处观察，在最合适的时机出手。你的力量不在于蛮力，而在于精准和判断。你相信「穷则变，变则通」，永远在寻找最优解。",
+            label: "自由的狙击手",
+            keywords: "灵巧、敏锐、有距离"
+        }, {
+            type: "🗡️",
+            name: "刀 · 霸气之魄",
+            desc: "你像一把刀——果敢、直接、有力量。你不喜欢绕弯子，不喜欢拖泥带水。你相信「狭路相逢勇者胜」，遇到问题就解决，遇到障碍就劈开。你的力量不在于技巧，而在于你敢于直面一切的勇气。",
+            label: "直来直往的强者",
+            keywords: "果敢、直接、有魄力"
+        }, {
+            type: "🔱",
+            name: "长枪 · 守护之志",
+            desc: "你像一杆长枪——忠诚、坚毅、有担当。你是那个会站在最前面保护别人的人。你不求被看见，但求对得起自己的承诺。你的力量不在于攻击力，而在于你愿意为重要的人坚守阵地。",
+            label: "坚定的守护者",
+            keywords: "忠诚、坚毅、有担当"
+        }, {
+            type: "🌀",
+            name: "暗器 · 神秘之智",
+            desc: "你像一件暗器——灵活、机敏、深藏不露。你不喜欢正面交锋，更擅长在暗处观察和布局。你相信「出奇制胜」，在最意想不到的时刻展现你的力量。你的力量不在于正面冲突，而在于你总比别人多想三步。",
+            label: "深藏不露的智者",
+            keywords: "灵活、机敏、深藏不露"
+        }, {
+            type: "🛡️",
+            name: "盾牌 · 守护之仁",
+            desc: "你像一面盾牌——包容、坚韧、有温度。你不是用来攻击的，你是用来保护的。你让人感到安全，值得信赖。你的力量不在于伤害别人，而在于你能承受多少、包容多少。你相信「厚德载物」，用温柔的力量守护重要的一切。",
+            label: "温暖的守护者",
+            keywords: "包容、坚韧、有温度"
+        }];
+
+        // =====================================================
+        // 状态变量
+        // =====================================================
+        let quickAnswers = [];
+        let quickCurrent = 0;
+        let fullAnswers = [];
+        let fullCurrent = 0;
+
+        // =====================================================
+        // 快速版逻辑
+        // =====================================================
+        function startQuiz() {
+            document.getElementById('welcome').style.display = 'none';
+            document.getElementById('quizPage').classList.add('active');
+            quickCurrent = 0;
+            quickAnswers = [];
+            showQuickQuestion();
+        }
+
+        function showQuickQuestion() {
+            if (quickCurrent >= 5) {
+                showQuickResult();
+                return;
+            }
+            const q = quickQuestions[quickCurrent];
+            document.getElementById('qNum').textContent = quickCurrent + 1;
+            document.getElementById('qText').textContent = q.q;
+            document.getElementById('progressFill').style.width = ((quickCurrent / 5) * 100) + '%';
+            document.getElementById('progressText').textContent = (quickCurrent + 1) + '/5';
+
+            let html = '';
+            const labels = ['A', 'B', 'C', 'D'];
+            q.opts.forEach((opt, i) => {
+                const sel = (quickAnswers[quickCurrent] === i) ? ' selected' : '';
+                html += `<button class="option${sel}" onclick="selectQuick(${i})"><span class="opt-label">${labels[i]}</span>${opt}</button>`;
+            });
+            document.getElementById('optionsBox').innerHTML = html;
+            document.getElementById('nextBtn').classList.add('hidden');
+        }
+
+        function selectQuick(idx) {
+            quickAnswers[quickCurrent] = idx;
+            const options = document.querySelectorAll('#optionsBox .option');
+            options.forEach((el, i) => {
+                el.classList.toggle('selected', i === idx);
+            });
+            document.getElementById('nextBtn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            quickCurrent++;
+            showQuickQuestion();
+        }
+
+        function showQuickResult() {
+            document.getElementById('quizPage').classList.remove('active');
+            document.getElementById('quickResult').classList.add('active');
+            const counts = [0, 0, 0, 0];
+            quickAnswers.forEach(a => counts[a]++);
+            let maxIdx = 0;
+            for (let i = 1; i < 4; i++) {
+                if (counts[i] > counts[maxIdx]) maxIdx = i;
+            }
+            const r = results[maxIdx % results.length];
+            document.getElementById('qrType').textContent = r.type;
+            document.getElementById('qrName').textContent = r.name;
+            document.getElementById('qrDesc').textContent = r.desc;
+            setTimeout(() => drawRadar('quickRadar', [65, 55, 70, 60, 50]), 200);
+        }
+
+        // =====================================================
+        // 完整版逻辑
+        // =====================================================
+        function showFullQuiz() {
+            document.getElementById('quickResult').classList.remove('active');
+            document.getElementById('fullQuizPage').classList.add('active');
+            fullCurrent = 0;
+            fullAnswers = [];
+            showFullQuestion();
+        }
+
+        function showFullQuestion() {
+            if (fullCurrent >= 20) {
+                showFullResult();
+                return;
+            }
+            const q = fullQuestions[fullCurrent];
+            document.getElementById('fullQNum').textContent = fullCurrent + 1;
+            document.getElementById('fullQText').textContent = q.q;
+            document.getElementById('fullProgressFill').style.width = ((fullCurrent / 20) * 100) + '%';
+            document.getElementById('fullProgressText').textContent = (fullCurrent + 1) + '/20';
+
+            let html = '';
+            const labels = ['A', 'B', 'C', 'D'];
+            q.opts.forEach((opt, i) => {
+                const sel = (fullAnswers[fullCurrent] === i) ? ' selected' : '';
+                html += `<button class="option${sel}" onclick="selectFull(${i})"><span class="opt-label">${labels[i]}</span>${opt}</button>`;
+            });
+            document.getElementById('fullOptionsBox').innerHTML = html;
+            document.getElementById('fullNextBtn').classList.add('hidden');
+        }
+
+        function selectFull(idx) {
+            fullAnswers[fullCurrent] = idx;
+            const options = document.querySelectorAll('#fullOptionsBox .option');
+            options.forEach((el, i) => {
+                el.classList.toggle('selected', i === idx);
+            });
+            document.getElementById('fullNextBtn').classList.remove('hidden');
+        }
+
+        function fullNextQuestion() {
+            fullCurrent++;
+            showFullQuestion();
+        }
+
+        function showFullResult() {
+            document.getElementById('fullQuizPage').classList.remove('active');
+
+            const counts = [0, 0, 0, 0];
+            fullAnswers.forEach(a => counts[a]++);
+            let maxIdx = 0;
+            for (let i = 1; i < 4; i++) {
+                if (counts[i] > counts[maxIdx]) maxIdx = i;
+            }
+
+            let ri = maxIdx % results.length;
+            if (maxIdx === 0 && counts[3] >= 5) ri = 3;
+            else if (maxIdx === 1 && counts[3] >= 5) ri = 4;
+            else if (maxIdx === 2 && counts[3] >= 5) ri = 5;
+
+            const r = results[ri];
+            const score = Math.round(counts[maxIdx] / 20 * 100);
+
+            const dimScores = [0, 0, 0, 0, 0];
+            fullAnswers.forEach((a, i) => {
+                const dim = Math.floor(i / 4);
+                if (dim < 5) dimScores[dim] += (a + 1);
+            });
+            const dimNorm = dimScores.map(s => Math.min(100, Math.round((s / 16) * 100)));
+
+            let pathText = "";
+            if (ri === 0) pathText = "⚔️ 剑 → 你的锋芒是你的力量，你的原则是你的铠甲。不妥协，不将就，不随波逐流。这个世界需要更多像你这样有风骨的人。";
+            else if (ri === 1) pathText = "🏹 弓 → 你的敏锐是你的天赋。你看得比别人远，想得比别人深。继续用你的智慧去观察、去判断、在最合适的时机出手。";
+            else if (ri === 2) pathText = "🗡️ 刀 → 你的果敢是你的力量。不犹豫，不后悔，不回头。继续用你的魄力去劈开那些阻挡你的障碍。";
+            else if (ri === 3) pathText = "🔱 长枪 → 你的忠诚是你的力量。你是那个值得托付的人，继续用你的担当守护你珍视的一切。";
+            else if (ri === 4) pathText = "🌀 暗器 → 你的智慧是你的武器。你不争不抢，但你总能在最关键的时刻出奇制胜。继续用你的机敏，在暗处照亮局面。";
+            else pathText = "🛡️ 盾牌 → 你的温柔是你的力量。你不是用来伤害的，你是用来保护的。继续用你的温暖，让这个世界多一点安全感。";
+
+            const actions = [
+                ["第1-30天：认清兵器", "写下你当前生活中最像你兵器特质的3个时刻——你在什么时候展现了你真正的力量？"],
+                ["第1-30天：熟悉兵器", "观察你的“兵器”在什么时候最锋利，什么时候需要收起锋芒——找到使用它的最佳时机。"],
+                ["第31-60天：修炼兵器", "刻意练习你兵器的核心特质——如果你是剑，练习坚守原则；如果你是弓，练习观察和判断。"],
+                ["第61-90天：人兵合一", "让兵器的特质成为你的一部分。你不是在扮演谁，你只是更清楚自己是谁。"]
+            ];
+
+            let html = `
+                <div class="result-type">${r.type}</div>
+                <div class="result-name">${r.name}</div>
+                <div class="score">匹配度 · ${score}% · ${r.label}</div>
+                <div class="result-desc">${r.desc}</div>
+                <div class="chart-box">
+                    <h4>📊 五维雷达图分析</h4>
+                    <div class="radar-container"><canvas id="fullRadar" width="280" height="280"></canvas></div>
+                </div>
+                <div class="path-box">
+                    <h4>🛤️ 你的兵器修炼路径</h4>
+                    <p style="font-size:14px;color:#C8B8A8;line-height:1.8">${pathText}</p>
+                </div>
+                <div class="action-plan">
+                    <h4>📋 90天兵器修炼计划</h4>
+                    ${actions.map((a, i) => `
+                        <div class="action-item">
+                            <div class="action-num">${i+1}</div>
+                            <div class="action-text"><strong>${a[0]}</strong><br>${a[1]}</div>
+                        </div>
+                    `).join('')}
+                </div>
+                <p style="font-size:13px;color:#A89080;margin-top:16px">💡 兵器是你的延伸<br>找到属于你的那一把，就是找到你最舒服的战斗方式</p>
+            `;
+
+            const resultDiv = document.getElementById('fullResult');
+            resultDiv.innerHTML = html;
+            resultDiv.classList.add('active');
+            setTimeout(() => drawRadar('fullRadar', dimNorm), 300);
+        }
+
+        // =====================================================
+        // 雷达图绘制
+        // =====================================================
+        function drawRadar(cid, data) {
+            const c = document.getElementById(cid);
+            if (!c) return;
+            const ctx = c.getContext('2d');
+            const cx = c.width / 2,
+                cy = c.height / 2,
+                r = 100,
+                sides = 5;
+            ctx.clearRect(0, 0, c.width, c.height);
+
+            for (let lv = 1; lv <= 5; lv++) {
+                ctx.beginPath();
+                for (let i = 0; i < sides; i++) {
+                    const a = (Math.PI * 2 / sides) * i - Math.PI / 2;
+                    const rr = (r / 5) * lv;
+                    const x = cx + rr * Math.cos(a),
+                        y = cy + rr * Math.sin(a);
+                    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+                }
+                ctx.closePath();
+                ctx.strokeStyle = '#3D3028';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            }
+            for (let i = 0; i < sides; i++) {
+                const a = (Math.PI * 2 / sides) * i - Math.PI / 2;
+                ctx.beginPath();
+                ctx.moveTo(cx, cy);
+                ctx.lineTo(cx + r * Math.cos(a), cy + r * Math.sin(a));
+                ctx.strokeStyle = '#3D3028';
+                ctx.stroke();
+            }
+            ctx.beginPath();
+            for (let i = 0; i < sides; i++) {
+                const a = (Math.PI * 2 / sides) * i - Math.PI / 2;
+                const rr = (data[i] / 100) * r;
+                const x = cx + rr * Math.cos(a),
+                    y = cy + rr * Math.sin(a);
+                i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+            }
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(138,122,106,0.20)';
+            ctx.fill();
+            ctx.strokeStyle = '#C8B8A8';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            for (let i = 0; i < sides; i++) {
+                const a = (Math.PI * 2 / sides) * i - Math.PI / 2;
+                const rr = (data[i] / 100) * r;
+                ctx.beginPath();
+                ctx.arc(cx + rr * Math.cos(a), cy + rr * Math.sin(a), 5, 0, Math.PI * 2);
+                ctx.fillStyle = '#C8B8A8';
+                ctx.fill();
+            }
+            const dimNames = ["性格底色", "处世风格", "情感表达", "价值追求", "人生哲学"];
+            ctx.fillStyle = '#A89080';
+            ctx.font = '12px -apple-system,sans-serif';
+            ctx.textAlign = 'center';
+            for (let i = 0; i < sides; i++) {
+                const a = (Math.PI * 2 / sides) * i - Math.PI / 2;
+                ctx.fillText(dimNames[i], cx + (r + 25) * Math.cos(a), cy + (r + 25) * Math.sin(a) + 4);
+            }
+        }
+    </script>
+</body>
+</html>
