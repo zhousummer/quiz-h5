@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>你更适合体制内还是体制外？ - 20题完整版测试</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #F5F0EB;
+            min-height: 100vh;
+            color: #3C2E2A;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .welcome {
+            text-align: center;
+            padding-top: 50px;
+        }
+        .welcome .emoji-top {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+        .welcome h1 {
+            font-size: 30px;
+            color: #5D4037;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .welcome .subtitle {
+            font-size: 15px;
+            color: #8D6E63;
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+        .welcome .dims {
+            text-align: left;
+            margin-bottom: 36px;
+            background: white;
+            border-radius: 20px;
+            padding: 20px 24px;
+            box-shadow: 0 4px 20px rgba(93, 64, 55, 0.10);
+        }
+        .welcome .dim-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 9px 0;
+            font-size: 15px;
+            color: #5D4037;
+        }
+        .welcome .dim-item .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #BCAAA4;
+            flex-shrink: 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 16px 60px;
+            background: linear-gradient(135deg, #A1887F, #6D4C41);
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 6px 24px rgba(109, 76, 65, 0.30);
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(109, 76, 65, 0.40);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .btn-small {
+            padding: 12px 40px;
+            font-size: 16px;
+        }
+        .quiz-page {
+            display: none;
+        }
+        .quiz-page.active {
+            display: block;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #D7CCC8;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #A1887F, #6D4C41);
+            border-radius: 4px;
+            transition: width 0.4s ease;
+        }
+        .progress-text {
+            text-align: center;
+            font-size: 14px;
+            color: #8D6E63;
+            margin-bottom: 28px;
+        }
+        .question {
+            margin-bottom: 26px;
+        }
+        .question .q-num {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            line-height: 36px;
+            text-align: center;
+            background: #A1887F;
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 16px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .question h3 {
+            display: inline;
+            font-size: 20px;
+            color: #5D4037;
+            line-height: 1.5;
+        }
+        .options {
+            margin-top: 18px;
+        }
+        .option {
+            display: block;
+            width: 100%;
+            padding: 18px 20px;
+            margin-bottom: 12px;
+            background: white;
+            border: 2px solid #D7CCC8;
+            border-radius: 16px;
+            font-size: 16px;
+            color: #3C2E2A;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .option:hover {
+            border-color: #A1887F;
+            background: #F5F0EB;
+        }
+        .option.selected {
+            border-color: #A1887F;
+            background: #EFEBE9;
+            box-shadow: 0 2px 12px rgba(109, 76, 65, 0.12);
+        }
+        .option .opt-label {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            text-align: center;
+            background: #A1887F;
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 14px;
+            margin-right: 12px;
+        }
+        .quick-result {
+            display: none;
+            text-align: center;
+            padding-top: 30px;
+        }
+        .quick-result.active {
+            display: block;
+        }
+        .quick-result .result-type {
+            font-size: 52px;
+            margin-bottom: 8px;
+        }
+        .quick-result .result-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: #5D4037;
+            margin-bottom: 10px;
+        }
+        .quick-result .result-desc {
+            font-size: 15px;
+            color: #8D6E63;
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+        .quick-result .result-chart {
+            margin: 16px auto;
+            max-width: 280px;
+        }
+        .quick-result .upgrade-box {
+            background: white;
+            border-radius: 20px;
+            padding: 28px 20px;
+            margin-top: 28px;
+            box-shadow: 0 4px 20px rgba(93, 64, 55, 0.08);
+        }
+        .quick-result .upgrade-box h4 {
+            font-size: 20px;
+            color: #5D4037;
+            margin-bottom: 12px;
+        }
+        .quick-result .upgrade-box p {
+            font-size: 14px;
+            color: #8D6E63;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .full-result {
+            display: none;
+            text-align: center;
+            padding-top: 24px;
+        }
+        .full-result.active {
+            display: block;
+        }
+        .full-result .result-type {
+            font-size: 60px;
+            margin-bottom: 8px;
+        }
+        .full-result .result-name {
+            font-size: 32px;
+            font-weight: bold;
+            color: #5D4037;
+            margin-bottom: 8px;
+        }
+        .full-result .score {
+            display: inline-block;
+            padding: 8px 24px;
+            background: #EFEBE9;
+            border-radius: 20px;
+            font-size: 16px;
+            color: #5D4037;
+            margin-bottom: 20px;
+        }
+        .full-result .result-desc {
+            font-size: 15px;
+            color: #3C2E2A;
+            line-height: 1.8;
+            text-align: left;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 16px;
+        }
+        .full-result .chart-box {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 20px rgba(93, 64, 55, 0.08);
+        }
+        .full-result .chart-box h4 {
+            font-size: 18px;
+            color: #5D4037;
+            margin-bottom: 14px;
+        }
+        .full-result .radar-container {
+            width: 280px;
+            height: 280px;
+            margin: 0 auto;
+        }
+        .full-result .path-box {
+            text-align: left;
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .full-result .path-box h4 {
+            font-size: 18px;
+            color: #5D4037;
+            margin-bottom: 14px;
+            text-align: center;
+        }
+        .full-result .action-plan {
+            text-align: left;
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .full-result .action-plan h4 {
+            font-size: 18px;
+            color: #5D4037;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        .full-result .action-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 12px 0;
+            border-bottom: 1px solid #EFEBE9;
+        }
+        .full-result .action-item:last-child {
+            border-bottom: none;
+        }
+        .full-result .action-num {
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            text-align: center;
+            background: #A1887F;
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .full-result .action-text {
+            font-size: 14px;
+            color: #3C2E2A;
+            line-height: 1.6;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="app">
+
+        <!-- 欢迎页 -->
+        <div class="welcome" id="welcome">
+            <div class="emoji-top">🏛️</div>
+            <h1>你更适合体制内还是体制外？</h1>
+            <p class="subtitle">20题深度扫描你的职场基因</p>
+            <div class="dims">
+                <div class="dim-item"><span class="dot"></span> 价值观 —— 你真正想要什么？</div>
+                <div class="dim-item"><span class="dot"></span> 风险偏好 —— 你敢冒多大风险？</div>
+                <div class="dim-item"><span class="dot"></span> 工作节奏 —— 你快还是慢？</div>
+                <div class="dim-item"><span class="dot"></span> 人际关系 —— 你适合什么样的社交场？</div>
+                <div class="dim-item"><span class="dot"></span> 自我认知 —— 你是谁？</div>
+            </div>
+            <button class="btn" onclick="startQuiz()">开始测试</button>
+        </div>
+
+        <!-- 快速版5题 -->
+        <div class="quiz-page" id="quizPage">
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+            <div class="progress-text" id="progressText">1/5</div>
+            <div class="question"><span class="q-num" id="qNum">1</span><h3 id="qText"></h3></div>
+            <div class="options" id="optionsBox"></div>
+            <button class="btn btn-small hidden" id="nextBtn" onclick="nextQuestion()">下一题</button>
+        </div>
+
+        <!-- 快速版结果 -->
+        <div class="quick-result" id="quickResult">
+            <div class="result-type" id="qrType"></div>
+            <div class="result-name" id="qrName"></div>
+            <div class="result-desc" id="qrDesc"></div>
+            <div class="result-chart"><canvas id="quickRadar" width="260" height="260"></canvas></div>
+            <div class="upgrade-box">
+                <h4>🎯 以上只是5题快速版</h4>
+                <p>完成全部20题，你将获得：<br>
+                ✅ 精确的职场赛道评分<br>
+                ✅ 五维雷达图深度分析<br>
+                ✅ 你的职场画像解读<br>
+                ✅ 专属赛道决策指南</p>
+                <button class="btn" onclick="showFullQuiz()">解锁完整20题测试</button>
+            </div>
+        </div>
+
+        <!-- 完整版20题 -->
+        <div class="quiz-page" id="fullQuizPage">
+            <div class="progress-bar"><div class="progress-fill" id="fullProgressFill"></div></div>
+            <div class="progress-text" id="fullProgressText">1/20</div>
+            <div class="question"><span class="q-num" id="fullQNum">1</span><h3 id="fullQText"></h3></div>
+            <div class="options" id="fullOptionsBox"></div>
+            <button class="btn btn-small hidden" id="fullNextBtn" onclick="fullNextQuestion()">下一题</button>
+        </div>
+
+        <!-- 完整版结果 -->
+        <div class="full-result" id="fullResult"></div>
+
+    </div>
+
+    <script>
+        // =====================================================
+        // 快速版5题
+        // =====================================================
+        const quickQuestions = [
+            { q: "你更看重工作中的哪个方面？", opts: ["稳定和安全感", "工作和生活的平衡", "成长和上升空间", "自由和自主权"] },
+            { q: "面对不确定性，你的第一反应是：", opts: ["感到不安，希望回到稳定状态", "可以接受，但需要有预案", "有点兴奋，觉得是机会", "非常兴奋，觉得可能性无限"] },
+            { q: "你更喜欢哪种工作节奏？", opts: ["按部就班，有条不紊", "有规律但偶尔需要加班", "快节奏，有挑战性", "自由灵活，自己安排"] },
+            { q: "你更擅长处理哪种人际关系？", opts: ["与上级和长辈相处", "与同事和同级协作", "与不同背景的人打交道", "独立工作，不太依赖关系"] },
+            { q: "你更害怕什么？", opts: ["失去稳定和保障", "人际关系复杂", "能力跟不上变化", "失去自由和自主权"] }
+        ];
+
+        // =====================================================
+        // 完整版20题
+        // =====================================================
+        const fullQuestions = [
+            { q: "你更看重工作中的哪个方面？", opts: ["稳定和安全感", "工作和生活的平衡", "成长和上升空间", "自由和自主权"] },
+            { q: "你更认同哪种职业观？", opts: ["工作是一份安稳的保障", "工作是生活的一部分", "工作是实现自我价值的途径", "工作是创造可能性的工具"] },
+            { q: "你更希望从工作中获得什么？", opts: ["长期的稳定和保障", "体面的社会地位", "不断成长和突破的机会", "足够的收入和自由度"] },
+            { q: "你更看重哪种社会环境？", opts: ["有秩序、有规则、可预测", "有归属感、有人情味", "有竞争、有活力、有变化", "有自由、有空间、有可能性"] },
+            { q: "面对不确定性，你的第一反应是：", opts: ["感到不安，希望尽快回到稳定状态", "可以接受，但需要有预案", "有点兴奋，觉得是机会", "非常兴奋，不确定性意味着无限可能"] },
+            { q: "你更倾向于哪种职业路径？", opts: ["稳步上升，按部就班", "稳健前进，偶尔尝试新机会", "不断挑战，追求突破", "自由探索，不设限"] },
+            { q: "你如何看待「跳槽」？", opts: ["能不跳就不跳，稳定最重要", "为了更好的平台可以跳", "跳槽是成长的常态", "跳槽太慢了，创业或自由职业才是我的路"] },
+            { q: "你对「风险」的态度是：", opts: ["能避就避，安全第一", "评估后可以承受一定风险", "风险越大，机会越大", "风险是用来驾驭的"] },
+            { q: "你更喜欢哪种工作节奏？", opts: ["按部就班，有条不紊", "有规律但偶尔需要加班", "快节奏，有挑战性", "自由灵活，自己安排"] },
+            { q: "你更喜欢哪种工作方式？", opts: ["按规则和流程办事", "有一定自主空间，但遵循框架", "有较大的自主权", "完全自己说了算"] },
+            { q: "你面对deadline时的状态是：", opts: ["提前规划，按进度完成", "能按时完成，但偶尔会拖延", "在压力下效率更高", "不喜欢被deadline束缚"] },
+            { q: "你更适应哪种管理方式？", opts: ["明确的指令和分工", "有指导但给一定自主空间", "目标导向，方式灵活", "自驱型，不需要管理"] },
+            { q: "你更擅长处理哪种人际关系？", opts: ["与上级和长辈相处", "与同事和同级协作", "与不同背景的人打交道", "独立工作，不太依赖关系"] },
+            { q: "你在团队中更倾向于：", opts: ["服从和配合", "协调和沟通", "领导和推动", "独立负责"] },
+            { q: "你如何看待「职场政治」？", opts: ["能理解并适应", "不太喜欢但能应对", "尽量远离", "完全不想参与"] },
+            { q: "你更愿意和什么样的人共事？", opts: ["靠谱、稳定、有责任心的人", "友善、合作、有团队精神的人", "有才华、有干劲、有想法的人", "独立、自由、不设限的人"] },
+            { q: "你认为自己最大的优势是：", opts: ["稳定可靠，让人放心", "善于合作和沟通", "学习能力强，适应变化", "有想法有魄力，敢于冒险"] },
+            { q: "你更害怕什么？", opts: ["失去稳定和保障", "人际关系复杂", "能力跟不上变化", "失去自由和自主权"] },
+            { q: "你更向往哪种生活状态？", opts: ["安安稳稳，没有太大风浪", "工作体面，生活有品质", "不断挑战，持续成长", "自由自在，不被束缚"] },
+            { q: "你内心更渴望：", opts: ["被认可和接纳", "被尊重和信任", "被看见和欣赏", "被理解和允许"] }
+        ];
+
+        // =====================================================
+        // 5种结果类型
+        // =====================================================
+        const results = [{
+            type: "🏛️",
+            name: "体制内天选之人",
+            desc: "你的基因里写着「稳定」两个字。你不是没有能力去闯，你是不想去闯——安稳是你最大的安全感来源。你适合体制内的环境，那里的秩序、规则和可预测性会让你感到踏实。你不需要在风浪中证明自己，你在自己的位置上发光就够了。",
+            label: "安稳就是你的刚需",
+            color: "#5D4037"
+        }, {
+            type: "⚖️",
+            name: "观望型",
+            desc: "你处于一个微妙的平衡状态——既想要体制内的稳定，又向往体制外的自由。你的犹豫不是软弱，而是你在认真对待自己的人生选择。你不需要急着做决定，先花时间去体验、去了解、去感受，答案会慢慢浮现。",
+            label: "你需要更清楚自己要什么",
+            color: "#8D6E63"
+        }, {
+            type: "🌿",
+            name: "混合型",
+            desc: "你是那个「两条腿走路」的人——你可以在体制内谋生，在体制外谋发展。你不需要二选一，你有能力在两种环境中找到自己的位置。你的弹性是一种天赋，好好利用它。你的人生不需要被定义，你可以在不同的阶段选择不同的赛道。",
+            label: "体制内谋生，体制外谋发展",
+            color: "#A1887F"
+        }, {
+            type: "🔄",
+            name: "转型探索者",
+            desc: "你已经有了离开体制内的冲动和行动。你可能已经尝试过副业、看过外面的机会、或者正在准备离开。这条路不容易，但你在往前走。你正在从「被安排」走向「自己安排」——这是成长，也是冒险。",
+            label: "你已准备好破圈",
+            color: "#795548"
+        }, {
+            type: "🚀",
+            name: "体制外自由灵魂",
+            desc: "你不是不适合体制内，你是不适合任何「体制」。你需要的是自由、是可能性、是自己说了算的人生。你在市场上验证自己，在变化中成长自己。你的路不容易，但你乐在其中。因为你相信：自由比稳定更值得。",
+            label: "自由比稳定更重要",
+            color: "#4E342E"
+        }];
+
+        // =====================================================
+        // 状态变量
+        // =====================================================
+        let quickAnswers = [];
+        let quickCurrent = 0;
+        let fullAnswers = [];
+        let fullCurrent = 0;
+
+        // =====================================================
+        // 快速版逻辑
+        // =====================================================
+        function startQuiz() {
+            document.getElementById('welcome').style.display = 'none';
+            document.getElementById('quizPage').classList.add('active');
+            quickCurrent = 0;
+            quickAnswers = [];
+            showQuickQuestion();
+        }
+
+        function showQuickQuestion() {
+            if (quickCurrent >= 5) {
+                showQuickResult();
+                return;
+            }
+            const q = quickQuestions[quickCurrent];
+            document.getElementById('qNum').textContent = quickCurrent + 1;
+            document.getElementById('qText').textContent = q.q;
+            document.getElementById('progressFill').style.width = ((quickCurrent / 5) * 100) + '%';
+            document.getElementById('progressText').textContent = (quickCurrent + 1) + '/5';
+
+            let html = '';
+            const labels = ['A', 'B', 'C', 'D'];
+            q.opts.forEach((opt, i) => {
+                const sel = (quickAnswers[quickCurrent] === i) ? ' selected' : '';
+                html += `<button class="option${sel}" onclick="selectQuick(${i})"><span class="opt-label">${labels[i]}</span>${opt}</button>`;
+            });
+            document.getElementById('optionsBox').innerHTML = html;
+            document.getElementById('nextBtn').classList.add('hidden');
+        }
+
+        function selectQuick(idx) {
+            quickAnswers[quickCurrent] = idx;
+            const options = document.querySelectorAll('#optionsBox .option');
+            options.forEach((el, i) => {
+                el.classList.toggle('selected', i === idx);
+            });
+            document.getElementById('nextBtn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            quickCurrent++;
+            showQuickQuestion();
+        }
+
+        function showQuickResult() {
+            document.getElementById('quizPage').classList.remove('active');
+            document.getElementById('quickResult').classList.add('active');
+            let total = 0;
+            quickAnswers.forEach(a => total += (a + 1));
+            let score = Math.min(100, Math.round((total / 20) * 100));
+            let ri = score >= 71 ? 4 : score >= 61 ? 3 : score >= 51 ? 2 : score >= 36 ? 1 : 0;
+            const r = results[ri];
+            document.getElementById('qrType').textContent = r.type;
+            document.getElementById('qrName').textContent = r.name;
+            document.getElementById('qrDesc').textContent = r.desc;
+            setTimeout(() => drawRadar('quickRadar', [65, 55, 70, 60, 50]), 200);
+        }
+
+        // =====================================================
+        // 完整版逻辑
+        // =====================================================
+        function showFullQuiz() {
+            document.getElementById('quickResult').classList.remove('active');
+            document.getElementById('fullQuizPage').classList.add('active');
+            fullCurrent = 0;
+            fullAnswers = [];
+            showFullQuestion();
+        }
+
+        function showFullQuestion() {
+            if (fullCurrent >= 20) {
+                showFullResult();
+                return;
+            }
+            const q = fullQuestions[fullCurrent];
+            document.getElementById('fullQNum').textContent = fullCurrent + 1;
+            document.getElementById('fullQText').textContent = q.q;
+            document.getElementById('fullProgressFill').style.width = ((fullCurrent / 20) * 100) + '%';
+            document.getElementById('fullProgressText').textContent = (fullCurrent + 1) + '/20';
+
+            let html = '';
+            const labels = ['A', 'B', 'C', 'D'];
+            q.opts.forEach((opt, i) => {
+                const sel = (fullAnswers[fullCurrent] === i) ? ' selected' : '';
+                html += `<button class="option${sel}" onclick="selectFull(${i})"><span class="opt-label">${labels[i]}</span>${opt}</button>`;
+            });
+            document.getElementById('fullOptionsBox').innerHTML = html;
+            document.getElementById('fullNextBtn').classList.add('hidden');
+        }
+
+        function selectFull(idx) {
+            fullAnswers[fullCurrent] = idx;
+            const options = document.querySelectorAll('#fullOptionsBox .option');
+            options.forEach((el, i) => {
+                el.classList.toggle('selected', i === idx);
+            });
+            document.getElementById('fullNextBtn').classList.remove('hidden');
+        }
+
+        function fullNextQuestion() {
+            fullCurrent++;
+            showFullQuestion();
+        }
+
+        function showFullResult() {
+            document.getElementById('fullQuizPage').classList.remove('active');
+
+            let total = 0;
+            fullAnswers.forEach(a => total += (a + 1));
+            let finalScore = Math.min(100, Math.round((total / 80) * 100));
+
+            let ri = finalScore >= 71 ? 4 : finalScore >= 61 ? 3 : finalScore >= 51 ? 2 : finalScore >= 36 ? 1 : 0;
+            const r = results[ri];
+
+            const dimScores = [0, 0, 0, 0, 0];
+            fullAnswers.forEach((a, i) => {
+                const dim = Math.floor(i / 4);
+                if (dim < 5) dimScores[dim] += (a + 1);
+            });
+            const dimNorm = dimScores.map(s => Math.min(100, Math.round((s / 16) * 100)));
+
+            let pathText = "";
+            if (ri === 0) pathText = "🏛️ 体制内天选之人 → 你的安稳是一种力量。不要因为别人在闯就觉得自己在退步——你在自己的轨道上前进，已经足够好。继续在稳定的土壤里扎根，你会在那里开出自己的花。";
+            else if (ri === 1) pathText = "⚖️ 观望型 → 你的犹豫是认真的。给自己时间去体验不同的环境——去体制内实习、去尝试副业、去和不同赛道的人聊天。答案不在头脑里，在行动中。";
+            else if (ri === 2) pathText = "🌿 混合型 → 你的弹性是天赋。你不需要二选一，你可以在不同的阶段走不同的路。体制内给你稳定的底，体制外给你自由的翅膀。你的人生，本来就不该被定义。";
+            else if (ri === 3) pathText = "🔄 转型探索者 → 你已经在路上了。这条路会有点难，但你正在从「被安排」走向「自己安排」。保持你的勇气，也保持你的耐心。你正在成为更完整的自己。";
+            else pathText = "🚀 体制外自由灵魂 → 你的自由是一种选择。路不容易，但你乐在其中。继续相信自己的判断，继续在变化中成长。这个世界不缺安稳的人，缺的是像你这样敢闯敢拼的灵魂。";
+
+            const actions = [
+                ["第1-30天：自我扫描", "写下你对当前工作的真实感受——你喜欢什么？不喜欢什么？你的答案里藏着你真正的选择。"],
+                ["第1-30天：信息收集", "找3个体制内和3个体制外的人聊聊，听听他们的真实状态——不只看光鲜，也要看代价。"],
+                ["第31-60天：小步验证", "如果你倾向体制外，先做一个副业或项目试水；如果你倾向体制内，先了解考公/考编的真实情况。"],
+                ["第61-90天：做出选择", "基于前两个月的体验和信息，做出你的决定。记住：没有完美的选择，只有当下最好的选择。"]
+            ];
+
+            let html = `
+                <div class="result-type">${r.type}</div>
+                <div class="result-name">${r.name}</div>
+                <div class="score">体制内倾向 · ${100-finalScore}% | 体制外倾向 · ${finalScore}%</div>
+                <div class="result-desc">${r.desc}</div>
+                <div class="chart-box">
+                    <h4>📊 五维雷达图分析</h4>
+                    <div class="radar-container"><canvas id="fullRadar" width="280" height="280"></canvas></div>
+                </div>
+                <div class="path-box">
+                    <h4>🛤️ 你的赛道决策路径</h4>
+                    <p style="font-size:14px;color:#3C2E2A;line-height:1.8">${pathText}</p>
+                </div>
+                <div class="action-plan">
+                    <h4>📋 90天赛道决策计划</h4>
+                    ${actions.map((a, i) => `
+                        <div class="action-item">
+                            <div class="action-num">${i+1}</div>
+                            <div class="action-text"><strong>${a[0]}</strong><br>${a[1]}</div>
+                        </div>
+                    `).join('')}
+                </div>
+                <p style="font-size:13px;color:#8D6E63;margin-top:16px">💡 体制内和体制外没有高下之分<br>只有适合不适合——而适合你的，就是最好的</p>
+            `;
+
+            const resultDiv = document.getElementById('fullResult');
+            resultDiv.innerHTML = html;
+            resultDiv.classList.add('active');
+            setTimeout(() => drawRadar('fullRadar', dimNorm), 300);
+        }
+
+        // =====================================================
+        // 雷达图绘制
+        // =====================================================
+        function drawRadar(cid, data) {
+            const c = document.getElementById(cid);
+            if (!c) return;
+            const ctx = c.getContext('2d');
+            const cx = c.width / 2,
+                cy = c.height / 2,
+                r = 100,
+                sides = 5;
+            ctx.clearRect(0, 0, c.width, c.height);
+
+            for (let lv = 1; lv <= 5; lv++) {
+                ctx.beginPath();
+                for (let i = 0; i < sides; i++) {
+                    const a = (Math.PI * 2 / sides) * i - Math.PI / 2;
+                    const rr = (r / 5) * lv;
+                    const x = cx + rr * Math.cos(a),
+                        y = cy + rr * Math.sin(a);
+                    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+                }
+                ctx.closePath();
+                ctx.strokeStyle = '#D7CCC8';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            }
+            for (let i = 0; i < sides; i++) {
+                const a = (Math.PI * 2 / sides) * i - Math.PI / 2;
+                ctx.beginPath();
+                ctx.moveTo(cx, cy);
+                ctx.lineTo(cx + r * Math.cos(a), cy + r * Math.sin(a));
+                ctx.strokeStyle = '#D7CCC8';
+                ctx.stroke();
+            }
+            ctx.beginPath();
+            for (let i = 0; i < sides; i++) {
+                const a = (Math.PI * 2 / sides) * i - Math.PI / 2;
+                const rr = (data[i] / 100) * r;
+                const x = cx + rr * Math.cos(a),
+                    y = cy + rr * Math.sin(a);
+                i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+            }
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(161,136,127,0.25)';
+            ctx.fill();
+            ctx.strokeStyle = '#A1887F';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            for (let i = 0; i < sides; i++) {
+                const a = (Math.PI * 2 / sides) * i - Math.PI / 2;
+                const rr = (data[i] / 100) * r;
+                ctx.beginPath();
+                ctx.arc(cx + rr * Math.cos(a), cy + rr * Math.sin(a), 5, 0, Math.PI * 2);
+                ctx.fillStyle = '#6D4C41';
+                ctx.fill();
+            }
+            const dimNames = ["价值观", "风险偏好", "工作节奏", "人际关系", "自我认知"];
+            ctx.fillStyle = '#3C2E2A';
+            ctx.font = '12px -apple-system,sans-serif';
+            ctx.textAlign = 'center';
+            for (let i = 0; i < sides; i++) {
+                const a = (Math.PI * 2 / sides) * i - Math.PI / 2;
+                ctx.fillText(dimNames[i], cx + (r + 25) * Math.cos(a), cy + (r + 25) * Math.sin(a) + 4);
+            }
+        }
+    </script>
+</body>
+</html>
