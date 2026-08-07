@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>测测你的吸金体质是什么类型？ - 20题完整版</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(145deg,#0f0c0a,#1a1410);min-height:100vh;color:#e8ddd0}
+        .container{max-width:500px;margin:0 auto;padding:20px}
+        .welcome{text-align:center;padding-top:50px}
+        .welcome .emoji-top{font-size:64px;margin-bottom:16px}
+        .welcome h1{font-size:28px;color:#f5e6d3;margin-bottom:10px;line-height:1.4}
+        .welcome .subtitle{font-size:15px;color:#a89080;margin-bottom:28px;line-height:1.6}
+        .welcome .dims{text-align:left;margin-bottom:36px;background:#2a2018;border-radius:20px;padding:20px 24px;border:1px solid #3d3028}
+        .welcome .dim-item{display:flex;align-items:center;gap:12px;padding:9px 0;font-size:15px;color:#c8b8a8}
+        .welcome .dim-item .dot{width:8px;height:8px;border-radius:50%;background:#8a7a6a;flex-shrink:0}
+        .btn{display:inline-block;padding:16px 60px;background:linear-gradient(135deg,#d4a857,#b8923a);color:#1a1410;font-size:20px;font-weight:bold;border:none;border-radius:40px;cursor:pointer;transition:all 0.3s;box-shadow:0 6px 24px rgba(184,146,58,0.30)}
+        .btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(184,146,58,0.50)}
+        .btn-small{padding:12px 40px;font-size:16px}
+        .quiz-page{display:none}.quiz-page.active{display:block}
+        .progress-bar{width:100%;height:8px;background:#2a2018;border-radius:4px;margin-bottom:10px;overflow:hidden;border:1px solid #3d3028}
+        .progress-fill{height:100%;background:linear-gradient(90deg,#d4a857,#b8923a);border-radius:4px;transition:width 0.4s ease}
+        .progress-text{text-align:center;font-size:14px;color:#a89080;margin-bottom:28px}
+        .question{margin-bottom:26px}
+        .question .q-num{display:inline-block;width:36px;height:36px;line-height:36px;text-align:center;background:#d4a857;color:#1a1410;border-radius:50%;font-weight:bold;font-size:16px;margin-right:10px;vertical-align:middle}
+        .question h3{display:inline;font-size:20px;color:#f5e6d3;line-height:1.5}
+        .options{margin-top:18px}
+        .option{display:block;width:100%;padding:18px 20px;margin-bottom:12px;background:#2a2018;border:2px solid #3d3028;border-radius:16px;font-size:16px;color:#e8ddd0;text-align:left;cursor:pointer;transition:all 0.3s}
+        .option:hover{border-color:#d4a857;background:#3d3028}
+        .option.selected{border-color:#d4a857;background:#3d3028;box-shadow:0 0 20px rgba(212,168,87,0.08)}
+        .option .opt-label{display:inline-block;width:28px;height:28px;line-height:28px;text-align:center;background:#d4a857;color:#1a1410;border-radius:50%;font-weight:bold;font-size:14px;margin-right:12px}
+        .quick-result{display:none;text-align:center;padding-top:30px}
+        .quick-result.active{display:block}
+        .quick-result .result-type{font-size:72px;margin-bottom:8px}
+        .quick-result .result-name{font-size:28px;font-weight:bold;color:#f5e6d3;margin-bottom:10px}
+        .quick-result .result-desc{font-size:15px;color:#a89080;margin-bottom:28px;line-height:1.6}
+        .quick-result .upgrade-box{background:#2a2018;border-radius:20px;padding:28px 20px;margin-top:28px;border:1px solid #3d3028}
+        .quick-result .upgrade-box h4{font-size:20px;color:#f5e6d3;margin-bottom:12px}
+        .quick-result .upgrade-box p{font-size:14px;color:#a89080;margin-bottom:20px;line-height:1.6}
+        .full-result{display:none;text-align:center;padding-top:24px}
+        .full-result.active{display:block}
+        .full-result .result-type{font-size:80px;margin-bottom:8px}
+        .full-result .result-name{font-size:32px;font-weight:bold;color:#f5e6d3;margin-bottom:8px}
+        .full-result .score{display:inline-block;padding:8px 24px;background:#2a2018;border-radius:20px;font-size:16px;color:#a89080;margin-bottom:20px;border:1px solid #3d3028}
+        .full-result .result-desc{font-size:15px;color:#c8b8a8;line-height:1.8;text-align:left;margin-bottom:20px;padding:20px;background:#2a2018;border-radius:16px;border:1px solid #3d3028}
+        .full-result .chart-box{background:#2a2018;border-radius:20px;padding:20px;margin:20px 0;border:1px solid #3d3028}
+        .full-result .chart-box h4{font-size:18px;color:#f5e6d3;margin-bottom:14px}
+        .full-result .radar-container{width:280px;height:280px;margin:0 auto}
+        .full-result .path-box{text-align:left;background:#2a2018;border-radius:16px;padding:20px;margin:20px 0;border:1px solid #3d3028}
+        .full-result .path-box h4{font-size:18px;color:#f5e6d3;margin-bottom:14px;text-align:center}
+        .full-result .action-plan{text-align:left;background:#2a2018;border-radius:16px;padding:20px;margin:20px 0;border:1px solid #3d3028}
+        .full-result .action-plan h4{font-size:18px;color:#f5e6d3;margin-bottom:16px;text-align:center}
+        .full-result .action-item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #3d3028}
+        .full-result .action-item:last-child{border-bottom:none}
+        .full-result .action-num{width:28px;height:28px;line-height:28px;text-align:center;background:#d4a857;color:#1a1410;border-radius:50%;font-weight:bold;font-size:14px;flex-shrink:0}
+        .full-result .action-text{font-size:14px;color:#c8b8a8;line-height:1.6}
+        .hidden{display:none}
+    </style>
+</head>
+<body>
+<div class="container" id="app">
+    <div class="welcome" id="welcome">
+        <div class="emoji-top">💰</div>
+        <h1>测测你的「吸金体质」是什么类型？</h1>
+        <p class="subtitle">20题深度扫描你的搞钱基因</p>
+        <div class="dims">
+            <div class="dim-item"><span class="dot"></span> 赚钱直觉 —— 你嗅到钱的能力有多强？</div>
+            <div class="dim-item"><span class="dot"></span> 执行能力 —— 你想做就能做吗？</div>
+            <div class="dim-item"><span class="dot"></span> 风险偏好 —— 你敢不敢试？</div>
+            <div class="dim-item"><span class="dot"></span> 连接能力 —— 你能用好资源和人脉吗？</div>
+            <div class="dim-item"><span class="dot"></span> 金钱关系 —— 你和钱的关系怎么样？</div>
+        </div>
+        <button class="btn" onclick="startQuiz()">开始测试</button>
+    </div>
+    <!-- 快速版 -->
+    <div class="quiz-page" id="quizPage">
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="progress-text" id="progressText">1/5</div>
+        <div class="question"><span class="q-num" id="qNum">1</span><h3 id="qText"></h3></div>
+        <div class="options" id="optionsBox"></div>
+        <button class="btn btn-small hidden" id="nextBtn" onclick="nextQuestion()">下一题</button>
+    </div>
+    <div class="quick-result" id="quickResult">
+        <div class="result-type" id="qrType"></div>
+        <div class="result-name" id="qrName"></div>
+        <div class="result-desc" id="qrDesc"></div>
+        <div class="upgrade-box">
+            <h4>🎯 以上只是5题快速版</h4>
+            <p>完成全部20题，你将获得：<br>✅ 精准的吸金体质类型<br>✅ 五维雷达图深度分析<br>✅ 搞钱天赋解读<br>✅ 专属“吸金”激活指南</p>
+            <button class="btn" onclick="showFullQuiz()">解锁完整20题测试</button>
+        </div>
+    </div>
+    <!-- 完整版 -->
+    <div class="quiz-page" id="fullQuizPage">
+        <div class="progress-bar"><div class="progress-fill" id="fullProgressFill"></div></div>
+        <div class="progress-text" id="fullProgressText">1/20</div>
+        <div class="question"><span class="q-num" id="fullQNum">1</span><h3 id="fullQText"></h3></div>
+        <div class="options" id="fullOptionsBox"></div>
+        <button class="btn btn-small hidden" id="fullNextBtn" onclick="fullNextQuestion()">下一题</button>
+    </div>
+    <div class="full-result" id="fullResult"></div>
+</div>
+<script>
+    const quickQ=[{q:"看到一条「轻松月入过万」的信息，你第一反应是？",opts:["直接划走，骗人的","好奇点进去看看","研究一下可行性","立刻开始调研"]},{q:"如果你有一笔闲钱，你会？",opts:["存起来","投资理财","拿去尝试小项目","去学习新技能"]},{q:"你看到别人赚钱了，你的第一反应是？",opts:["他运气好","他背后有资源","他肯定付出了很多","我也可以"]},{q:"你更擅长以下哪种？",opts:["把钱花在刀刃上","让钱生钱","发现别人看不到的机会","把资源连接在一起"]},{q:"你和钱的关系更像？",opts:["钱是我的安全感","钱是我的工具","钱是我的朋友","钱是我创造价值的证明"]}];
+    const fullQ=[
+        {q:"你发现一个赚钱机会但需要投入时间学习，你会？",opts:["算了，太麻烦了","先等等看别人做","开始收集资料学习","立刻报名学习并行动"]},
+        {q:"你在消费时，更常想的是？",opts:["这个值不值得","这个对我有什么价值","这会不会是投资","我需要它，不管价格"]},
+        {q:"你觉得赚钱最重要的是？",opts:["努力和坚持","眼光和判断","人脉和信息差","运气和时机"]},
+        {q:"你更愿意把钱花在哪？",opts:["投资自己","投资资产","投资关系","投资体验"]},
+        {q:"你觉得自己对钱的敏感度？",opts:["一般，不太会算账","还不错，知道怎么划算","很好，能嗅到机会","直觉很准，钱往哪走我知道"]},
+        {q:"你更相信哪种致富方式？",opts:["慢慢积累，积少成多","抓住一次大机会","靠专业技能","靠连接和整合资源"]},
+        {q:"如果你有一个创意，你通常会？",opts:["想想就算了","和几个朋友聊聊","先做个简单的版本试试","直接开始做"]},
+        {q:"你更享受哪种赚钱方式？",opts:["安全稳定的","有挑战性的","有创造性的","有社交属性的"]},
+        {q:"遇到一个需要冒险的机会，你？",opts:["害怕失去，不敢尝试","评估后谨慎尝试","先小规模试水","毫不犹豫抓住"]},
+        {q:"你的朋友圈里？",opts:["大多是稳定上班的人","有各种不同背景的人","有一些在创业或搞副业的人","各行业的人都有"]},
+        {q:"你更希望别人怎么评价你的赚钱能力？",opts:["靠谱稳妥","聪明敏锐","有魄力敢闯","有格局会整合"]},
+        {q:"你觉得自己最大的赚钱短板是？",opts:["不够坚持","不够大胆","不够聪明","不够专注"]},
+        {q:"你更想成为哪种人？",opts:["稳扎稳打的积累者","抓住风口的突破者","靠技能的专家型","靠人脉的连接型"]},
+        {q:"如果有100万，你会？",opts:["存大部分，留一点花","投资分散配置","拿一部分创业或尝试新项目","全部投入到自己最看好的方向"]},
+        {q:"你更喜欢哪种工作模式？",opts:["按部就班","有挑战和变化","自由灵活","团队协作"]},
+        {q:"你觉得自己最值钱的资产是？",opts:["专业技能","人脉资源","创意想法","执行力"]},
+        {q:"你面对失败的态度是？",opts:["很难接受","会难过但会复盘","觉得正常，继续前进","失败是必经之路"]},
+        {q:"你更相信什么？",opts:["天道酬勤","选择大于努力","人脉就是钱脉","认知决定财富"]},
+        {q:"你觉得自己离“财富自由”还有多远？",opts:["很远，不知道什么时候","有点远，但能看到方向","不太远，在努力中","已经在路上了"]},
+        {q:"你内心最真实的搞钱愿望是？",opts:["有足够的安全感","实现财务自由","证明自己的能力","可以自由选择生活"]}
+    ];
+    const results=[{type:"🌊",name:"吸金海绵型 · 钱追着你跑",desc:"你有一种天生的“吸引金钱”的磁场。不是说你会中彩票，而是你走到哪里，机会和资源都会向你靠拢。你擅长借力、擅长让人愿意帮你——你的财富不是靠辛苦换来的，是靠能量吸引来的。",label:"钱追着你跑"},{type:"🎯",name:"猎手型 · 你擅长捕捉机会",desc:"你对“机会”的嗅觉比谁都灵敏。别人还没看明白的时候，你已经出手了。你擅长在信息中找到规律，在变化中发现缝隙。你的财富来自于“比别人快一步”。",label:"机会捕手"},{type:"🌱",name:"播种型 · 你擅长长期积累",desc:"你不是赚快钱的人——你是那种播下种子、耐心浇水、等待丰收的人。你相信复利的力量，相信时间会给你答案。你的财富来自于“坚持做对的事”。",label:"长期主义者"},{type:"🔗",name:"连接型 · 你靠人脉赚钱",desc:"你的价值不在于你多能干，而在于你认识谁、能把谁连接到一起。你是天然的资源整合者，你的财富来自于“把合适的人放在合适的位置上”。",label:"资源整合者"},{type:"💡",name:"灵感型 · 你靠创意赚钱",desc:"你的脑子一天能冒一百个想法——而且很多是能变成钱的。你擅长从0到1，擅长创造别人没想过的东西。你的财富来自于“把想法变成现实”。",label:"创意变现者"},{type:"🛡️",name:"守财型 · 你擅长守住钱",desc:"你可能不是赚得最多的，但你绝对是最能留得住的。你懂规划、懂分寸、懂什么时候该花什么时候不该花。你的财富来自于“不犯错”。",label:"财富守护者"}];
+    const dimNames=["赚钱直觉","执行能力","风险偏好","连接能力","金钱关系"];
+    let qA=[],qC=0,fA=[],fC=0;
+    function startQuiz(){document.getElementById('welcome').style.display='none';document.getElementById('quizPage').classList.add('active');qC=0;qA=[];showQ()}
+    function showQ(){if(qC>=5){showQR();return}const q=quickQ[qC];document.getElementById('qNum').textContent=qC+1;document.getElementById('qText').textContent=q.q;document.getElementById('progressFill').style.width=(qC/5*100)+'%';document.getElementById('progressText').textContent=(qC+1)+'/5';let h='';const L=['A','B','C','D'];q.opts.forEach((o,i)=>{h+=`<button class="option${qA[qC]===i?' selected':''}" onclick="selectQ(${i})"><span class="opt-label">${L[i]}</span>${o}</button>`});document.getElementById('optionsBox').innerHTML=h;document.getElementById('nextBtn').classList.add('hidden')}
+    function selectQ(i){qA[qC]=i;document.querySelectorAll('#optionsBox .option').forEach((e,j)=>e.classList.toggle('selected',j===i));document.getElementById('nextBtn').classList.remove('hidden')}
+    function nextQuestion(){qC++;showQ()}
+    function showQR(){document.getElementById('quizPage').classList.remove('active');document.getElementById('quickResult').classList.add('active');const c=[0,0,0,0];qA.forEach(a=>c[a]++);let m=0;for(let i=1;i<4;i++)if(c[i]>c[m])m=i;const r=results[m%results.length];document.getElementById('qrType').textContent=r.type;document.getElementById('qrName').textContent=r.name;document.getElementById('qrDesc').textContent=r.desc}
+    function showFullQuiz(){document.getElementById('quickResult').classList.remove('active');document.getElementById('fullQuizPage').classList.add('active');fC=0;fA=[];showF()}
+    function showF(){if(fC>=20){showFR();return}const q=fullQ[fC];document.getElementById('fullQNum').textContent=fC+1;document.getElementById('fullQText').textContent=q.q;document.getElementById('fullProgressFill').style.width=(fC/20*100)+'%';document.getElementById('fullProgressText').textContent=(fC+1)+'/20';let h='';const L=['A','B','C','D'];q.opts.forEach((o,i)=>{h+=`<button class="option${fA[fC]===i?' selected':''}" onclick="selectF(${i})"><span class="opt-label">${L[i]}</span>${o}</button>`});document.getElementById('fullOptionsBox').innerHTML=h;document.getElementById('fullNextBtn').classList.add('hidden')}
+    function selectF(i){fA[fC]=i;document.querySelectorAll('#fullOptionsBox .option').forEach((e,j)=>e.classList.toggle('selected',j===i));document.getElementById('fullNextBtn').classList.remove('hidden')}
+    function fullNextQuestion(){fC++;showF()}
+    function showFR(){document.getElementById('fullQuizPage').classList.remove('active');const c=[0,0,0,0];fA.forEach(a=>c[a]++);let m=0;for(let i=1;i<4;i++)if(c[i]>c[m])m=i;let ri=m%results.length;if(m===0&&c[3]>=6)ri=5;else if(m===1&&c[3]>=6)ri=1;const r=results[ri];const sc=Math.round(c[m]/20*100);const ds=[0,0,0,0,0];fA.forEach((a,i)=>{const d=Math.floor(i/4);if(d<5)ds[d]+=a+1});const dn=ds.map(s=>Math.min(100,Math.round(s/16*100)));let pt='';if(ri===0)pt='🌊 吸金海绵型 → 你的财富密码是「吸引」不是「追逐」。你不用太累，你只需要让自己成为一个有能量、有连接力的人——钱自然会找到你。';else if(ri===1)pt='🎯 猎手型 → 你的财富密码是「敏锐」。保持你对信息的敏感度，永远比人多走一步。但记住：猎手也需要耐心，不是每次出手都必须有收获。';else if(ri===2)pt='🌱 播种型 → 你的财富密码是「坚持」。你不需要羡慕别人的速度，你只需要相信时间的力量。你的财富会在积累中爆发。';else if(ri===3)pt='🔗 连接型 → 你的财富密码是「关系」。你不是在赚钱，你是在搭建网络。你的财富=你的人脉×你的格局。';else if(ri===4)pt='💡 灵感型 → 你的财富密码是「创造」。你的脑子里装着一座金矿——关键是选一个想法，把它做出来。行动比想法更值钱。';else pt='🛡️ 守财型 → 你的财富密码是「克制」。你不需要赚最多，你只需要犯最少的错。在别人疯狂的时候你冷静，这就是你的超能力。';const acts=[["第1-30天：觉察你的金钱模式","记录你每一次和钱打交道的感受——是紧张、兴奋、还是平静？找到你和钱的真实关系。"],["第1-30天：激活你的体质","根据你的吸金类型，做一件激活体质的事——海绵型去连接一个人，猎手型去研究一个新机会。"],["第31-60天：扩大你的磁场","让自己更多地出现在有“钱味”的场合——社群、活动、课程、圈子。你的体质需要环境来激活。"],["第61-90天：复利你的财富","把你的吸金体质变成习惯——每个月做一件“吸金动作”，让钱成为你生活的一部分。"]];let html=`<div class="result-type">${r.type}</div><div class="result-name">${r.name}</div><div class="score">吸金指数 · ${sc}% · ${r.label}</div><div class="result-desc">${r.desc}</div><div class="chart-box"><h4>📊 五维雷达图分析</h4><div class="radar-container"><canvas id="fullRadar" width="280" height="280"></canvas></div></div><div class="path-box"><h4>🛤️ 你的吸金进化路径</h4><p style="font-size:14px;color:#c8b8a8;line-height:1.8">${pt}</p></div><div class="action-plan"><h4>📋 90天吸金体质激活计划</h4>${acts.map((a,i)=>`<div class="action-item"><div class="action-num">${i+1}</div><div class="action-text"><strong>${a[0]}</strong><br>${a[1]}</div></div>`).join('')}</div><p style="font-size:13px;color:#a89080;margin-top:16px">💡 你不是不会搞钱，你只是还没激活自己的吸金体质</p>`;document.getElementById('fullResult').innerHTML=html;document.getElementById('fullResult').classList.add('active');setTimeout(()=>drawRadar('fullRadar',dn),300)}
+    function drawRadar(id,d){const c=document.getElementById(id);if(!c)return;const ctx=c.getContext('2d');const cx=c.width/2,cy=c.height/2,r=100,s=5;ctx.clearRect(0,0,c.width,c.height);for(let l=1;l<=5;l++){ctx.beginPath();for(let i=0;i<s;i++){const a=(Math.PI*2/s)*i-Math.PI/2;const rr=(r/5)*l;const x=cx+rr*Math.cos(a),y=cy+rr*Math.sin(a);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)}ctx.closePath();ctx.strokeStyle='#3d3028';ctx.lineWidth=1;ctx.stroke()}for(let i=0;i<s;i++){const a=(Math.PI*2/s)*i-Math.PI/2;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));ctx.strokeStyle='#3d3028';ctx.stroke()}ctx.beginPath();for(let i=0;i<s;i++){const a=(Math.PI*2/s)*i-Math.PI/2;const rr=(d[i]/100)*r;const x=cx+rr*Math.cos(a),y=cy+rr*Math.sin(a);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)}ctx.closePath();ctx.fillStyle='rgba(212,168,87,0.15)';ctx.fill();ctx.strokeStyle='#d4a857';ctx.lineWidth=2;ctx.stroke();for(let i=0;i<s;i++){const a=(Math.PI*2/s)*i-Math.PI/2;const rr=(d[i]/100)*r;ctx.beginPath();ctx.arc(cx+rr*Math.cos(a),cy+rr*Math.sin(a),5,0,Math.PI*2);ctx.fillStyle='#d4a857';ctx.fill()}ctx.fillStyle='#a89080';ctx.font='12px -apple-system,sans-serif';ctx.textAlign='center';for(let i=0;i<s;i++){const a=(Math.PI*2/s)*i-Math.PI/2;ctx.fillText(dimNames[i],cx+(r+25)*Math.cos(a),cy+(r+25)*Math.sin(a)+4)}}
+</script>
+</body>
+</html>
