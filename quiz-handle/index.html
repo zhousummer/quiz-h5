@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>你会被哪种人“拿捏”？ - 20题完整版</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(145deg,#120c1a,#1a1028);min-height:100vh;color:#e0d0e8}
+        .container{max-width:500px;margin:0 auto;padding:20px}
+        .welcome{text-align:center;padding-top:50px}
+        .welcome .emoji-top{font-size:64px;margin-bottom:16px}
+        .welcome h1{font-size:28px;color:#f0e0f5;margin-bottom:10px;line-height:1.4}
+        .welcome .subtitle{font-size:15px;color:#a890b0;margin-bottom:28px;line-height:1.6}
+        .welcome .dims{text-align:left;margin-bottom:36px;background:#221830;border-radius:20px;padding:20px 24px;border:1px solid #3d2848}
+        .welcome .dim-item{display:flex;align-items:center;gap:12px;padding:9px 0;font-size:15px;color:#c8b8d0}
+        .welcome .dim-item .dot{width:8px;height:8px;border-radius:50%;background:#8a7a90;flex-shrink:0}
+        .btn{display:inline-block;padding:16px 60px;background:linear-gradient(135deg,#b8a0c8,#9078a8);color:#1a1028;font-size:20px;font-weight:bold;border:none;border-radius:40px;cursor:pointer;transition:all 0.3s;box-shadow:0 6px 24px rgba(144,120,168,0.30)}
+        .btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(144,120,168,0.50)}
+        .btn-small{padding:12px 40px;font-size:16px}
+        .quiz-page{display:none}.quiz-page.active{display:block}
+        .progress-bar{width:100%;height:8px;background:#221830;border-radius:4px;margin-bottom:10px;overflow:hidden;border:1px solid #3d2848}
+        .progress-fill{height:100%;background:linear-gradient(90deg,#b8a0c8,#9078a8);border-radius:4px;transition:width 0.4s ease}
+        .progress-text{text-align:center;font-size:14px;color:#a890b0;margin-bottom:28px}
+        .question{margin-bottom:26px}
+        .question .q-num{display:inline-block;width:36px;height:36px;line-height:36px;text-align:center;background:#b8a0c8;color:#1a1028;border-radius:50%;font-weight:bold;font-size:16px;margin-right:10px;vertical-align:middle}
+        .question h3{display:inline;font-size:20px;color:#f0e0f5;line-height:1.5}
+        .options{margin-top:18px}
+        .option{display:block;width:100%;padding:18px 20px;margin-bottom:12px;background:#221830;border:2px solid #3d2848;border-radius:16px;font-size:16px;color:#e0d0e8;text-align:left;cursor:pointer;transition:all 0.3s}
+        .option:hover{border-color:#b8a0c8;background:#3d2848}
+        .option.selected{border-color:#b8a0c8;background:#3d2848;box-shadow:0 0 20px rgba(184,160,200,0.08)}
+        .option .opt-label{display:inline-block;width:28px;height:28px;line-height:28px;text-align:center;background:#b8a0c8;color:#1a1028;border-radius:50%;font-weight:bold;font-size:14px;margin-right:12px}
+        .quick-result{display:none;text-align:center;padding-top:30px}
+        .quick-result.active{display:block}
+        .quick-result .result-type{font-size:72px;margin-bottom:8px}
+        .quick-result .result-name{font-size:28px;font-weight:bold;color:#f0e0f5;margin-bottom:10px}
+        .quick-result .result-desc{font-size:15px;color:#a890b0;margin-bottom:28px;line-height:1.6}
+        .quick-result .upgrade-box{background:#221830;border-radius:20px;padding:28px 20px;margin-top:28px;border:1px solid #3d2848}
+        .quick-result .upgrade-box h4{font-size:20px;color:#f0e0f5;margin-bottom:12px}
+        .quick-result .upgrade-box p{font-size:14px;color:#a890b0;margin-bottom:20px;line-height:1.6}
+        .full-result{display:none;text-align:center;padding-top:24px}
+        .full-result.active{display:block}
+        .full-result .result-type{font-size:80px;margin-bottom:8px}
+        .full-result .result-name{font-size:32px;font-weight:bold;color:#f0e0f5;margin-bottom:8px}
+        .full-result .score{display:inline-block;padding:8px 24px;background:#221830;border-radius:20px;font-size:16px;color:#a890b0;margin-bottom:20px;border:1px solid #3d2848}
+        .full-result .result-desc{font-size:15px;color:#c8b8d0;line-height:1.8;text-align:left;margin-bottom:20px;padding:20px;background:#221830;border-radius:16px;border:1px solid #3d2848}
+        .full-result .chart-box{background:#221830;border-radius:20px;padding:20px;margin:20px 0;border:1px solid #3d2848}
+        .full-result .chart-box h4{font-size:18px;color:#f0e0f5;margin-bottom:14px}
+        .full-result .radar-container{width:280px;height:280px;margin:0 auto}
+        .full-result .path-box{text-align:left;background:#221830;border-radius:16px;padding:20px;margin:20px 0;border:1px solid #3d2848}
+        .full-result .path-box h4{font-size:18px;color:#f0e0f5;margin-bottom:14px;text-align:center}
+        .full-result .action-plan{text-align:left;background:#221830;border-radius:16px;padding:20px;margin:20px 0;border:1px solid #3d2848}
+        .full-result .action-plan h4{font-size:18px;color:#f0e0f5;margin-bottom:16px;text-align:center}
+        .full-result .action-item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #3d2848}
+        .full-result .action-item:last-child{border-bottom:none}
+        .full-result .action-num{width:28px;height:28px;line-height:28px;text-align:center;background:#b8a0c8;color:#1a1028;border-radius:50%;font-weight:bold;font-size:14px;flex-shrink:0}
+        .full-result .action-text{font-size:14px;color:#c8b8d0;line-height:1.6}
+        .hidden{display:none}
+    </style>
+</head>
+<body>
+<div class="container" id="app">
+    <div class="welcome" id="welcome">
+        <div class="emoji-top">🎯</div>
+        <h1>你会被哪种人“拿捏”？</h1>
+        <p class="subtitle">20题深度扫描你的情感软肋</p>
+        <div class="dims">
+            <div class="dim-item"><span class="dot"></span> 心动模式 —— 你被什么吸引？</div>
+            <div class="dim-item"><span class="dot"></span> 软肋在哪 —— 你最扛不住什么？</div>
+            <div class="dim-item"><span class="dot"></span> 相处模式 —— 你在关系中像什么？</div>
+            <div class="dim-item"><span class="dot"></span> 放手难度 —— 你多久能走出来？</div>
+            <div class="dim-item"><span class="dot"></span> 自我保护 —— 你会不会设防？</div>
+        </div>
+        <button class="btn" onclick="startQuiz()">开始测试</button>
+    </div>
+    <div class="quiz-page" id="quizPage">...</div>
+    <div class="quick-result" id="quickResult">...</div>
+    <div class="quiz-page" id="fullQuizPage">...</div>
+    <div class="full-result" id="fullResult"></div>
+</div>
+<script>
+    const quickQ=[{q:"什么样的人最容易让你心动？",opts:["特别聪明、有才华的人","特别温柔、会照顾人的人","特别有魄力、能扛事的人","特别神秘、让人猜不透的人"]},{q:"你最扛不住什么？",opts:["被对方夸聪明","被对方温柔对待","被对方坚定选择","被对方若即若离"]},{q:"你在关系里更像？",opts:["独立高冷的猫","温柔粘人的恋人","热情自由的灵魂","沉稳守护的港湾"]},{q:"分手后你多久能走出来？",opts:["很快，3天就翻篇","几周到一两个月","需要半年以上","很久很久，甚至几年"]},{q:"你会刻意保护自己吗？",opts:["不会，容易上头","会有一点，但不太设防","会保持距离，慢慢观察","会非常谨慎，很难打开"]}];
+    const fullQ=[
+        {q:"你更容易被哪种人吸引？",opts:["特别聪明、有才华的人","特别温柔、会照顾人的人","特别有魄力、能扛事的人","特别神秘、让人猜不透的人"]},
+        {q:"你最扛不住对方做什么？",opts:["用才华征服你","用温柔感动你","用魄力带领你","用神秘撩动你"]},
+        {q:"你在关系里更倾向于？",opts:["保持独立和空间","想要时刻黏在一起","自由自在、不被束缚","守护对方、承担责任"]},
+        {q:"什么样的人最让你上头？",opts:["比你聪明很多的人","让你感觉被爱包围的人","让你觉得有安全感的人","让你猜不透想靠近的人"]},
+        {q:"你最害怕什么？",opts:["被揭穿不够聪明","被对方冷漠对待","被对方抛弃","发现对方不是你想的那样"]},
+        {q:"你更期待哪种关系？",opts:["智性恋——精神共鸣","治愈恋——温柔陪伴","强者恋——被引领和守护","神秘恋——充满好奇和探索"]},
+        {q:"你更容易被什么打动？",opts:["对方的才华和见解","对方的细心和温暖","对方的担当和魄力","对方的独特和神秘"]},
+        {q:"你在关系里会主动吗？",opts:["会，但不太多","会，主动表达","不太主动","看对方"]},
+        {q:"你更欣赏哪种异性？",opts:["聪明有思想","温柔有同理心","强大有力量","有趣有魅力"]},
+        {q:"你觉得自己容易被什么拿捏？",opts:["被夸聪明","被温柔对待","被坚定选择","被若即若离"]},
+        {q:"你更喜欢哪种相处模式？",opts:["有深度对话的","有温暖陪伴的","有激情挑战的","有神秘感的"]},
+        {q:"你分手后的状态更像？",opts:["理性分析，很快放下","情绪崩溃，需要时间","表面没事，内心很久","彻底消失，不再联系"]},
+        {q:"你更愿意和谁在一起？",opts:["能让你成长的人","能让你感到安心的人","能让你崇拜的人","能让你好奇的人"]},
+        {q:"你对「被拿捏」的态度是？",opts:["我不可能被拿捏","偶尔被拿捏也没关系","我好像很容易被拿捏","我不知道自己会不会被拿捏"]},
+        {q:"你觉得自己的软肋是？",opts:["不够聪明","不够坚强","不够独立","不够洒脱"]},
+        {q:"你更向往哪种爱情？",opts:["势均力敌的","温柔细水长流的","轰轰烈烈的","神秘撩人的"]},
+        {q:"你觉得自己像什么动物？",opts:["狐狸——聪明","猫——温柔独立","狼——忠诚强大","鹿——神秘灵性"]},
+        {q:"你更容易对什么人卸下防备？",opts:["比自己聪明的人","让自己感到安全的人","比自己强大的人","让自己感到好奇的人"]},
+        {q:"你觉得最危险的吸引力是？",opts:["被对方的才华吸引","被对方的温柔融化","被对方的气场征服","被对方的神秘诱惑"]},
+        {q:"你内心深处最怕的是？",opts:["被否定","被忽视","被抛弃","被看透"]}
+    ];
+    const results=[{type:"🧠",name:"智性恋型 · 被聪明人拿捏",desc:"你扛得住直球和冷漠，扛不住对方的才华和智慧。当你遇到一个比你聪明、比你有见识、能让你佩服的人——你就输了。你会被对方的思维深度吸引，不由自主地想要靠近、学习、追随。",label:"被才华征服"},{type:"💬",name:"情绪型 · 被温柔的人拿捏",desc:"你是一个吃软不吃硬的人。对方越温柔、越细腻、越能看见你的情绪——你就越容易沦陷。你扛得住一切硬话，却扛不住一句「我在呢」。",label:"被温柔融化"},{type:"🔥",name:"强势型 · 被有魄力的人拿捏",desc:"你对「能扛事」的人毫无抵抗力。对方越有决断力、越能在关键时刻站出来——你就越容易跟随。你需要的不是一个需要你保护的人，而是一个能让你安心依靠的人。",label:"被魄力征服"},{type:"🌊",name:"自由型 · 被若即若离的人拿捏",desc:"你越抓不住的人，你越想抓住。对方越不在乎你，你就越在意。你被那种「掌控不了」的感觉深深吸引——你追逐的不是那个人，是那份不确定性。",label:"被神秘吸引"},{type:"🛡️",name:"保护型 · 被需要你的人拿捏",desc:"你天生有一种“保护欲”和“责任感”。当一个人需要你、依赖你、把你当成唯一的时候——你就不会走。你被那种「被需要」的感觉深深绑定。",label:"被需要绑定"},{type:"🎭",name:"神秘型 · 被看不透的人拿捏",desc:"你对「能让你好奇」的人毫无抵抗力。对方越不暴露自己、越让你猜不透——你就越想靠近。你追逐的不是答案，是解谜的过程本身。",label:"被神秘诱惑"}];
+    const dimNames=["心动模式","软肋在哪","相处模式","放手难度","自我保护"];
+    let qA=[],qC=0,fA=[],fC=0;
+    function startQuiz(){document.getElementById('welcome').style.display='none';document.getElementById('quizPage').classList.add('active');qC=0;qA=[];showQ()}
+    function showQ(){if(qC>=5){showQR();return}const q=quickQ[qC];document.getElementById('qNum').textContent=qC+1;document.getElementById('qText').textContent=q.q;document.getElementById('progressFill').style.width=(qC/5*100)+'%';document.getElementById('progressText').textContent=(qC+1)+'/5';let h='';const L=['A','B','C','D'];q.opts.forEach((o,i)=>{h+=`<button class="option${qA[qC]===i?' selected':''}" onclick="selectQ(${i})"><span class="opt-label">${L[i]}</span>${o}</button>`});document.getElementById('optionsBox').innerHTML=h;document.getElementById('nextBtn').classList.add('hidden')}
+    function selectQ(i){qA[qC]=i;document.querySelectorAll('#optionsBox .option').forEach((e,j)=>e.classList.toggle('selected',j===i));document.getElementById('nextBtn').classList.remove('hidden')}
+    function nextQuestion(){qC++;showQ()}
+    function showQR(){document.getElementById('quizPage').classList.remove('active');document.getElementById('quickResult').classList.add('active');const c=[0,0,0,0];qA.forEach(a=>c[a]++);let m=0;for(let i=1;i<4;i++)if(c[i]>c[m])m=i;const r=results[m%results.length];document.getElementById('qrType').textContent=r.type;document.getElementById('qrName').textContent=r.name;document.getElementById('qrDesc').textContent=r.desc}
+    function showFullQuiz(){document.getElementById('quickResult').classList.remove('active');document.getElementById('fullQuizPage').classList.add('active');fC=0;fA=[];showF()}
+    function showF(){if(fC>=20){showFR();return}const q=fullQ[fC];document.getElementById('fullQNum').textContent=fC+1;document.getElementById('fullQText').textContent=q.q;document.getElementById('fullProgressFill').style.width=(fC/20*100)+'%';document.getElementById('fullProgressText').textContent=(fC+1)+'/20';let h='';const L=['A','B','C','D'];q.opts.forEach((o,i)=>{h+=`<button class="option${fA[fC]===i?' selected':''}" onclick="selectF(${i})"><span class="opt-label">${L[i]}</span>${o}</button>`});document.getElementById('fullOptionsBox').innerHTML=h;document.getElementById('fullNextBtn').classList.add('hidden')}
+    function selectF(i){fA[fC]=i;document.querySelectorAll('#fullOptionsBox .option').forEach((e,j)=>e.classList.toggle('selected',j===i));document.getElementById('fullNextBtn').classList.remove('hidden')}
+    function fullNextQuestion(){fC++;showF()}
+    function showFR(){document.getElementById('fullQuizPage').classList.remove('active');const c=[0,0,0,0];fA.forEach(a=>c[a]++);let m=0;for(let i=1;i<4;i++)if(c[i]>c[m])m=i;let ri=m%results.length;if(m===0&&c[3]>=6)ri=5;else if(m===1&&c[3]>=6)ri=1;const r=results[ri];const sc=Math.round(c[m]/20*100);const ds=[0,0,0,0,0];fA.forEach((a,i)=>{const d=Math.floor(i/4);if(d<5)ds[d]+=a+1});const dn=ds.map(s=>Math.min(100,Math.round(s/16*100)));let pt='';if(ri===0)pt='🧠 智性恋型 → 你的软肋是「才华」。但你记住：真正的聪明人不会用聪明来拿捏你，而是会用聪明来成就你。';else if(ri===1)pt='💬 情绪型 → 你的软肋是「温柔」。学会分辨「真的温柔」和「表演的温柔」——前者让你安心，后者让你受伤。';else if(ri===2)pt='🔥 强势型 → 你的软肋是「魄力」。但真正的强者不是拿捏你的人，是和你并肩作战的人。';else if(ri===3)pt='🌊 自由型 → 你的软肋是「不确定」。试着去爱一个确定的人——那种踏实感，可能比刺激更珍贵。';else if(ri===4)pt='🛡️ 保护型 → 你的软肋是「被需要」。但记住：你不欠任何人一个救赎，你值得被爱，而不是被需要。';else pt='🎭 神秘型 → 你的软肋是「未解之谜」。但有时候，答案比谜题更让人心动。允许自己被真正看见。';const acts=[["第1-30天：看见你的模式","回想你过去被拿捏的经历——对方是什么类型？你有什么共同点？找到你的规律。"],["第1-30天：设置边界","尝试在一次互动中设置一个边界——哪怕很小。边界不是在推开别人，是在保护自己。"],["第31-60天：重新选择","有意识地靠近一个和你的“拿捏类型”完全不同的人——看看会发生什么。"],["第61-90天：拿回主动权","你不需要永远防备，也不需要永远敞开。学会在安全的时候敞开，在危险的时候收回来。"]];let html=`<div class="result-type">${r.type}</div><div class="result-name">${r.name}</div><div class="score">拿捏指数 · ${sc}% · ${r.label}</div><div class="result-desc">${r.desc}</div><div class="chart-box"><h4>📊 五维雷达图分析</h4><div class="radar-container"><canvas id="fullRadar" width="280" height="280"></canvas></div></div><div class="path-box"><h4>🛤️ 你的反拿捏路径</h4><p style="font-size:14px;color:#c8b8d0;line-height:1.8">${pt}</p></div><div class="action-plan"><h4>📋 90天反拿捏修炼计划</h4>${acts.map((a,i)=>`<div class="action-item"><div class="action-num">${i+1}</div><div class="action-text"><strong>${a[0]}</strong><br>${a[1]}</div></div>`).join('')}</div><p style="font-size:13px;color:#a890b0;margin-top:16px">💡 你不是容易被拿捏，你只是还没学会保护自己</p>`;document.getElementById('fullResult').innerHTML=html;document.getElementById('fullResult').classList.add('active');setTimeout(()=>drawRadar('fullRadar',dn),300)}
+    function drawRadar(id,d){const c=document.getElementById(id);if(!c)return;const ctx=c.getContext('2d');const cx=c.width/2,cy=c.height/2,r=100,s=5;ctx.clearRect(0,0,c.width,c.height);for(let l=1;l<=5;l++){ctx.beginPath();for(let i=0;i<s;i++){const a=(Math.PI*2/s)*i-Math.PI/2;const rr=(r/5)*l;const x=cx+rr*Math.cos(a),y=cy+rr*Math.sin(a);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)}ctx.closePath();ctx.strokeStyle='#3d2848';ctx.lineWidth=1;ctx.stroke()}for(let i=0;i<s;i++){const a=(Math.PI*2/s)*i-Math.PI/2;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));ctx.strokeStyle='#3d2848';ctx.stroke()}ctx.beginPath();for(let i=0;i<s;i++){const a=(Math.PI*2/s)*i-Math.PI/2;const rr=(d[i]/100)*r;const x=cx+rr*Math.cos(a),y=cy+rr*Math.sin(a);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)}ctx.closePath();ctx.fillStyle='rgba(184,160,200,0.15)';ctx.fill();ctx.strokeStyle='#b8a0c8';ctx.lineWidth=2;ctx.stroke();for(let i=0;i<s;i++){const a=(Math.PI*2/s)*i-Math.PI/2;const rr=(d[i]/100)*r;ctx.beginPath();ctx.arc(cx+rr*Math.cos(a),cy+rr*Math.sin(a),5,0,Math.PI*2);ctx.fillStyle='#b8a0c8';ctx.fill()}ctx.fillStyle='#a890b0';ctx.font='12px -apple-system,sans-serif';ctx.textAlign='center';for(let i=0;i<s;i++){const a=(Math.PI*2/s)*i-Math.PI/2;ctx.fillText(dimNames[i],cx+(r+25)*Math.cos(a),cy+(r+25)*Math.sin(a)+4)}}
+</script>
+</body>
+</html>
