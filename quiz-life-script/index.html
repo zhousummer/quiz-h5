@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>你的“人生剧本”是哪一种？ - 20题完整版</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(145deg,#0c1218,#162028);min-height:100vh;color:#d0d8e0}
+        .container{max-width:500px;margin:0 auto;padding:20px}
+        .welcome{text-align:center;padding-top:50px}
+        .welcome .emoji-top{font-size:64px;margin-bottom:16px}
+        .welcome h1{font-size:28px;color:#e8eef5;margin-bottom:10px;line-height:1.4}
+        .welcome .subtitle{font-size:15px;color:#8a98a8;margin-bottom:28px;line-height:1.6}
+        .welcome .dims{text-align:left;margin-bottom:36px;background:#1a2838;border-radius:20px;padding:20px 24px;border:1px solid #2a3850}
+        .welcome .dim-item{display:flex;align-items:center;gap:12px;padding:9px 0;font-size:15px;color:#b0c0d0}
+        .welcome .dim-item .dot{width:8px;height:8px;border-radius:50%;background:#6a7a8a;flex-shrink:0}
+        .btn{display:inline-block;padding:16px 60px;background:linear-gradient(135deg,#6a8aa8,#4a6a8a);color:#f0f5fa;font-size:20px;font-weight:bold;border:none;border-radius:40px;cursor:pointer;transition:all 0.3s;box-shadow:0 6px 24px rgba(74,106,138,0.30)}
+        .btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(74,106,138,0.50)}
+        .btn-small{padding:12px 40px;font-size:16px}
+        .quiz-page{display:none}.quiz-page.active{display:block}
+        .progress-bar{width:100%;height:8px;background:#1a2838;border-radius:4px;margin-bottom:10px;overflow:hidden;border:1px solid #2a3850}
+        .progress-fill{height:100%;background:linear-gradient(90deg,#6a8aa8,#4a6a8a);border-radius:4px;transition:width 0.4s ease}
+        .progress-text{text-align:center;font-size:14px;color:#8a98a8;margin-bottom:28px}
+        .question{margin-bottom:26px}
+        .question .q-num{display:inline-block;width:36px;height:36px;line-height:36px;text-align:center;background:#6a8aa8;color:#f0f5fa;border-radius:50%;font-weight:bold;font-size:16px;margin-right:10px;vertical-align:middle}
+        .question h3{display:inline;font-size:20px;color:#e8eef5;line-height:1.5}
+        .options{margin-top:18px}
+        .option{display:block;width:100%;padding:18px 20px;margin-bottom:12px;background:#1a2838;border:2px solid #2a3850;border-radius:16px;font-size:16px;color:#d0d8e0;text-align:left;cursor:pointer;transition:all 0.3s}
+        .option:hover{border-color:#6a8aa8;background:#2a3850}
+        .option.selected{border-color:#6a8aa8;background:#2a3850;box-shadow:0 0 20px rgba(106,138,168,0.08)}
+        .option .opt-label{display:inline-block;width:28px;height:28px;line-height:28px;text-align:center;background:#6a8aa8;color:#f0f5fa;border-radius:50%;font-weight:bold;font-size:14px;margin-right:12px}
+        .quick-result{display:none;text-align:center;padding-top:30px}
+        .quick-result.active{display:block}
+        .quick-result .result-type{font-size:72px;margin-bottom:8px}
+        .quick-result .result-name{font-size:28px;font-weight:bold;color:#e8eef5;margin-bottom:10px}
+        .quick-result .result-desc{font-size:15px;color:#8a98a8;margin-bottom:28px;line-height:1.6}
+        .quick-result .upgrade-box{background:#1a2838;border-radius:20px;padding:28px 20px;margin-top:28px;border:1px solid #2a3850}
+        .quick-result .upgrade-box h4{font-size:20px;color:#e8eef5;margin-bottom:12px}
+        .quick-result .upgrade-box p{font-size:14px;color:#8a98a8;margin-bottom:20px;line-height:1.6}
+        .full-result{display:none;text-align:center;padding-top:24px}
+        .full-result.active{display:block}
+        .full-result .result-type{font-size:80px;margin-bottom:8px}
+        .full-result .result-name{font-size:32px;font-weight:bold;color:#e8eef5;margin-bottom:8px}
+        .full-result .score{display:inline-block;padding:8px 24px;background:#1a2838;border-radius:20px;font-size:16px;color:#8a98a8;margin-bottom:20px;border:1px solid #2a3850}
+        .full-result .result-desc{font-size:15px;color:#b0c0d0;line-height:1.8;text-align:left;margin-bottom:20px;padding:20px;background:#1a2838;border-radius:16px;border:1px solid #2a3850}
+        .full-result .chart-box{background:#1a2838;border-radius:20px;padding:20px;margin:20px 0;border:1px solid #2a3850}
+        .full-result .chart-box h4{font-size:18px;color:#e8eef5;margin-bottom:14px}
+        .full-result .radar-container{width:280px;height:280px;margin:0 auto}
+        .full-result .path-box{text-align:left;background:#1a2838;border-radius:16px;padding:20px;margin:20px 0;border:1px solid #2a3850}
+        .full-result .path-box h4{font-size:18px;color:#e8eef5;margin-bottom:14px;text-align:center}
+        .full-result .action-plan{text-align:left;background:#1a2838;border-radius:16px;padding:20px;margin:20px 0;border:1px solid #2a3850}
+        .full-result .action-plan h4{font-size:18px;color:#e8eef5;margin-bottom:16px;text-align:center}
+        .full-result .action-item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #2a3850}
+        .full-result .action-item:last-child{border-bottom:none}
+        .full-result .action-num{width:28px;height:28px;line-height:28px;text-align:center;background:#6a8aa8;color:#f0f5fa;border-radius:50%;font-weight:bold;font-size:14px;flex-shrink:0}
+        .full-result .action-text{font-size:14px;color:#b0c0d0;line-height:1.6}
+        .hidden{display:none}
+    </style>
+</head>
+<body>
+<div class="container" id="app">
+    <div class="welcome" id="welcome">
+        <div class="emoji-top">📖</div>
+        <h1>你的「人生剧本」是哪一种？</h1>
+        <p class="subtitle">20题深度扫描你的叙事基因</p>
+        <div class="dims">
+            <div class="dim-item"><span class="dot"></span> 人生主线 —— 你在为什么而活？</div>
+            <div class="dim-item"><span class="dot"></span> 冲突类型 —— 你面对什么困难？</div>
+            <div class="dim-item"><span class="dot"></span> 核心动力 —— 什么在驱动你？</div>
+            <div class="dim-item"><span class="dot"></span> 关系模式 —— 你和谁一起走？</div>
+            <div class="dim-item"><span class="dot"></span> 结局期待 —— 你希望怎样收场？</div>
+        </div>
+        <button class="btn" onclick="startQuiz()">开始测试</button>
+    </div>
+    <div class="quiz-page" id="quizPage">...</div>
+    <div class="quick-result" id="quickResult">...</div>
+    <div class="quiz-page" id="fullQuizPage">...</div>
+    <div class="full-result" id="fullResult"></div>
+</div>
+<script>
+    const quickQ=[{q:"你觉得自己的人生更像什么？",opts:["一场需要逆袭的修行","一场需要探索的旅行","一场需要守护的使命","一场需要觉醒的旅程"]},{q:"你面对的最大困难是？",opts:["自己不够强","方向不清晰","想要保护的人很多","不知道自己是谁"]},{q:"什么最能驱动你前进？",opts:["变得更好的渴望","探索未知的好奇","守护重要的人","寻找真相的执着"]},{q:"你更习惯一个人还是和谁一起？",opts:["一个人扛","和伙伴一起","守护别人","被高人指引"]},{q:"你期待怎样的人生结局？",opts:["成为想成为的人","看遍想看的风景","守护的人都很幸福","找到了真正的自己"]}];
+    const fullQ=[
+        {q:"你觉得自己的人生更像什么？",opts:["一场需要逆袭的修行","一场需要探索的旅行","一场需要守护的使命","一场需要觉醒的旅程"]},
+        {q:"你面对的最大困难是？",opts:["自己不够强","方向不清晰","想要保护的人很多","不知道自己是谁"]},
+        {q:"什么最能驱动你前进？",opts:["变得更好的渴望","探索未知的好奇","守护重要的人","寻找真相的执着"]},
+        {q:"你更习惯一个人还是和谁一起？",opts:["一个人扛","和伙伴一起","守护别人","被高人指引"]},
+        {q:"你期待怎样的人生结局？",opts:["成为想成为的人","看遍想看的风景","守护的人都很幸福","找到了真正的自己"]},
+        {q:"你更欣赏哪种主角？",opts:["从低谷崛起的逆袭者","探索未知的冒险者","守护他人的守护者","寻找真相的觉醒者"]},
+        {q:"你在故事中最可能扮演什么角色？",opts:["主角——自己扛","主角——有人同行","配角——守护主角","导师——指引别人"]},
+        {q:"你遇到挫折时更像？",opts:["打不死的小强","换个方向继续走","更坚定要保护的人","停下来思考意义"]},
+        {q:"你的故事里最不能缺什么？",opts:["成长和蜕变","冒险和未知","爱和守护","真相和答案"]},
+        {q:"你更希望被谁记住？",opts:["你自己","你的伙伴","你守护的人","你启迪的人"]},
+        {q:"你对自己的人生有剧本吗？",opts:["有，很清楚","有大概方向","正在写","想重新写"]},
+        {q:"你觉得自己更像哪种角色？",opts:["战士","旅人","守护者","行者"]},
+        {q:"你的人生高潮会是什么？",opts:["破茧成蝶的那一刻","抵达远方的那一刻","护住所有人的那一刻","恍然大悟的那一刻"]},
+        {q:"你更害怕哪种结局？",opts:["成为不了想成为的人","看不到想看的风景","守护不了想守护的人","找不到真正的自己"]},
+        {q:"你更相信什么力量？",opts:["努力的力量","选择的力量","守护的力量","觉醒的力量"]},
+        {q:"你的故事底色是什么？",opts:["热血","自由","温暖","清醒"]},
+        {q:"你想给你的故事取什么标题？",opts:["《逆袭人生》","《探索人生》","《守护人生》","《觉醒人生》"]},
+        {q:"你更想被怎样对待？",opts:["被认可","被理解","被依赖","被看见"]},
+        {q:"你内心最深的渴望是？",opts:["成为最好的自己","活出想要的人生","让爱的人幸福","找到真正的自己"]},
+        {q:"你希望你的故事最后那句话是？",opts:["他成了他想成为的人","他看到了他想看的风景","他守护了所有他在乎的人","他找到了他想找的答案"]}
+    ];
+    const results=[{type:"🌄",name:"英雄之旅型 · 你的人生是一场蜕变",desc:"你的人生故事是从低谷出发，一路打怪升级、突破自我。你相信努力会有回报，坚持会有结果。你不是天生强大，但你在每一次跌倒后都变得更强大。",label:"逆袭蜕变"},{type:"🧭",name:"探索者型 · 你的人生是一场冒险",desc:"你的人生故事不是在找终点，是在找路上。你渴望体验、渴望未知、渴望自由。你不喜欢被定义，不喜欢按剧本走——你只相信你亲自见过的风景。",label:"自由冒险"},{type:"🏡",name:"守护者型 · 你的人生是守护和陪伴",desc:"你的人生故事不是为了自己成功，而是为了守护重要的人。你的意义不在于你爬了多高，而在于你让谁感到安心。你是一个行走的港湾。",label:"温柔守护"},{type:"💡",name:"创造者型 · 你的人生是创造和表达",desc:"你的人生故事是留下作品、创造价值、影响他人。你有一种“不白活”的执念——你来了，就要留下点什么。你改变不了世界，但你改变了你经过的每一个人。",label:"创造表达"},{type:"🌊",name:"疗愈者型 · 你的人生是治愈和温暖",desc:"你的人生故事是让世界变得更柔软一些。你经历过伤痛，所以更懂如何疗愈。你存在的意义是让破碎的人重新完整，让寒冷的人重新温暖。",label:"温暖治愈"},{type:"🎭",name:"觉醒者型 · 你的人生是寻找真相",desc:"你的人生故事是在追问“我是谁”“为什么而活”。你不满足于表面的答案，你一直在挖掘、在思考、在寻找。你不一定找到了答案，但你在路上。",label:"寻找真我"}];
+    const dimNames=["人生主线","冲突类型","核心动力","关系模式","结局期待"];
+    let qA=[],qC=0,fA=[],fC=0;
+    function startQuiz(){document.getElementById('welcome').style.display='none';document.getElementById('quizPage').classList.add('active');qC=0;qA=[];showQ()}
+    function showQ(){if(qC>=5){showQR();return}const q=quickQ[qC];document.getElementById('qNum').textContent=qC+1;document.getElementById('qText').textContent=q.q;document.getElementById('progressFill').style.width=(qC/5*100)+'%';document.getElementById('progressText').textContent=(qC+1)+'/5';let h='';const L=['A','B','C','D'];q.opts.forEach((o,i)=>{h+=`<button class="option${qA[qC]===i?' selected':''}" onclick="selectQ(${i})"><span class="opt-label">${L[i]}</span>${o}</button>`});document.getElementById('optionsBox').innerHTML=h;document.getElementById('nextBtn').classList.add('hidden')}
+    function selectQ(i){qA[qC]=i;document.querySelectorAll('#optionsBox .option').forEach((e,j)=>e.classList.toggle('selected',j===i));document.getElementById('nextBtn').classList.remove('hidden')}
+    function nextQuestion(){qC++;showQ()}
+    function showQR(){document.getElementById('quizPage').classList.remove('active');document.getElementById('quickResult').classList.add('active');const c=[0,0,0,0];qA.forEach(a=>c[a]++);let m=0;for(let i=1;i<4;i++)if(c[i]>c[m])m=i;const r=results[m%results.length];document.getElementById('qrType').textContent=r.type;document.getElementById('qrName').textContent=r.name;document.getElementById('qrDesc').textContent=r.desc}
+    function showFullQuiz(){document.getElementById('quickResult').classList.remove('active');document.getElementById('fullQuizPage').classList.add('active');fC=0;fA=[];showF()}
+    function showF(){if(fC>=20){showFR();return}const q=fullQ[fC];document.getElementById('fullQNum').textContent=fC+1;document.getElementById('fullQText').textContent=q.q;document.getElementById('fullProgressFill').style.width=(fC/20*100)+'%';document.getElementById('fullProgressText').textContent=(fC+1)+'/20';let h='';const L=['A','B','C','D'];q.opts.forEach((o,i)=>{h+=`<button class="option${fA[fC]===i?' selected':''}" onclick="selectF(${i})"><span class="opt-label">${L[i]}</span>${o}</button>`});document.getElementById('fullOptionsBox').innerHTML=h;document.getElementById('fullNextBtn').classList.add('hidden')}
+    function selectF(i){fA[fC]=i;document.querySelectorAll('#fullOptionsBox .option').forEach((e,j)=>e.classList.toggle('selected',j===i));document.getElementById('fullNextBtn').classList.remove('hidden')}
+    function fullNextQuestion(){fC++;showF()}
+    function showFR(){document.getElementById('fullQuizPage').classList.remove('active');const c=[0,0,0,0];fA.forEach(a=>c[a]++);let m=0;for(let i=1;i<4;i++)if(c[i]>c[m])m=i;let ri=m%results.length;if(m===0&&c[3]>=6)ri=5;else if(m===1&&c[3]>=6)ri=1;const r=results[ri];const sc=Math.round(c[m]/20*100);const ds=[0,0,0,0,0];fA.forEach((a,i)=>{const d=Math.floor(i/4);if(d<5)ds[d]+=a+1});const dn=ds.map(s=>Math.min(100,Math.round(s/16*100)));let pt='';if(ri===0)pt='🌄 英雄之旅型 → 你的人生剧本是「从低谷到高峰」。你的下一步不是等待机会，是继续打怪升级——你已经过了最难的关，后面的路只会更宽。';else if(ri===1)pt='🧭 探索者型 → 你的人生剧本是「在路上」。你不需要终点，你只需要方向。下一步不是停下来，是去一个你从没去过的地方。';else if(ri===2)pt='🏡 守护者型 → 你的人生剧本是「回家」。你的下一步不是往前冲，是确认你在乎的人是否安好——然后继续站在他们身边。';else if(ri===3)pt='💡 创造者型 → 你的人生剧本是「留下作品」。你的下一步不是等待灵感，是开始创作——哪怕不完美，先完成再完美。';else if(ri===4)pt='🌊 疗愈者型 → 你的人生剧本是「治愈」。你的下一步不是忘记过去，是把自己的伤变成光，照亮别人。';else pt='🎭 觉醒者型 → 你的人生剧本是「醒来」。你的下一步不是找到所有答案，是接受“也许没有标准答案”——然后继续提问。';const acts=[["第1-30天：看清你的剧本","写下你人生中的“第一幕”——你从哪里来？你的起点是什么？"],["第1-30天：接受你的剧本","接纳你正在演的故事——不是所有剧本都完美，但你的剧本只属于你。"],["第31-60天：改写你的剧本","如果你有权利改一幕戏，你会改哪一幕？然后问问自己：现在可以做什么？"],["第61-90天：活出你的剧本","你不需要成为别人故事里的角色——你是自己故事的主角。开始活出你选择的剧本。"]];let html=`<div class="result-type">${r.type}</div><div class="result-name">${r.name}</div><div class="score">剧本匹配度 · ${sc}% · ${r.label}</div><div class="result-desc">${r.desc}</div><div class="chart-box"><h4>📊 五维雷达图分析</h4><div class="radar-container"><canvas id="fullRadar" width="280" height="280"></canvas></div></div><div class="path-box"><h4>🛤️ 你的下一幕剧情</h4><p style="font-size:14px;color:#b0c0d0;line-height:1.8">${pt}</p></div><div class="action-plan"><h4>📋 90天剧本改写计划</h4>${acts.map((a,i)=>`<div class="action-item"><div class="action-num">${i+1}</div><div class="action-text"><strong>${a[0]}</strong><br>${a[1]}</div></div>`).join('')}</div><p style="font-size:13px;color:#8a98a8;margin-top:16px">💡 你不是没有剧本，你只是还没看到自己的剧本</p>`;document.getElementById('fullResult').innerHTML=html;document.getElementById('fullResult').classList.add('active');setTimeout(()=>drawRadar('fullRadar',dn),300)}
+    function drawRadar(id,d){const c=document.getElementById(id);if(!c)return;const ctx=c.getContext('2d');const cx=c.width/2,cy=c.height/2,r=100,s=5;ctx.clearRect(0,0,c.width,c.height);for(let l=1;l<=5;l++){ctx.beginPath();for(let i=0;i<s;i++){const a=(Math.PI*2/s)*i-Math.PI/2;const rr=(r/5)*l;const x=cx+rr*Math.cos(a),y=cy+rr*Math.sin(a);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)}ctx.closePath();ctx.strokeStyle='#2a3850';ctx.lineWidth=1;ctx.stroke()}for(let i=0;i<s;i++){const a=(Math.PI*2/s)*i-Math.PI/2;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));ctx.strokeStyle='#2a3850';ctx.stroke()}ctx.beginPath();for(let i=0;i<s;i++){const a=(Math.PI*2/s)*i-Math.PI/2;const rr=(d[i]/100)*r;const x=cx+rr*Math.cos(a),y=cy+rr*Math.sin(a);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)}ctx.closePath();ctx.fillStyle='rgba(106,138,168,0.15)';ctx.fill();ctx.strokeStyle='#6a8aa8';ctx.lineWidth=2;ctx.stroke();for(let i=0;i<s;i++){const a=(Math.PI*2/s)*i-Math.PI/2;const rr=(d[i]/100)*r;ctx.beginPath();ctx.arc(cx+rr*Math.cos(a),cy+rr*Math.sin(a),5,0,Math.PI*2);ctx.fillStyle='#6a8aa8';ctx.fill()}ctx.fillStyle='#8a98a8';ctx.font='12px -apple-system,sans-serif';ctx.textAlign='center';for(let i=0;i<s;i++){const a=(Math.PI*2/s)*i-Math.PI/2;ctx.fillText(dimNames[i],cx+(r+25)*Math.cos(a),cy+(r+25)*Math.sin(a)+4)}}
+</script>
+</body>
+</html>
